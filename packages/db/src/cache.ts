@@ -1,86 +1,56 @@
 /**
- * KV Cache utilities for Postgres-based caching with TTL support.
+ * KV Cache utilities stub.
+ *
+ * This module previously provided Postgres-based caching with TTL support.
+ * The cache table has been removed - implement your own caching strategy.
  */
-import { eq, lt } from "drizzle-orm";
 
-import type { db as Database } from "./client";
-import { cache } from "./schema";
-
-type DbClient = typeof Database;
+type DbClient = unknown;
 
 /**
- * Get a cached value by key.
- * Returns null if key doesn't exist or has expired.
+ * Stub: Get a cached value by key.
+ * @returns Always returns null (cache disabled)
  */
-export const cacheGet = async <T>(
-  db: DbClient,
-  key: string,
+export const cacheGet = <T>(
+  _db: DbClient,
+  _key: string,
 ): Promise<T | null> => {
-  const result = await db
-    .select({ value: cache.value, expiresAt: cache.expiresAt })
-    .from(cache)
-    .where(eq(cache.key, key))
-    .limit(1);
-
-  if (!result[0]) return null;
-
-  // Check if expired
-  if (new Date() > result[0].expiresAt) {
-    // Delete expired entry
-    await db.delete(cache).where(eq(cache.key, key));
-    return null;
-  }
-
-  try {
-    return JSON.parse(result[0].value) as T;
-  } catch {
-    return null;
-  }
+  return Promise.resolve(null);
 };
 
 /**
- * Set a cached value with TTL in milliseconds.
- * Upserts if key already exists.
+ * Stub: Set a cached value with TTL.
+ * @returns No-op (cache disabled)
  */
-export const cacheSet = async <T>(
-  db: DbClient,
-  key: string,
-  value: T,
-  ttlMs: number,
+export const cacheSet = <T>(
+  _db: DbClient,
+  _key: string,
+  _value: T,
+  _ttlMs = 3600000,
 ): Promise<void> => {
-  const expiresAt = new Date(Date.now() + ttlMs);
-  const jsonValue = JSON.stringify(value);
-
-  await db
-    .insert(cache)
-    .values({ key, value: jsonValue, expiresAt })
-    .onConflictDoUpdate({
-      target: cache.key,
-      set: { value: jsonValue, expiresAt },
-    });
+  return Promise.resolve();
 };
 
 /**
- * Delete a cached value by key.
+ * Stub: Delete a cached value by key.
+ * @returns No-op (cache disabled)
  */
-export const cacheDelete = async (db: DbClient, key: string): Promise<void> => {
-  await db.delete(cache).where(eq(cache.key, key));
+export const cacheDelete = (
+  _db: DbClient,
+  _key: string,
+): Promise<void> => {
+  return Promise.resolve();
 };
 
 /**
- * Clean up all expired cache entries.
- * Run this periodically via cron job.
+ * Stub: Clean up all expired cache entries.
+ * @returns Always returns 0 (cache disabled)
  */
-export const cacheCleanup = async (db: DbClient): Promise<number> => {
-  const result = await db
-    .delete(cache)
-    .where(lt(cache.expiresAt, new Date()))
-    .returning({ id: cache.id });
-
-  return result.length;
+export const cacheCleanup = (_db: DbClient): Promise<number> => {
+  return Promise.resolve(0);
 };
 
-// Cache key helpers
+// Cache key helpers (kept for interface compatibility)
 export const CACHE_KEYS = {
   pulse: (userId: string) => `pulse:${userId}`,
   vibeHistory: (userId: string) => `vibe-history:${userId}`,
@@ -94,3 +64,4 @@ export const CACHE_KEYS = {
 export const CACHE_TTL = {
   PULSE: 15 * 60 * 1000, // 15 minutes
 } as const;
+

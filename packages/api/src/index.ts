@@ -12,7 +12,9 @@ import {
   secureHeadersMiddleware,
 } from "./middleware/security";
 import { timingMiddleware } from "./middleware/timing";
+import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
+import supportRouter from "./router/support";
 
 /**
  * Options for creating the API app
@@ -40,6 +42,8 @@ export const createApp = (auth: Auth, options: CreateAppOptions = {}) => {
     .use("*", timingMiddleware)
     // Routes
     .route("/auth", authRouter)
+    .route("/apikeys", apiKeyRouter)
+    .route("/support", supportRouter)
     // Health check (not rate limited in security config)
     .get("/health", (c) => c.text("OK"));
 

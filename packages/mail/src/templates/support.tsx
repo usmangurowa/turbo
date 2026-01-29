@@ -5,18 +5,37 @@ import { EmailLayout } from "../components/email-layout";
 export interface SupportEmailProps {
   /** User's email address */
   userEmail: string;
-  /** User's ID (optional) */
+  /** User's ID */
   userId?: string;
-  /** Type of message (e.g. feedback, issue) */
+  /** The type of support request */
   type: string;
-  /** The message content */
+  /** The support message content */
   message: string;
-  /** Additional metadata */
+  /** Optional metadata */
   metadata?: Record<string, unknown>;
 }
 
 /**
- * Support email template for incoming feedback/support requests.
+ * Support request email template (sent to support team).
+ *
+ * @example
+ * ```tsx
+ * import { sendEmail } from "@turbo/mail/client";
+ * import { SupportEmail } from "@turbo/mail";
+ *
+ * await sendEmail({
+ *   to: "support@turbo.app",
+ *   subject: "Support Request from John",
+ *   template: (
+ *     <SupportEmail
+ *       userEmail="john@example.com"
+ *       userName="John"
+ *       message="I need help with..."
+ *       category="general"
+ *     />
+ *   ),
+ * });
+ * ```
  */
 export const SupportEmail = ({
   userEmail,
@@ -25,17 +44,22 @@ export const SupportEmail = ({
   message,
   metadata,
 }: SupportEmailProps) => (
-  <EmailLayout preview={`New ${type} from ${userEmail}`}>
+  <EmailLayout preview={`Support request from ${userEmail}`}>
     <Section className="rounded-lg bg-white p-8">
       <Heading className="text-foreground m-0 mb-4 text-2xl font-bold">
-        New {type}
+        New Support Request
       </Heading>
 
-      <Text className="text-muted-foreground mb-4 text-base">
-        <strong>From:</strong> {userEmail} {userId && `(${userId})`}
+      <Text className="text-muted-foreground mb-2 text-sm">
+        <strong>From:</strong> {userEmail}
+        {userId && <> (ID: {userId})</>}
       </Text>
 
-      <Hr className="border-border my-6" />
+      <Text className="text-muted-foreground mb-4 text-sm">
+        <strong>Type:</strong> {type}
+      </Text>
+
+      <Hr className="border-border my-4" />
 
       <Text className="text-foreground mb-6 text-base whitespace-pre-wrap">
         {message}
@@ -43,15 +67,21 @@ export const SupportEmail = ({
 
       {metadata && Object.keys(metadata).length > 0 && (
         <>
-          <Hr className="border-border my-6" />
-          <Heading className="text-foreground m-0 mb-2 text-lg font-bold">
-            Metadata
-          </Heading>
-          <pre className="bg-muted text-muted-foreground rounded p-4 text-xs">
+          <Hr className="border-border my-4" />
+          <Text className="text-muted-foreground mb-2 text-sm">
+            <strong>Metadata:</strong>
+          </Text>
+          <Text className="text-muted-foreground mb-4 text-xs font-mono">
             {JSON.stringify(metadata, null, 2)}
-          </pre>
+          </Text>
         </>
       )}
+
+      <Hr className="border-border my-6" />
+
+      <Text className="text-muted-foreground m-0 text-sm">
+        Reply to this email to respond directly to the user.
+      </Text>
     </Section>
   </EmailLayout>
 );

@@ -13,12 +13,13 @@ export const calculateMetrics = () => ({
   flowEfficiency: 0,
 });
 
-export const fetchTodayMetrics = async () => ({
-  heartbeats: 0,
-  sessions: 0,
-  flows: 0,
-  codingTimeMinutes: 0,
-  codingTimeSeconds: 0,
-  flowTimeSeconds: 0,
-  flowEfficiency: 0,
-});
+export const fetchTodayMetrics = () =>
+  Promise.resolve({
+    heartbeats: 0,
+    sessions: 0,
+    flows: 0,
+    codingTimeMinutes: 0,
+    codingTimeSeconds: 0,
+    flowTimeSeconds: 0,
+    flowEfficiency: 0,
+  });

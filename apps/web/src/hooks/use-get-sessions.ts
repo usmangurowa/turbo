@@ -1,6 +1,6 @@
 "use client";
 
-export type ApiCodingSession = Record<string, any>;
+export type ApiCodingSession = Record<string, unknown>;
 
 interface UseGetSessionsOptionsBase {
   enabled?: boolean;
@@ -27,5 +27,5 @@ export const useGetSessions = (_options: UseGetSessionsOptions) => ({
   isLoading: false,
   isError: false,
   error: null as Error | null,
-  refetch: async () => undefined,
+  refetch: () => Promise.resolve(undefined),
 });

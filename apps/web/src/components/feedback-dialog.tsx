@@ -34,7 +34,7 @@ import { Textarea } from "@turbo/ui/textarea";
 import { useApi } from "../hooks/use-api";
 
 const formSchema = z.object({
-  type: z.enum(["feedback", "issue", "question", "other"]),
+  type: z.enum(["bug", "feature", "feedback", "other"]),
   message: z.string().min(10, {
     message: "Message must be at least 10 characters.",
   }),
@@ -44,7 +44,7 @@ interface FeedbackDialogProps {
   children?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  defaultType?: "feedback" | "issue" | "question" | "other";
+  defaultType?: "bug" | "feature" | "feedback" | "other";
 }
 
 export function FeedbackDialog({
@@ -121,9 +121,9 @@ export function FeedbackDialog({
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="bug">Report Bug</SelectItem>
+                    <SelectItem value="feature">Feature Request</SelectItem>
                     <SelectItem value="feedback">Feedback</SelectItem>
-                    <SelectItem value="issue">Report Issue</SelectItem>
-                    <SelectItem value="question">Question</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
