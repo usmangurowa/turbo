@@ -6,4 +6,4 @@
  */
 
 // Re-export task definitions
-export {}
+export {};
