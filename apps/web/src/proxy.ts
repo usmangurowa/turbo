@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // Cookie name for the redirect preference
-export const REDIRECT_PREFERENCE_COOKIE = "kodo-redirect-to-dashboard";
+export const REDIRECT_PREFERENCE_COOKIE = "turbo-redirect-to-dashboard";
 
 // Routes that require authentication
 const protectedRoutes = ["/dashboard"];

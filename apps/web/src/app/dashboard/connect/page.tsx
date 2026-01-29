@@ -4,95 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/client";
-import { KodoLogo } from "@/components/kodo-logo";
+import { TurboLogo } from "@/components/turbo-logo";
 import { useApiKeys } from "@/hooks/use-api-keys";
 import { useIsMac } from "@/hooks/use-is-mac";
-import {
-  ArrowRight01Icon,
-  CheckmarkCircle02Icon,
-  Copy01Icon,
-  Key01Icon,
-  Loading01Icon,
-  Tick01Icon,
-} from "@hugeicons/core-free-icons";
-import { format } from "date-fns";
+import { redirect } from "next/navigation";
 
-import { Button } from "@turbo/ui/button";
-import { Icon } from "@turbo/ui/icon";
-import { Kbd } from "@turbo/ui/kbd";
-import { Skeleton } from "@turbo/ui/skeleton";
-import { toast } from "@turbo/ui/toast";
+const ConnectPage = () => {
+  redirect("/dashboard");
+};
 
-/**
- * Supported IDEs with their branding
- */
-const SUPPORTED_IDES = [
-  { id: "vscode", name: "VS Code", logo: "/editors/vscode.svg", invert: false },
-  { id: "cursor", name: "Cursor", logo: "/editors/cursor.svg", invert: false },
-  {
-    id: "antigravity",
-    name: "Antigravity",
-    logo: "/editors/antigravity.svg",
-    invert: false,
-  },
-  {
-    id: "windsurf",
-    name: "Windsurf",
-    logo: "/editors/windsurf.svg",
-    invert: true,
-  },
-] as const;
-
-/**
- * Section wrapper - continuous flow with grayed-out inactive state
- */
-const OnboardingSection = ({
-  stepNumber,
-  title,
-  description,
-  isActive,
-  isCompleted,
-  children,
-}: {
-  stepNumber: number;
-  title: string;
-  description: string;
-  isActive: boolean;
-  isCompleted: boolean;
-  children: React.ReactNode;
-}) => (
-  <div
-    className={`relative transition-opacity duration-300 ${
-      !isActive && !isCompleted ? "pointer-events-none opacity-30" : ""
-    }`}
-  >
-    {/* Step header */}
-    <div className="mb-4 flex items-start gap-4">
-      <div
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors ${
-          isCompleted
-            ? "bg-primary text-primary-foreground"
-            : isActive
-              ? "bg-primary/20 text-primary border-primary border-2"
-              : "bg-muted text-muted-foreground"
-        }`}
-      >
-        {isCompleted ? (
-          <Icon icon={Tick01Icon} className="h-4 w-4" />
-        ) : (
-          stepNumber
-        )}
-      </div>
-      <div className="flex-1">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-muted-foreground text-sm">{description}</p>
-      </div>
-    </div>
-
-    {/* Step content - indented to align with header text */}
-    <div className="ml-12">{children}</div>
-  </div>
-);
+export default ConnectPage;
+/*
 
 /**
  * IDE Support Grid
@@ -258,7 +180,7 @@ const ConnectionInstructions = ({ isMac }: { isMac: boolean }) => (
         <span>Run the command</span>
         <div className="mt-1.5">
           <code className="bg-muted rounded px-2 py-1 text-xs font-medium">
-            Kodo: Set API Key
+            Turbo: Set API Key
           </code>
         </div>
       </div>
@@ -356,9 +278,9 @@ export default function ConnectPage() {
     <main className="container flex min-h-0 flex-1 flex-col overflow-auto py-8">
       {/* Header */}
       <div className="mb-10 flex items-center gap-4">
-        <KodoLogo size="lg" className="opacity-80" />
+        <TurboLogo size="lg" className="opacity-80" />
         <div>
-          <h1 className="text-2xl font-bold">Welcome to Kodo</h1>
+          <h1 className="text-2xl font-bold">Welcome to Turbo</h1>
           <p className="text-muted-foreground">
             Let&apos;s get your extension connected.
           </p>
@@ -371,7 +293,7 @@ export default function ConnectPage() {
         <OnboardingSection
           stepNumber={1}
           title="Install the Extension"
-          description="Search for 'Kodo' in your IDE's extension marketplace."
+          description="Search for 'Turbo Template' in your IDE's extension marketplace."
           isActive={!installVerified}
           isCompleted={installVerified}
         >
@@ -459,7 +381,7 @@ export default function ConnectPage() {
       <div className="text-muted-foreground mt-auto pt-8 text-sm">
         Having trouble?{" "}
         <a
-          href="https://docs.kodo.app/getting-started"
+          href="https://turbo.app/docs/getting-started"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
@@ -470,3 +392,4 @@ export default function ConnectPage() {
     </main>
   );
 }
+*/

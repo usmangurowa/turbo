@@ -1,16 +1,8 @@
-import { and, eq, inArray, isNull, lt, or } from "drizzle-orm";
-
-import { generateSessionSummary } from "@turbo/ai";
-import { ANALYTICS_EVENTS } from "@turbo/analytics";
-import { captureError, trackServerEvent } from "@turbo/analytics/server";
-import { CACHE_KEYS, cacheDelete } from "@turbo/db";
-import { db } from "@turbo/db/client";
-import { codingSession, heartbeat } from "@turbo/db/schema";
-import {
-  calculateLineChanges,
-  getMostFrequent,
-  SESSION_STATUS,
-} from "@turbo/shared";
+export interface CompletionStats {
+  completed: number;
+  deleted: number;
+  failed: number;
+}
 
 interface CompleteStaleSessionsOptions {
   batchSize?: number;
@@ -21,11 +13,15 @@ interface CompleteStaleSessionsOptions {
   startTime?: number;
 }
 
-export interface CompletionStats {
-  completed: number;
-  deleted: number;
-  failed: number;
-}
+export const completeStaleSessions = async (
+  _options: CompleteStaleSessionsOptions = {},
+): Promise<CompletionStats> => ({
+  completed: 0,
+  deleted: 0,
+  failed: 0,
+});
+
+/*
 
 /**
  * Process items in chunks using Promise.all for parallel execution.
@@ -327,3 +323,4 @@ export const completeStaleSessions = async (
 
   return { completed, deleted: sessionsToDelete.length, failed };
 };
+*/

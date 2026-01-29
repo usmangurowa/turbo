@@ -64,7 +64,7 @@ describe("POST /sessions/standup", () => {
         title: "Session 1",
         summary: "Worked on auth",
         actionTag: "building",
-        mainProject: "kodo",
+        mainProject: "turbo",
         linesAdded: 100,
         mainLanguage: "TypeScript",
         startedAt: new Date(),

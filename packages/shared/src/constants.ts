@@ -1,5 +1,5 @@
 /**
- * Shared constants for Kodo
+ * Shared constants for Turbo
  * These values are used across the extension, API, and web app
  */
 

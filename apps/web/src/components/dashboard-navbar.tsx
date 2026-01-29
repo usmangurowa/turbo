@@ -34,7 +34,7 @@ export function DashboardNavbar() {
       <div className="container flex h-14 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Icon icon={TimeScheduleIcon} className="size-5" />
-          <h1 className="text-lg font-semibold">Kodo</h1>
+          <h1 className="text-lg font-semibold">Turbo</h1>
           <Link
             href="/docs"
             className="text-muted-foreground hover:text-foreground text-sm transition-colors"

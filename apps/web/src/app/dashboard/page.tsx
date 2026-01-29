@@ -1,80 +1,63 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { DashboardTour } from "@/components/dashboard/dashboard-tour";
-import { Metrics } from "@/components/dashboard/metrics";
-import {
-  PulseHeader,
-  PulseHeaderSkeleton,
-} from "@/components/dashboard/pulse-header";
-import { SessionFeed } from "@/components/dashboard/session-feed";
-import { StandupButton } from "@/components/dashboard/standup-button";
-import { useApiKeys } from "@/hooks/use-api-keys";
+import Link from "next/link";
+import { useSession } from "@/hooks/use-session";
 
+import { Button } from "@turbo/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@turbo/ui/card";
 import { Skeleton } from "@turbo/ui/skeleton";
 
-/**
- * Dashboard page with empty state detection.
- * Redirects to /dashboard/connect if user needs onboarding.
- */
 export default function DashboardPage() {
-  const router = useRouter();
-  const { keys, isLoading } = useApiKeys();
+  const { data: session, isPending } = useSession();
 
-  // Determine if user needs onboarding
-  // User needs onboarding if:
-  // 1. They have no API keys, OR
-  // 2. They have API keys but no connected editors (no heartbeats received)
-  const hasApiKeys = keys.length > 0;
-  const hasConnectedEditor = keys.some(
-    (key) => key.connectedEditors.length > 0,
-  );
-  const needsOnboarding = !isLoading && (!hasApiKeys || !hasConnectedEditor);
-
-  // Handle redirect in useEffect to avoid calling router.replace during render
-  useEffect(() => {
-    if (needsOnboarding) {
-      router.replace("/dashboard/connect");
-    }
-  }, [needsOnboarding, router]);
-
-  // Show loading state or while redirecting
-  if (isLoading || needsOnboarding) {
+  if (isPending) {
     return (
-      <main className="relative container flex min-h-0 flex-1 flex-col gap-8 overflow-hidden pb-5">
-        <div className="flex items-center justify-between gap-x-5">
-          <PulseHeaderSkeleton />
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-24 rounded-full" />
-          </div>
-        </div>
-
-        <Skeleton className="min-h-0 w-full flex-1 rounded-2xl" />
+      <main className="container flex min-h-0 flex-1 flex-col gap-6 py-6">
+        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-40 w-full rounded-2xl" />
       </main>
     );
   }
 
-  // Regular dashboard
-  return (
-    <main className="relative container flex min-h-0 flex-1 flex-col gap-8 overflow-hidden pb-5">
-      <div className="flex items-center justify-between gap-x-5">
-        {/* Smart Pulse Header - Dynamic state-based messaging */}
-        <PulseHeader />
-        <div className="flex items-center gap-2">
-          <DashboardTour />
-          <StandupButton />
-        </div>
-      </div>
+  if (!session?.user) {
+    return (
+      <main className="container flex min-h-0 flex-1 flex-col items-center justify-center gap-4 py-6">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Welcome back</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground text-sm">
+              Sign in to access your dashboard.
+            </p>
+            <Button asChild className="w-full">
+              <Link href="/login">Go to login</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
 
-      <section className="bg-card/50 grid min-h-0 w-full flex-1 grid-cols-1 gap-5 overflow-hidden rounded-2xl p-6 md:grid-cols-3 xl:grid-cols-5">
-        <Suspense fallback={null}>
-          <SessionFeed />
-        </Suspense>
-        <Suspense fallback={null}>
-          <Metrics />
-        </Suspense>
-      </section>
+  return (
+    <main className="container flex min-h-0 flex-1 flex-col gap-6 py-6">
+      <div>
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <p className="text-muted-foreground text-sm">
+          You are signed in as {session.user.email}.
+        </p>
+      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Auth-only starter</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-sm">
+            This dashboard is kept intentionally minimal while auth is the
+            primary feature. Add your own product modules here.
+          </p>
+        </CardContent>
+      </Card>
     </main>
   );
 }

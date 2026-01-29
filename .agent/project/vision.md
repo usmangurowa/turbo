@@ -1,12 +1,12 @@
-# **Application Overview: Kodo**
+# **Application Overview: Turbo**
 
 **Tagline:** The Developer Beat.
 **Concept:** A social, wellness-focused developer identity platform. "Strava for Coders."
 
 ## **The Mission**
 
-**Why Kodo?**
-Unlike wakatime (which monitors hours/surveillance), Kodo focuses on **Recognition**, **Context**, and **Wellness**. It shifts the narrative from "Did you work enough?" to "Look what you achieved."
+**Why Turbo?**
+Unlike wakatime (which monitors hours/surveillance), Turbo focuses on **Recognition**, **Context**, and **Wellness**. It shifts the narrative from "Did you work enough?" to "Look what you achieved."
 
 ### **Core Differentiators**
 

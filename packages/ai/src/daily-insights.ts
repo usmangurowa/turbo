@@ -71,7 +71,7 @@ const dailyInsightsSchema = z.object({
  * Generate daily insights based on coding metrics.
  *
  * Creates a personalized summary with headline, narrative, highlights,
- * and optional recommendation. Uses the Kodo narrator voice.
+ * and optional recommendation. Uses the Turbo narrator voice.
  *
  * @example
  * ```ts
@@ -123,7 +123,7 @@ export const generateDailyInsights = async (
     contextHints.push("High flow efficiency indicates strong focus");
   }
 
-  const prompt = `You are Kodo's AI narrator, providing daily insights for a developer about their coding activity.
+  const prompt = `You are Turbo's AI narrator, providing daily insights for a developer about their coding activity.
 
 **Today's Metrics:**
 - Coding time: ${codingTime}
@@ -141,7 +141,7 @@ ${contextHints.length > 0 ? `**Context:** ${contextHints.join(". ")}` : ""}
 3. **Highlights** (3-4 items): Specific observations from the metrics
 4. **Recommendation** (optional): One actionable, encouraging suggestion
 
-**Voice Guidelines (Kodo Narrator):**
+**Voice Guidelines (Turbo Narrator):**
 - Address the user as "you" (not "the team" or third person)
 - Never use "I" or "we"
 - Use plain language and everyday verbs

@@ -85,7 +85,7 @@ const sessionInsightsSchema = z.object({
  *   languages: [{ name: "TypeScript", percentage: 80 }],
  *   commits: [{ message: "Refactor dashboard layout" }],
  *   durationMinutes: 45,
- *   project: "kodo-web",
+ *   project: "turbo-web",
  *   activityPeaks: 3,
  * });
  * ```

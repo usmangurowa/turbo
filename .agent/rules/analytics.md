@@ -6,7 +6,7 @@ trigger: always_on
 
 ## PostHog Integration
 
-The Kodo monorepo uses PostHog for analytics and error tracking across all platforms.
+The Turbo monorepo uses PostHog for analytics and error tracking across all platforms.
 
 ## Package Structure
 - `packages/analytics` - Shared analytics utilities (`@turbo/analytics`)
@@ -19,7 +19,7 @@ The Kodo monorepo uses PostHog for analytics and error tracking across all platf
 |----------|--------------|
 | **Web (Next.js)** | `posthog.capture()` via `posthog-js`, initialized in `instrumentation-client.ts` |
 | **Mobile (Expo)** | `usePostHog()` from `posthog-react-native`, Provider in `_layout.tsx` |
-| **VS Code** | `trackEvent()` from `./telemetry.ts` (opt-in via `kodo.enableTelemetry`) |
+| **VS Code** | `trackEvent()` from `./telemetry.ts` (opt-in via `turbo.enableTelemetry`) |
 | **API** | `trackApiEvent()` from `middleware/analytics.ts` |
 
 ## User Identification

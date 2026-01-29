@@ -1,8 +1,8 @@
 /**
- * Telemetry module for the Kodo VS Code extension.
+ * Telemetry module for the Turbo VS Code extension.
  *
  * Opt-in error tracking using Sentry and analytics using PostHog.
- * Respects the `kodo.enableTelemetry` setting.
+ * Respects the `turbo.enableTelemetry` setting.
  */
 
 import * as Sentry from "@sentry/node";
@@ -23,11 +23,11 @@ let currentUserId: string | null = null;
 export const initTelemetry = (context: vscode.ExtensionContext) => {
   machineId = vscode.env.machineId;
   enabled = vscode.workspace
-    .getConfiguration("kodo")
+    .getConfiguration("turbo")
     .get<boolean>("enableTelemetry", false);
 
   if (!enabled) {
-    console.log("[Kodo]: Telemetry disabled");
+    console.log("[Turbo]: Telemetry disabled");
     return;
   }
 
@@ -38,8 +38,8 @@ export const initTelemetry = (context: vscode.ExtensionContext) => {
       dsn: sentryDsn,
       environment: process.env.NODE_ENV ?? "production",
       release:
-        vscode.extensions.getExtension("usmangurowa.kodo")?.packageJSON
-          ?.version,
+          vscode.extensions.getExtension("usmangurowa.turbo-template")?.packageJSON
+            ?.version,
     });
     sentryInitialized = true;
   }
@@ -58,9 +58,9 @@ export const initTelemetry = (context: vscode.ExtensionContext) => {
   // Listen for setting changes
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration("kodo.enableTelemetry")) {
+      if (e.affectsConfiguration("turbo.enableTelemetry")) {
         const newValue = vscode.workspace
-          .getConfiguration("kodo")
+          .getConfiguration("turbo")
           .get<boolean>("enableTelemetry", false);
 
         if (newValue && !enabled) {
@@ -73,7 +73,7 @@ export const initTelemetry = (context: vscode.ExtensionContext) => {
               dsn: sentryDsn,
               environment: process.env.NODE_ENV ?? "production",
               release:
-                vscode.extensions.getExtension("usmangurowa.kodo")?.packageJSON
+                vscode.extensions.getExtension("usmangurowa.turbo-template")?.packageJSON
                   ?.version,
             });
             sentryInitialized = true;
@@ -88,17 +88,17 @@ export const initTelemetry = (context: vscode.ExtensionContext) => {
             });
           }
 
-          console.log("[Kodo]: Telemetry enabled by user");
+          console.log("[Turbo]: Telemetry enabled by user");
         } else if (!newValue && enabled) {
           enabled = false;
           void shutdownTelemetry();
-          console.log("[Kodo]: Telemetry disabled by user");
+          console.log("[Turbo]: Telemetry disabled by user");
         }
       }
     }),
   );
 
-  console.log("[Kodo]: Telemetry initialized");
+  console.log("[Turbo]: Telemetry initialized");
 };
 
 /**
@@ -115,7 +115,7 @@ export const trackEvent = (
     ...properties,
     vscode_version: vscode.version,
     extension_version:
-      vscode.extensions.getExtension("usmangurowa.kodo")?.packageJSON
+      vscode.extensions.getExtension("usmangurowa.turbo-template")?.packageJSON
         ?.version ?? "unknown",
     platform: process.platform,
     machine_id: machineId,
@@ -173,7 +173,7 @@ export const identifyUser = (userId: string) => {
     posthogClient.alias({ distinctId: userId, alias: machineId });
   }
 
-  console.log("[Kodo]: User identified for telemetry");
+  console.log("[Turbo]: User identified for telemetry");
 };
 
 /**

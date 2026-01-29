@@ -129,7 +129,7 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
         },
       }),
       apiKey({
-        defaultPrefix: "kodo",
+        defaultPrefix: "turbo",
         rateLimit: {
           enabled: true,
           timeWindow: 60 * 1000, // 1 minute (matches Hono middleware)
@@ -142,8 +142,8 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
     trustedOrigins: [
       "expo://",
       "http://localhost:3000",
-      "https://kodohq.app",
-      "https://www.kodohq.app",
+      "https://turbo.app",
+      "https://www.turbo.app",
       options.baseUrl,
       options.productionUrl,
     ],

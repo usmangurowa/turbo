@@ -28,7 +28,7 @@ export const TransformationSection = () => {
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              Surveillance
+              Fragmented Setup
               {activeTab === "surveillance" && (
                 <motion.div
                   layoutId="active-tab"
@@ -45,7 +45,7 @@ export const TransformationSection = () => {
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              Support
+              Solid Foundation
               {activeTab === "support" && (
                 <motion.div
                   layoutId="active-tab"
@@ -67,7 +67,7 @@ export const TransformationSection = () => {
                   className="absolute inset-0 flex flex-col items-center justify-center"
                 >
                   <p className="text-muted-foreground text-2xl font-medium md:text-3xl">
-                    "Why were you idle for 20 minutes?"
+                    "Auth, DB, API, and UI all live in separate repos."
                   </p>
                   <p className="mt-4 text-sm tracking-widest text-red-500/70 uppercase">
                     The Old Way
@@ -83,10 +83,10 @@ export const TransformationSection = () => {
                   className="absolute inset-0 flex flex-col items-center justify-center"
                 >
                   <p className="text-foreground text-2xl font-medium md:text-3xl">
-                    "Great session. You've been focused for 2 hours."
+                    "Everything is wired. I can ship features today."
                   </p>
                   <p className="text-primary mt-4 text-sm tracking-widest uppercase">
-                    The Kodo Way
+                    The Turbo Way
                   </p>
                 </motion.div>
               )}

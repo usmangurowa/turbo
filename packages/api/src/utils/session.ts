@@ -1,17 +1,6 @@
-import { and, desc, eq } from "drizzle-orm";
+export type DbClient = unknown;
 
-import type { db as DbInstance } from "@turbo/db/client";
-import { generateSessionSummary } from "@turbo/ai";
-import { ANALYTICS_EVENTS } from "@turbo/analytics";
-import { trackServerEvent } from "@turbo/analytics/server";
-import { codingSession, heartbeat } from "@turbo/db/schema";
-import {
-  calculateLineChanges,
-  getMostFrequent,
-  SESSION_STATUS,
-} from "@turbo/shared";
-
-type DbClient = typeof DbInstance;
+/*
 
 /**
  * Session management utilities for the "Strava-like" session architecture.
@@ -132,7 +121,7 @@ export const assignSessionsToHeartbeats = async <T extends { timestamp: Date }>(
   }
 
   return sessionIds;
-};
+*/
 
 /**
  * Close a session by marking it as synced (stats computed, awaiting AI).

@@ -3,7 +3,7 @@
 
 ## Dual Integration: Sentry + PostHog
 
-The Kodo monorepo uses:
+The Turbo monorepo uses:
 - **Sentry**: Error tracking, performance monitoring, structured logging
 - **PostHog**: Product analytics, user tracking, event funnels
 
@@ -111,7 +111,7 @@ import { trackServerEvent } from "@turbo/analytics/server";
 trackServerEvent({
   distinctId: userId,
   event: ANALYTICS_EVENTS.SESSION_CLOSED,
-  properties: { duration: 1800, project: "kodo" },
+  properties: { duration: 1800, project: "turbo" },
 });
 ```
 

@@ -1,3 +1,21 @@
+import { describe, expect, it } from "vitest";
+
+import { completeStaleSessions } from "../domain/session-completion";
+
+describe("completeStaleSessions", () => {
+  it("returns empty stats in template", async () => {
+    const result = await completeStaleSessions();
+
+    expect(result).toEqual({
+      completed: 0,
+      deleted: 0,
+      failed: 0,
+    });
+  });
+});
+*/
+
+/*
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -147,7 +165,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_1",
           file: "test.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
         },
       ]);
@@ -170,7 +188,7 @@ describe("completeStaleSessionsTask", () => {
         startedAt: new Date(recentTime.getTime() - 60000),
         endedAt: recentTime,
         mainLanguage: "typescript",
-        mainProject: "kodo",
+        mainProject: "turbo",
         mainBranch: "main",
       };
 
@@ -181,7 +199,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_synced",
           file: "test.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
         },
       ]);
@@ -244,7 +262,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_ai",
           file: "auth.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
         },
       ]);
@@ -260,7 +278,7 @@ describe("completeStaleSessionsTask", () => {
         expect.objectContaining({
           files: ["auth.ts"],
           languages: ["typescript"],
-          project: "kodo",
+          project: "turbo",
         }),
       );
     });
@@ -285,7 +303,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_fail",
           file: "test.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
         },
       ]);
@@ -333,7 +351,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_stats",
           file: "test.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
           aiLineChanges: 10,
           humanLineChanges: 5,
@@ -342,7 +360,7 @@ describe("completeStaleSessionsTask", () => {
           sessionId: "sess_stats",
           file: "test2.ts",
           language: "typescript",
-          project: "kodo",
+          project: "turbo",
           branch: "main",
           aiLineChanges: -3,
           humanLineChanges: 0,

@@ -1,7 +1,7 @@
 /**
  * Metrics calculation utilities
  *
- * Shared between API (server-side) and VS Code extension (client-side).
+ * Shared between API (server-side) and a client app (client-side).
  * Uses wakatime's algorithm for calculating coding time.
  *
  * @see https://wakatime.com/faq#timeout
@@ -15,7 +15,7 @@ import {
 
 /**
  * Interface for heartbeats used in metrics calculation.
- * Supports both Date objects (API) and ISO strings (extension).
+ * Supports both Date objects (API) and ISO strings (client app).
  */
 export interface HeartbeatForMetrics {
   timestamp: Date | string;

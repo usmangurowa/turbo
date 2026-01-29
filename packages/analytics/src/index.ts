@@ -1,5 +1,5 @@
 /**
- * @turbo/analytics - Sentry error tracking integration for Kodo
+ * @turbo/analytics - Sentry error tracking integration for Turbo
  *
  * Exports:
  * - `@turbo/analytics` - Event constants and utils

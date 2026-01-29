@@ -1,15 +1,12 @@
-import { and, count, desc, eq, gte, inArray, lt, or } from "drizzle-orm";
 import { Hono } from "hono";
 
-import type { SessionContext } from "@turbo/ai";
-import type { Vibe, VibeStats } from "@turbo/shared";
-import { generateCoachMessage } from "@turbo/ai";
-import { CACHE_KEYS, cacheDelete, cacheGet, cacheSet } from "@turbo/db";
-import { codingSession, heartbeat, user, userSettings } from "@turbo/db/schema";
-import { calculateAllMetrics, determineVibe } from "@turbo/shared";
-
 import type { AppContext } from "../context";
-import { authMiddleware } from "../middleware/auth";
+
+const app = new Hono<AppContext>();
+
+export default app;
+
+/*
 
 /**
  * Cached pulse content structure.
@@ -274,7 +271,7 @@ const app = new Hono<AppContext>()
     const userId = session.user.id;
 
     // Find the latest session that involves "ongoing" or "synced" status
-    // Note: Kodo only allows one active session at a time per user logic
+    // Note: Turbo only allows one active session at a time per user logic
     const activeSession = await db.query.codingSession.findFirst({
       where: (codingSession, { and, eq, or }) =>
         and(
@@ -1019,13 +1016,4 @@ const app = new Hono<AppContext>()
     });
   });
 
-export default app;
-
-// Export cache invalidation helper for use from session completion
-export const invalidatePulseCache = async (
-  db: Parameters<typeof cacheDelete>[0],
-  userId: string,
-) => {
-  const cacheKey = CACHE_KEYS.pulse(userId);
-  await cacheDelete(db, cacheKey);
-};
+*/

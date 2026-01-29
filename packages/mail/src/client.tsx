@@ -24,7 +24,7 @@ export const resend = new Resend(RESEND_API_KEY ?? "test_key");
  * Default sender email address.
  * Override this in your application or per-email.
  */
-export const DEFAULT_FROM = "no-reply@kodohq.app";
+export const DEFAULT_FROM = "no-reply@turbo.app";
 
 export interface SendEmailOptions {
   /** Recipient email address(es) */
@@ -205,11 +205,11 @@ export const sendSupportEmail = async ({
   type,
   message,
   metadata,
-  to = "kodohq.app@gmail.com", // Default support email
+  to = "support@turbo.app", // Default support email
 }: SupportEmailProps & { to?: string }): Promise<SendEmailResult> =>
   sendEmail({
     to,
-    subject: `[Kodo] New ${type} from ${userEmail}`,
+    subject: `[Turbo] New ${type} from ${userEmail}`,
     template: SupportEmail({ userEmail, userId, type, message, metadata }),
     replyTo: userEmail,
   });

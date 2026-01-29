@@ -204,9 +204,9 @@ describe("SPEC: Session Logic", () => {
 
     it("should identify main language/project/branch", async () => {
       const mockHeartbeats = [
-        { language: "typescript", project: "kodo", branch: "main" },
-        { language: "typescript", project: "kodo", branch: "dev" },
-        { language: "rust", project: "kodo", branch: "main" },
+        { language: "typescript", project: "turbo", branch: "main" },
+        { language: "typescript", project: "turbo", branch: "dev" },
+        { language: "rust", project: "turbo", branch: "main" },
       ];
       // Mock Promise.all return (heartbeats then session)
       mockDb.where
@@ -219,7 +219,7 @@ describe("SPEC: Session Logic", () => {
 
       const updateCall = mockDb.set.mock.calls[0][0];
       expect(updateCall.mainLanguage).toBe("typescript"); // 2 vs 1
-      expect(updateCall.mainProject).toBe("kodo");
+      expect(updateCall.mainProject).toBe("turbo");
       expect(updateCall.mainBranch).toBe("main"); // 2 vs 1
     });
 
@@ -227,7 +227,7 @@ describe("SPEC: Session Logic", () => {
       const { generateSessionSummary } = await import("@turbo/ai");
 
       const mockHeartbeats = [
-        { file: "test.ts", language: "ts", project: "kodo" },
+        { file: "test.ts", language: "ts", project: "turbo" },
       ];
       mockDb.where
         .mockResolvedValueOnce(mockHeartbeats)
@@ -275,7 +275,7 @@ describe("SPEC: Session Logic", () => {
       );
 
       const mockHeartbeats = [
-        { file: "test.ts", language: "ts", project: "kodo" },
+        { file: "test.ts", language: "ts", project: "turbo" },
       ];
       mockDb.where
         .mockResolvedValueOnce(mockHeartbeats)

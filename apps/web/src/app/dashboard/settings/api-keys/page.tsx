@@ -1,126 +1,11 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import type { ApiKey } from "@/hooks/use-api-keys";
-import type { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
-import Image from "next/image";
-import { authClient } from "@/auth/client";
-import { GenerateApiKey } from "@/components/api-key";
-import { ApiKeysTable } from "@/components/api-keys-table";
-import { PageHeader } from "@/components/page-header";
-import { API_KEYS_QUERY_KEY, useApiKeys } from "@/hooks/use-api-keys";
-import { useSession } from "@/hooks/use-session";
-import {
-  Delete02Icon,
-  Key01Icon,
-  MoreHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@turbo/ui/alert-dialog";
-import { Badge } from "@turbo/ui/badge";
-import { Button } from "@turbo/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@turbo/ui/dropdown-menu";
-import { Icon } from "@turbo/ui/icon";
-import { Skeleton } from "@turbo/ui/skeleton";
-import { toast } from "@turbo/ui/toast";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@turbo/ui/tooltip";
-
-/**
- * Mapping of editor identifiers to their icon paths.
- * Only editors with available icons are included.
- */
-const EDITOR_ICONS: Record<string, { logo: string; name: string }> = {
-  vscode: { logo: "/editors/vscode.svg", name: "VS Code" },
-  cursor: { logo: "/editors/cursor.svg", name: "Cursor" },
-  antigravity: { logo: "/editors/antigravity.svg", name: "Antigravity" },
-  windsurf: { logo: "/editors/windsurf.svg", name: "Windsurf" },
+const ApiKeysPage = () => {
+  redirect("/dashboard");
 };
 
-const ActionsCell = ({ keyId }: { keyId: string }) => {
-  const queryClient = useQueryClient();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const deleteMutation = useMutation({
-    mutationFn: () => authClient.apiKey.delete({ keyId }),
-    onSuccess: () => {
-      toast.success("API key deleted");
-      void queryClient.invalidateQueries({ queryKey: API_KEYS_QUERY_KEY });
-      setIsDialogOpen(false);
-    },
-    onError: () => {
-      toast.error("Failed to delete API key");
-    },
-  });
-
-  return (
-    <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            disabled={deleteMutation.isPending}
-          >
-            <Icon icon={MoreHorizontalIcon} className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem className="text-destructive focus:text-destructive">
-              <Icon icon={Delete02Icon} className="mr-2 h-4 w-4" />
-              Delete
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. Any applications using this API key
-            will no longer be able to authenticate.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={deleteMutation.isPending}>
-            Cancel
-          </AlertDialogCancel>
-          <Button
-            variant="destructive"
-            onClick={() => deleteMutation.mutate()}
-            loading={deleteMutation.isPending}
-          >
-            Delete
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
-};
-
-const columns: ColumnDef<ApiKey>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <div className="bg-muted rounded-md p-2">
+export default ApiKeysPage;
+/*
           <Icon icon={Key01Icon} className="text-muted-foreground h-4 w-4" />
         </div>
         <span className="font-medium">
@@ -266,3 +151,4 @@ export default function ApiKeysPage() {
     </main>
   );
 }
+*/

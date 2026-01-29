@@ -1,98 +1,58 @@
-# Kodo Roadmap
+# Turbo Template Roadmap
 
-> **The Developer Beat** — Not just how long you coded — what you actually built.
+> **Turbo** — A full-stack starter for web, mobile, and API with auth + database wired up.
 
 ---
 
-## Phase 1: Nail the Solo Narrative *(Current Focus)*
+## Phase 1: Template Hardening *(Current Focus)*
 
 ### ✅ Already Built
-- [x] Passive heartbeat tracking (VS Code extension)
-- [x] Session-level AI summaries
-- [x] Multi-personality coaching (Hype, Wellness, Analyst, Strategist, PM)
-- [x] Privacy-first architecture (no code content, metadata only)
-- [x] Date range filtering and session feed
+- [x] Web app scaffold (Next.js)
+- [x] Mobile app scaffold (Expo)
+- [x] API scaffold (Hono)
+- [x] Auth setup (Better Auth)
+- [x] Database setup (Drizzle + Postgres)
 
 ### 🔨 Polish & Ship
-- [ ] **Landing page refresh** — Position as "The Developer Beat"
-- [ ] **Onboarding flow** — "What are you focusing on this week?" seed question
-- [ ] **Session cards** — Richer narrative: title, intensity sparkline, AI description
-- [ ] **Narrative-first dashboard** — Feed as default, charts as secondary "Insights" tab
-- [ ] **First-day dopamine** — Show session card after 30+ min block
+- [ ] **Replace sample copy** — Make all UI text generic and reusable
+- [ ] **Docs refresh** — Clear, minimal getting-started instructions
+- [ ] **Environment audit** — Ensure .env.example covers all required values
+- [ ] **Starter dashboard** — Placeholder widgets that are easy to replace
 
 ---
 
-## Phase 2: Shareable Artifacts
+## Phase 2: Developer Experience
 
-### 📤 Export & Share
-- [ ] **Weekly Wrapped** — Auto-generated image with narrative snippets
-- [ ] **Developer Beat cards** — Shareable cards for Twitter/LinkedIn
-- [ ] **Exportable standup lines** — Copy-paste ready summaries
-- [ ] **Discord/Slack integration** — Auto-post to #daily-standup
+### 🧰 Scaffolding
+- [ ] **CLI bootstrap** — One-command setup for new projects
+- [ ] **Sample data seed** — Optional seed script for local dev
+- [ ] **Common integrations** — Email, analytics, and storage templates
 
-### 📊 Insights Tab
-- [ ] Language breakdown
-- [ ] Flow streak visualization
-- [ ] Personal records (longest flow, streaks)
+### 🧪 Quality
+- [ ] **Basic test suite** — Minimal tests for auth + API endpoints
+- [ ] **CI checks** — Lint, typecheck, and tests preconfigured
 
 ---
 
-## Phase 3: Goals & Focus Mode
+## Phase 3: Starter Kits
 
-### 🎯 Intentional Tracking
-- [ ] **One-click Focus** — "Start Focus: Fix login bug"
-- [ ] **Focus completion summary** — Duration, files touched, AI summary
-- [ ] **Goals/Campaigns** — "2h Rust daily for 30 days"
-- [ ] **Anti-Jira constraints** — Backlog / Active / Shipped only, no subtasks
-
----
-
-## Phase 4: Multiplayer *(Validate First)*
-
-### 👥 Squads & Social
-- [ ] **Squads** — Cohort-based groups (not global leaderboards)
-- [ ] **Real-time presence** — See who's coding
-- [ ] **Kudos reactions** — 🔥 ⚡ 🦆 on session cards
-- [ ] **Squad challenges** — Weekly/monthly campaigns
-
-### 🛡️ Privacy Controls
-- [ ] **Sharing toggles** — Opt-in team visibility
-- [ ] **Stealth mode** — Full privacy option
-
----
-
-## Positioning Pillars
-
-### 1. Sessions & Stories (Not Charts)
-- Each session is a card with narrative context
-- AI-inferred titles and descriptions
-- Personal changelog, not a wall of graphs
-
-### 2. Self-Protection (Not Surveillance)
-- "Your data is for you, not your manager"
-- No screenshots, no code content
-- Wellness signals as cognitive health companion
-
-### 3. Multiplayer Vibes (Not Leaderboards)
-- Squads over global competition
-- Personal records over raw hours
-- Supportive, not anxiety-inducing
+### 📦 Optional Modules
+- [ ] **Landing page kit** — Replaceable marketing sections
+- [ ] **Account settings kit** — Profile + security settings
+- [ ] **Billing kit** — Optional Stripe integration template
 
 ---
 
 ## Anti-Goals
 
-- ❌ No task management (use Linear/Jira for that)
-- ❌ No manager dashboards
-- ❌ No screenshot surveillance
-- ❌ No "hours = productivity" framing
-- ❌ No invasive permissions
+- ❌ No product-specific features baked into the template
+- ❌ No vendor lock-in messaging
+- ❌ No tracking or analytics by default
 
 ---
 
-## Beachhead Audience
+## Target Audience
 
-**Indie hackers / Solo founders / OSS devs**
-- Care about narrative (what they shipped)
-- Care about identity and burnout
-- Active on Twitter, IndieHackers, Product Hunt, GitHub
+**Teams and founders who want a clean, production-ready starter**
+- Build fast without wrestling with auth and database setup
+- Replace UI and features without ripping out infrastructure

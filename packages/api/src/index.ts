@@ -12,16 +12,7 @@ import {
   secureHeadersMiddleware,
 } from "./middleware/security";
 import { timingMiddleware } from "./middleware/timing";
-import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
-import cronRouter from "./router/cron";
-import githubRouter from "./router/github";
-import heartbeatsRouter from "./router/heartbeats";
-import insightsRouter from "./router/insights";
-import metricsRouter from "./router/metrics";
-import sessionsRouter from "./router/sessions";
-import settingsRouter from "./router/settings";
-import supportRouter from "./router/support";
 
 /**
  * Options for creating the API app
@@ -48,16 +39,7 @@ export const createApp = (auth: Auth, options: CreateAppOptions = {}) => {
     .use("*", contextMiddleware(auth))
     .use("*", timingMiddleware)
     // Routes
-    .route("/apikeys", apiKeyRouter)
     .route("/auth", authRouter)
-    .route("/heartbeats", heartbeatsRouter)
-    .route("/insights", insightsRouter)
-    .route("/metrics", metricsRouter)
-    .route("/sessions", sessionsRouter)
-    .route("/github", githubRouter)
-    .route("/settings", settingsRouter)
-    .route("/cron", cronRouter)
-    .route("/support", supportRouter)
     // Health check (not rate limited in security config)
     .get("/health", (c) => c.text("OK"));
 

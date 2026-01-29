@@ -1,5 +1,9 @@
 "use client";
 
+export const SessionFilters = () => null;
+
+/*
+
 import type { DateRangePreset } from "@/hooks/use-date-range";
 import type { IconSvgElement } from "@hugeicons/react";
 import { useMemo } from "react";
@@ -102,111 +106,8 @@ export const SessionFilters = () => {
       : [...current, value];
 
     void setFilters({ [key]: newValues.length ? newValues : null });
-  };
+  "use client";
 
-  const handleReset = () => {
+  export const SessionFilters = () => null;
     void setFilters({ project: null, branch: null, action: null });
-  };
-
-  const activeCount =
-    filters.project.length + filters.branch.length + filters.action.length;
-
-  // Get current date range label
-  const currentDateLabel =
-    dateRanges.find((r) => r.preset === preset)?.title ?? "Today";
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 gap-2 border-dashed">
-          <HugeiconsIcon icon={FilterHorizontalIcon} className="size-4" />
-          {currentDateLabel}
-          {activeCount > 0 && (
-            <Badge
-              variant="secondary"
-              className="ml-1 h-5 shrink-0 rounded-full text-[10px]"
-            >
-              +{activeCount}
-            </Badge>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        {/* Date Range Section */}
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <HugeiconsIcon icon={Calendar03Icon} className="size-4" />
-            <span>Date Range</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="w-48">
-            <DropdownMenuRadioGroup
-              value={preset}
-              onValueChange={(v) => setDateRange(v as DateRangePreset)}
-            >
-              {dateRanges
-                .filter((r) => r.preset !== "custom")
-                .map((range) => (
-                  <DropdownMenuRadioItem
-                    key={range.preset}
-                    value={range.preset}
-                  >
-                    {range.title}
-                  </DropdownMenuRadioItem>
-                ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-
-        <DropdownMenuSeparator />
-
-        {/* Filter Items */}
-        {filterItems.map(({ key, label, icon, subItems }) => (
-          <DropdownMenuSub key={key}>
-            <DropdownMenuSubTrigger>
-              <HugeiconsIcon icon={icon} className="size-4" />
-              <span>{label}</span>
-              {filters[key].length > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 h-5 shrink-0 rounded-full text-[10px]"
-                >
-                  {filters[key].length}
-                </Badge>
-              )}
-            </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="max-h-[300px] w-56 overflow-y-auto">
-              {subItems.length > 0 ? (
-                subItems.map((option) => (
-                  <DropdownMenuCheckboxItem
-                    key={option}
-                    checked={filters[key].includes(option)}
-                    onCheckedChange={() => toggleFilter(key, option)}
-                    title={option}
-                  >
-                    <span className="truncate">{option}</span>
-                  </DropdownMenuCheckboxItem>
-                ))
-              ) : (
-                <div className="text-muted-foreground p-2 text-center text-xs">
-                  No {label.toLowerCase()}s available
-                </div>
-              )}
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
-        ))}
-
-        {activeCount > 0 && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onSelect={handleReset}
-              className="justify-center text-center font-medium"
-            >
-              Reset Filters
-            </DropdownMenuItem>
-          </>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
+*/

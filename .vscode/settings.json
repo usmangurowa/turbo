@@ -47,7 +47,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "Hugeicons",
-    "Kodo",
     "nativewind",
     "posthog",
     "Pressable",

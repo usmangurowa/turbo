@@ -86,7 +86,7 @@ const sessionSummarySchema = z.object({
  *   files: ["auth.ts", "login.tsx"],
  *   languages: ["TypeScript"],
  *   branch: "fix/login-bug",
- *   project: "kodo",
+ *   project: "turbo",
  *   durationMinutes: 45,
  * });
  *

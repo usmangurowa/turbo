@@ -102,7 +102,7 @@ export function FeedbackDialog({
         <DialogHeader>
           <DialogTitle>Send Feedback</DialogTitle>
           <DialogDescription>
-            Help us improve Kodo. Report a bug, suggest a feature, or just say
+            Help us improve Turbo. Report a bug, suggest a feature, or just say
             hi.
           </DialogDescription>
         </DialogHeader>

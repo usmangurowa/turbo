@@ -17,21 +17,21 @@ const jakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kodohq.app"),
-  title: "Kodo - Every Session Tells a Story",
+  metadataBase: new URL("https://turbo.app"),
+  title: "Turbo Template - Build Fast with Auth + DB",
   description:
-    "Track your coding journey with meaningful context—not just hours. Smart session tracking that understands your work. Privacy-first.",
+    "A full-stack starter with Next.js, Expo, Hono, Better Auth, and Drizzle. Replace the UI and ship your product faster.",
   openGraph: {
-    title: "Kodo - Every Session Tells a Story",
+    title: "Turbo Template - Build Fast with Auth + DB",
     description:
-      "Track your coding journey with meaningful context—not just hours. Smart session tracking that understands your work. Privacy-first.",
-    url: "https://kodohq.app",
-    siteName: "Kodo",
+      "A full-stack starter with Next.js, Expo, Hono, Better Auth, and Drizzle. Replace the UI and ship your product faster.",
+    url: "https://turbo.app",
+    siteName: "Turbo",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@kodoapp",
-    creator: "@kodoapp",
+    site: "@turbo",
+    creator: "@turbo",
   },
 };
 

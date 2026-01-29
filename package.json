@@ -29,12 +29,7 @@
     "check:fix": "pnpm format:fix && pnpm lint:fix && pnpm typecheck",
     "ui-add": "turbo run ui-add",
     "android": "expo run:android",
-    "ios": "expo run:ios",
-    "package": "pnpm --filter kodo package",
-    "release": "pnpm --filter kodo release",
-    "release:patch": "pnpm --filter kodo release:patch",
-    "release:minor": "pnpm --filter kodo release:minor",
-    "release:major": "pnpm --filter kodo release:major"
+    "ios": "expo run:ios"
   },
   "devDependencies": {
     "@turbo/gen": "^2.5.8",

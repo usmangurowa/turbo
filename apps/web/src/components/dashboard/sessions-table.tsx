@@ -1,5 +1,9 @@
 "use client";
 
+export const SessionsTable = () => null;
+
+/*
+
 import type { ApiCodingSession } from "@/hooks/use-get-sessions";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
@@ -82,81 +86,9 @@ const columns: ColumnDef<ApiCodingSession>[] = [
 
       return (
         <Sparkline
-          data={row.original.activity}
-          width={80}
-          height={24}
-          className="text-primary"
-        />
-      );
-    },
-  },
-  {
-    accessorKey: "mainProject",
-    header: "Project",
-    cell: ({ row }) => {
-      if (!row.original.mainProject) {
-        return <span className="text-muted-foreground text-xs">-</span>;
-      }
+          "use client";
 
-      return (
-        <div className="flex items-center gap-1.5 text-sm">
-          <HugeiconsIcon
-            icon={FolderOpenIcon}
-            className="text-muted-foreground size-4"
-          />
-          <span className="max-w-[200px] truncate">
-            {row.original.mainProject}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "mainBranch",
-    header: "Branch",
-    cell: ({ row }) => {
-      if (!row.original.mainBranch) {
-        return <span className="text-muted-foreground text-xs">-</span>;
-      }
-
-      return (
-        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-          <HugeiconsIcon icon={GitBranchIcon} className="size-4" />
-          <span className="max-w-[150px] truncate">
-            {row.original.mainBranch}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "duration",
-    header: "Duration",
-    cell: ({ row }) => {
-      const durationSeconds = Math.floor(
-        (new Date(row.original.endedAt).getTime() -
-          new Date(row.original.startedAt).getTime()) /
-          1000,
-      );
-
-      return (
-        <div className="flex items-center gap-1.5 text-xs">
-          <HugeiconsIcon
-            icon={Clock01Icon}
-            className="text-muted-foreground size-4"
-          />
-          <span className="font-medium">
-            {formatCodingTime(durationSeconds)}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "stats",
-    header: "Stats",
-    cell: ({ row }) => {
-      const actionTag = row.original.actionTag
+          export const SessionsTable = () => null;
         ? actionTagConfig[row.original.actionTag]
         : null;
 
@@ -355,3 +287,4 @@ export const SessionsTable = () => {
     </div>
   );
 };
+*/

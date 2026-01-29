@@ -1,13 +1,14 @@
-import { queue, task } from "@trigger.dev/sdk/v3";
-import { eq } from "drizzle-orm";
+export interface GenerateSessionSummaryPayload {
+  sessionId: string;
+  userId: string;
+}
 
-import type { SessionSummaryInput } from "@turbo/ai";
-import { generateSessionSummary } from "@turbo/ai";
-import { ANALYTICS_EVENTS } from "@turbo/analytics";
-import { trackServerEvent } from "@turbo/analytics/server";
-import { db } from "@turbo/db/client";
-import { codingSession } from "@turbo/db/schema";
-import { SESSION_STATUS } from "@turbo/shared";
+export const generateSessionSummaryTask = {
+  id: "generate-session-summary",
+  run: async (_payload: GenerateSessionSummaryPayload) => undefined,
+};
+
+/*
 
 /**
  * Queue for AI operations with strict concurrency to avoid rate limits.
@@ -73,3 +74,4 @@ export const generateSessionSummaryTask = task({
     };
   },
 });
+*/

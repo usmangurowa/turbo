@@ -1,9 +1,7 @@
-/**
- * Custom styles for driver.js tour popover
- * Matches Kodo design system with dark mode support
+/*
+ * Matches Turbo design system with dark mode support
  */
-
-.kodo-tour-popover {
+.turbo-tour-popover {
   --driverjs-bg: hsl(var(--popover));
   --driverjs-text: hsl(var(--popover-foreground));
   --driverjs-highlight: hsl(var(--primary));
@@ -17,25 +15,25 @@
     0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
 }
 
-.kodo-tour-popover .driver-popover-title {
+.turbo-tour-popover .driver-popover-title {
   font-size: 1rem !important;
   font-weight: 600 !important;
   color: var(--driverjs-text) !important;
 }
 
-.kodo-tour-popover .driver-popover-description {
+.turbo-tour-popover .driver-popover-description {
   font-size: 0.875rem !important;
   color: hsl(var(--muted-foreground)) !important;
   line-height: 1.5 !important;
 }
 
-.kodo-tour-popover .driver-popover-progress-text {
+.turbo-tour-popover .driver-popover-progress-text {
   font-size: 0.75rem !important;
   color: hsl(var(--muted-foreground)) !important;
 }
 
-.kodo-tour-popover .driver-popover-prev-btn,
-.kodo-tour-popover .driver-popover-next-btn {
+.turbo-tour-popover .driver-popover-prev-btn,
+.turbo-tour-popover .driver-popover-next-btn {
   font-size: 0.875rem !important;
   font-weight: 500 !important;
   padding: 0.5rem 1rem !important;
@@ -43,31 +41,31 @@
   transition: all 0.2s !important;
 }
 
-.kodo-tour-popover .driver-popover-prev-btn {
+.turbo-tour-popover .driver-popover-prev-btn {
   background-color: transparent !important;
   color: var(--driverjs-text) !important;
   border: 1px solid hsl(var(--border)) !important;
 }
 
-.kodo-tour-popover .driver-popover-prev-btn:hover {
+.turbo-tour-popover .driver-popover-prev-btn:hover {
   background-color: hsl(var(--accent)) !important;
 }
 
-.kodo-tour-popover .driver-popover-next-btn {
+.turbo-tour-popover .driver-popover-next-btn {
   background-color: hsl(var(--primary)) !important;
   color: hsl(var(--primary-foreground)) !important;
   border: none !important;
 }
 
-.kodo-tour-popover .driver-popover-next-btn:hover {
+.turbo-tour-popover .driver-popover-next-btn:hover {
   background-color: hsl(var(--primary) / 0.9) !important;
 }
 
-.kodo-tour-popover .driver-popover-close-btn {
+.turbo-tour-popover .driver-popover-close-btn {
   color: hsl(var(--muted-foreground)) !important;
 }
 
-.kodo-tour-popover .driver-popover-close-btn:hover {
+.turbo-tour-popover .driver-popover-close-btn:hover {
   color: var(--driverjs-text) !important;
 }
 

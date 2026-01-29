@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 
 // Must match the cookie name in proxy.ts
-const REDIRECT_PREFERENCE_COOKIE = "kodo-redirect-to-dashboard";
+const REDIRECT_PREFERENCE_COOKIE = "turbo-redirect-to-dashboard";
 
 /**
  * Local preferences that are NOT synced to the server.

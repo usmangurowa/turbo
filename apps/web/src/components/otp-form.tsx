@@ -28,7 +28,7 @@ import {
 import { toast } from "@turbo/ui/toast";
 import { verifyEmailSchema } from "@turbo/validators";
 
-import { KodoLogo } from "./kodo-logo";
+import { TurboLogo } from "./turbo-logo";
 
 const RESEND_COOLDOWN_SECONDS = 30;
 
@@ -130,7 +130,7 @@ export const OTPForm = ({
               className="mb-5 flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <KodoLogo />
+                <TurboLogo />
               </div>
               <span className="sr-only">Turbo</span>
             </Link>

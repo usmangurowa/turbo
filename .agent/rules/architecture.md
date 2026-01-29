@@ -10,7 +10,6 @@ turbo/
 ├── apps/           # Deployable applications
 │   ├── web/        # Next.js web app (@turbo/web)
 │   ├── mobile/     # Expo React Native app (@turbo/mobile)
-│   └── vscode/     # VS Code extension (kodo)
 ├── packages/       # Shared internal packages
 │   ├── analytics/  # PostHog analytics wrapper (@turbo/analytics)
 │   ├── api/        # Hono API routes (@turbo/api)

@@ -100,7 +100,7 @@ describe("API: POST /heartbeats", () => {
     const mockUser = {
       userId: "user_123",
       id: "apikey_1",
-      key: "hashed_kodo_key",
+      key: "hashed_turbo_key",
     };
     // This is brittle because 'limit' is used for many things.
     // Ideally use dependency injection or more specific mocks.
@@ -132,7 +132,7 @@ describe("API: POST /heartbeats", () => {
     const res = await app.request("/heartbeats", {
       method: "POST",
       headers: {
-        Authorization: "Bearer kodo_test_key",
+        Authorization: "Bearer turbo_test_key",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),

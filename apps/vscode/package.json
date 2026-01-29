@@ -1,7 +1,7 @@
 {
-  "name": "kodo",
-  "displayName": "Kodo",
-  "description": "Every Session Tells a Story - Track your coding journey with meaningful context. Smart session tracking that understands your work.",
+  "name": "turbo-template",
+  "displayName": "Turbo",
+  "description": "Template extension for connected developer workflows. Replace endpoints and build your own features.",
   "version": "0.0.27",
   "private": true,
   "publisher": "usmangurowa",
@@ -9,7 +9,7 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/usmangurowa/kodo-hq"
+    "url": "https://github.com/usmangurowa/turbo-kamp"
   },
   "engines": {
     "vscode": "^1.85.0"
@@ -24,35 +24,35 @@
   "contributes": {
     "commands": [
       {
-        "command": "kodo.showStatus",
-        "title": "Kodo: Show Status"
+        "command": "turbo.showStatus",
+        "title": "Turbo: Show Status"
       },
       {
-        "command": "kodo.togglePrivacy",
-        "title": "Kodo: Toggle Privacy Mode"
+        "command": "turbo.togglePrivacy",
+        "title": "Turbo: Toggle Privacy Mode"
       },
       {
-        "command": "kodo.setApiKey",
-        "title": "Kodo: Set API Key"
+        "command": "turbo.setApiKey",
+        "title": "Turbo: Set API Key"
       },
       {
-        "command": "kodo.clearApiKey",
-        "title": "Kodo: Clear API Key"
+        "command": "turbo.clearApiKey",
+        "title": "Turbo: Clear API Key"
       },
       {
-        "command": "kodo.syncSettings",
-        "title": "Kodo: Sync Settings"
+        "command": "turbo.syncSettings",
+        "title": "Turbo: Sync Settings"
       }
     ],
     "configuration": {
-      "title": "Kodo",
+      "title": "Turbo",
       "properties": {
-        "kodo.enabled": {
+        "turbo.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable or disable Kodo tracking"
+          "description": "Enable or disable Turbo tracking"
         },
-        "kodo.privacyMode": {
+        "turbo.privacyMode": {
           "type": "string",
           "enum": [
             "normal",
@@ -65,30 +65,30 @@
           ],
           "description": "Privacy mode for tracking"
         },
-        "kodo.breakReminderMinutes": {
+        "turbo.breakReminderMinutes": {
           "type": "number",
           "default": 90,
           "minimum": 0,
           "description": "Break reminder interval in minutes (0 to disable)"
         },
-        "kodo.sessionTimeoutMinutes": {
+        "turbo.sessionTimeoutMinutes": {
           "type": "number",
           "default": 15,
           "minimum": 1,
           "maximum": 30,
           "description": "Session timeout in minutes. Gaps shorter than this count as coding time. Longer gaps start a new session."
         },
-        "kodo.enableTelemetry": {
+        "turbo.enableTelemetry": {
           "type": "boolean",
           "default": false,
           "description": "Enable anonymous usage analytics"
         },
-        "kodo.captureSymbols": {
+        "turbo.captureSymbols": {
           "type": "boolean",
           "default": false,
           "description": "Capture function/class names for AI summaries"
         },
-        "kodo.captureCommits": {
+        "turbo.captureCommits": {
           "type": "boolean",
           "default": true,
           "description": "Track Git commits for session context and AI summaries"

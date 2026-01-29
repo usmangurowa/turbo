@@ -118,9 +118,9 @@ export const GenerateApiKey = ({ onKeyGenerated }: GenerateApiKeyProps) => {
     <div className="bg-card border-border rounded-lg border p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-semibold">API Key for VS Code Extension</h3>
+          <h3 className="font-semibold">API Key for the Turbo Extension</h3>
           <p className="text-muted-foreground text-sm">
-            Generate a key to connect the Kodo extension
+            Generate a key to connect the Turbo extension
           </p>
         </div>
         <Button onClick={handleGenerate} disabled={isGenerating}>

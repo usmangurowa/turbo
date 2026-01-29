@@ -46,7 +46,7 @@ const DEFAULT_SETTINGS: SettingsResponse = userSettingsSchema.parse({});
 const mockApiKeyUser = {
   userId: "user_123",
   id: "apikey_1",
-  key: "hashed_kodo_key",
+  key: "hashed_turbo_key",
 };
 
 // Mock session user
@@ -109,7 +109,7 @@ describe("API: Settings Router", () => {
       const res = await app.request("/settings", {
         method: "GET",
         headers: {
-          Authorization: "Bearer kodo_test_key",
+          Authorization: "Bearer turbo_test_key",
         },
       });
 
@@ -140,7 +140,7 @@ describe("API: Settings Router", () => {
       const res = await app.request("/settings", {
         method: "GET",
         headers: {
-          Authorization: "Bearer kodo_test_key",
+          Authorization: "Bearer turbo_test_key",
         },
       });
 
@@ -192,7 +192,7 @@ describe("API: Settings Router", () => {
       const res = await app.request("/settings", {
         method: "PUT",
         headers: {
-          Authorization: "Bearer kodo_test_key",
+          Authorization: "Bearer turbo_test_key",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ enabled: false }),
@@ -211,7 +211,7 @@ describe("API: Settings Router", () => {
       const res = await app.request("/settings", {
         method: "PUT",
         headers: {
-          Authorization: "Bearer kodo_test_key",
+          Authorization: "Bearer turbo_test_key",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ privacyMode: "invalid_mode" }),
@@ -239,7 +239,7 @@ describe("API: Settings Router", () => {
       const res = await app.request("/settings", {
         method: "PUT",
         headers: {
-          Authorization: "Bearer kodo_test_key",
+          Authorization: "Bearer turbo_test_key",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ breakReminderMinutes: 120 }),

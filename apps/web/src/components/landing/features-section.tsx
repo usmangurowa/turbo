@@ -18,34 +18,33 @@ import { Icon } from "@turbo/ui/icon";
 
 const PILLARS = [
   {
-    id: "context",
-    title: "Meaningful Context",
-    subtitle: "AI-POWERED",
-    description:
-      "Smart sessions that understand your code, not just your time.",
+    id: "auth",
+    title: "Auth Ready",
+    subtitle: "SECURE",
+    description: "Better Auth is wired for web and API out of the box.",
     icon: Message01Icon,
     visual: ContextVisual,
   },
   {
-    id: "wellness",
-    title: "Sustainable Wellness",
-    subtitle: "HEALTH-FIRST",
-    description: "Proactive break alerts and flow state protection.",
+    id: "database",
+    title: "Database Ready",
+    subtitle: "TYPE-SAFE",
+    description: "Drizzle + Postgres with shared schemas and validators.",
     icon: Activity02Icon,
     visual: WellnessVisual,
   },
   {
-    id: "squad",
-    title: "Squad Presence",
-    subtitle: "REAL-TIME",
-    description: "Feel the pulse of your team without the interruption.",
+    id: "experience",
+    title: "Full-Stack Parity",
+    subtitle: "CONSISTENT",
+    description: "Web, mobile, and API share types, UI, and tooling.",
     icon: UserGroupIcon,
     visual: SquadVisual,
   },
 ];
 
 export const FeaturesSection = () => {
-  const [activeId, setActiveId] = useState<string | null>("wellness");
+  const [activeId, setActiveId] = useState<string | null>("database");
 
   return (
     <section className="py-16 lg:py-24">

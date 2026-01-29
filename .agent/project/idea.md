@@ -1,4 +1,4 @@
-# Kodo - The Developer Beat
+# Turbo - The Developer Beat
 
 > **Tagline:** "Strava for Coders"
 >
@@ -23,11 +23,11 @@ Existing tools like wakatime answer the wrong question. They ask, _"Did you work
 
 ## The Solution
 
-**Kodo is not a time tracker — it's a Developer Lifecycle Platform.**
+**Turbo is not a time tracker — it's a Developer Lifecycle Platform.**
 
 We shift the paradigm from **Monitoring** → **Recognition**.
 
-| Old Paradigm | Kodo Approach |
+| Old Paradigm | Turbo Approach |
 |--------------|---------------|
 | Hours | **Sessions** — meaningful blocks that tell a story |
 | Isolation | **Squads** — real-time presence makes coding multiplayer |
@@ -77,7 +77,7 @@ _The primary dashboard — designed to be addictive and supportive._
 
 - **Shareable Assets**
   - "Spotify Wrapped" style images for social media
-  - _"I shipped 40 commits this week on Kodo."_
+  - _"I shipped 40 commits this week on Turbo."_
 
 ---
 
@@ -174,7 +174,7 @@ Users
 ## Privacy Principles
 
 > [!IMPORTANT]
-> Kodo is **privacy-first by design**.
+> Turbo is **privacy-first by design**.
 
 1. **Never read code content** — only metadata (filenames, languages, branches)
 2. **User-controlled granularity** — Full Metadata vs Stealth Mode
@@ -197,7 +197,7 @@ Users
 
 ## Competitive Positioning
 
-| Feature | wakatime | RescueTime | Kodo |
+| Feature | wakatime | RescueTime | Turbo |
 |---------|----------|------------|------|
 | Time Tracking | ✅ | ✅ | ✅ |
 | Social Feed | ❌ | ❌ | ✅ |
@@ -211,7 +211,7 @@ Users
 
 ## The Vision
 
-Kodo transforms coding from a solitary, often unhealthy grind into a **recognized, protected, and celebrated craft**.
+Turbo transforms coding from a solitary, often unhealthy grind into a **recognized, protected, and celebrated craft**.
 
 Every developer deserves to:
 - **Be seen** for their effort
@@ -219,4 +219,4 @@ Every developer deserves to:
 - **Be connected** to their community
 - **Be proud** of their journey
 
-**Kodo makes the invisible visible.** 🎯
+**Turbo makes the invisible visible.** 🎯

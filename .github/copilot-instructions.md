@@ -1,19 +1,19 @@
-# Kodo Copilot Instructions
+# Turbo Template Copilot Instructions
 
-> **Kodo** — "The Developer Beat" — A social, wellness-focused developer identity platform. "Strava for Coders."
+> **Turbo** — A full-stack template repository with web, mobile, API, auth, and database scaffolding.
 
-This document provides GitHub Copilot with context about the Kodo codebase to generate consistent, high-quality code.
+This document provides GitHub Copilot with context about the Turbo template codebase to generate consistent, high-quality code.
 
 ---
 
 ## Project Overview
 
-Kodo shifts the narrative from "Did you work enough?" to "Look what you achieved" by focusing on:
+Turbo is designed to help teams start new products quickly by providing:
 
-- **Sessions over Hours**: Like a run on Strava, coding sessions tell a story
-- **Squads over Isolation**: Real-time presence makes remote coding feel multiplayer
-- **Wellness over Data**: Protects users from burnout (Cadence alerts, Night Owl warnings)
-- **Privacy-First**: Uses AI on metadata to infer context without reading code
+- **Auth out of the box**: Better Auth wired into web and API
+- **Database ready**: Drizzle ORM with Postgres
+- **Full-stack parity**: Web, mobile, and API all share types and validators
+- **Composable UI**: Shadcn/UI-based component library
 
 ---
 
@@ -24,7 +24,6 @@ turbo/
 ├── apps/
 │   ├── web/        # Next.js 16 web app (@turbo/web)
 │   ├── mobile/     # Expo 54 React Native app (@turbo/mobile)
-│   └── vscode/     # VS Code extension (kodo)
 ├── packages/
 │   ├── analytics/  # PostHog wrapper (@turbo/analytics)
 │   ├── api/        # Hono API routes (@turbo/api)
@@ -242,7 +241,7 @@ Tests should be derived from **requirements and specifications**, not from exami
 |----------|--------------|
 | Web (Next.js) | `posthog.capture()` via `posthog-js` |
 | Mobile (Expo) | `usePostHog()` from `posthog-react-native` |
-| VS Code | `trackEvent()` from `./telemetry.ts` (opt-in via `kodo.enableTelemetry`) |
+| VS Code | `trackEvent()` from `./telemetry.ts` (opt-in via `turbo.enableTelemetry`) |
 | API | `trackApiEvent()` from `middleware/analytics.ts` |
 
 ### What to Track
@@ -258,8 +257,8 @@ Tests should be derived from **requirements and specifications**, not from exami
 ```typescript
 import { trackApiEvent } from "../middleware/analytics";
 
-trackApiEvent(userId, ANALYTICS_EVENTS.API_KEY_CREATED, { 
-  source: "dashboard" 
+trackApiEvent(userId, ANALYTICS_EVENTS.API_KEY_CREATED, {
+  source: "dashboard",
 });
 ```
 
@@ -362,7 +361,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
 feat(api): add heartbeat batch sync endpoint
-fix(vscode): resolve offline queue persistence issue
+fix(web): resolve offline queue persistence issue
 docs(readme): update installation instructions
 refactor(db): migrate to Drizzle schema v2
 ```

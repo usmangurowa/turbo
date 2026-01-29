@@ -15,12 +15,14 @@ export const ProblemSection = () => {
             className="text-4xl leading-[1.1] font-bold tracking-tight md:text-6xl lg:text-7xl"
           >
             <span className="text-muted-foreground block">
-              You create value.
+              You have an idea.
             </span>
             <span className="text-muted-foreground block">
-              But traditional tools
+              Boilerplate slows you down.
             </span>
-            <span className="text-foreground block">only count hours.</span>
+            <span className="text-foreground block">
+              Turbo removes the friction.
+            </span>
           </motion.h2>
 
           <motion.div
@@ -31,8 +33,9 @@ export const ProblemSection = () => {
             className="flex flex-col items-center gap-8"
           >
             <p className="text-muted-foreground max-w-xl text-lg md:text-xl">
-              Burnout is invisible. Context is lost. <br />
-              It&apos;s time for a metric that matters.
+              Auth, database, and API wiring shouldn&apos;t be a multi-week
+              distraction. Start from a production-ready baseline and build what
+              matters.
             </p>
           </motion.div>
         </div>
