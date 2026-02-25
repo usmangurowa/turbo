@@ -2,8 +2,6 @@
  * General utility functions used across apps and packages.
  */
 
-import { formatDuration, intervalToDuration } from "date-fns";
-
 /**
  * Get the most frequent item from an array.
  * Returns undefined if the array is empty.
@@ -32,107 +30,6 @@ export const getMostFrequent = <T>(arr: T[]): T | undefined => {
   }
 
   return mostFrequent;
-};
-
-/**
- * Input type for line change calculation.
- */
-export interface HeartbeatLineChanges {
-  aiLineChanges?: number | null;
-  humanLineChanges?: number | null;
-}
-
-/**
- * Output type for line change calculation.
- */
-export interface LineChangeStats {
-  linesAdded: number;
-  linesDeleted: number;
-}
-
-/**
- * Calculate total lines added and deleted from heartbeat line changes.
- * Positive values = lines added, negative values = lines deleted.
- *
- * @example
- * ```ts
- * calculateLineChanges([
- *   { aiLineChanges: 10, humanLineChanges: 5 },  // +15
- *   { aiLineChanges: -5, humanLineChanges: 0 },  // -5
- * ]);
- * // { linesAdded: 15, linesDeleted: 5 }
- * ```
- */
-export const calculateLineChanges = (
-  heartbeats: HeartbeatLineChanges[],
-): LineChangeStats => {
-  let linesAdded = 0;
-  let linesDeleted = 0;
-
-  for (const hb of heartbeats) {
-    const aiChanges = hb.aiLineChanges ?? 0;
-    const humanChanges = hb.humanLineChanges ?? 0;
-    const totalChanges = aiChanges + humanChanges;
-
-    if (totalChanges > 0) {
-      linesAdded += totalChanges;
-    } else {
-      linesDeleted += Math.abs(totalChanges);
-    }
-  }
-
-  return { linesAdded, linesDeleted };
-};
-
-/**
- * Format seconds as a human-readable duration string.
- * Uses date-fns for proper pluralization.
- *
- * @example
- * ```ts
- * formatCodingTime(3661); // "1 hr 1 min"
- * formatCodingTime(7200); // "2 hrs"
- * formatCodingTime(45);   // "< 1 min"
- * ```
- */
-export const formatCodingTime = (seconds: number): string => {
-  // Less than 1 minute
-  if (seconds < 60) {
-    return "< 1 min";
-  }
-
-  const duration = intervalToDuration({ start: 0, end: seconds * 1000 });
-
-  return (
-    formatDuration(duration, {
-      format: ["hours", "minutes"],
-      locale: {
-        formatDistance: (token, count) => {
-          switch (token) {
-            case "xHours":
-              return `${count} ${count === 1 ? "hr" : "hrs"}`;
-            case "xMinutes":
-              return `${count} ${count === 1 ? "min" : "mins"}`;
-            default:
-              return "";
-          }
-        },
-      },
-    }) || "< 1 min"
-  );
-};
-
-/**
- * Format minutes as a human-readable duration string.
- *
- * @example
- * ```ts
- * formatCodingTimeMinutes(90); // "1 hr 30 mins"
- * formatCodingTimeMinutes(120); // "2 hrs"
- * ```
- */
-export const formatCodingTimeMinutes = (minutes: number): string => {
-  return formatCodingTime(minutes * 60);
 };
 
 /**
