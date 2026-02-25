@@ -43,18 +43,3 @@ export const cacheDelete = (_db: DbClient, _key: string): Promise<void> => {
 export const cacheCleanup = (_db: DbClient): Promise<number> => {
   return Promise.resolve(0);
 };
-
-// Cache key helpers (kept for interface compatibility)
-export const CACHE_KEYS = {
-  pulse: (userId: string) => `pulse:${userId}`,
-  vibeHistory: (userId: string) => `vibe-history:${userId}`,
-  standup: (userId: string, dateRangeLabel: string, dateHash: string) =>
-    `standup:${userId}:${dateRangeLabel}:${dateHash}`,
-  standupUsage: (userId: string, date: string) =>
-    `usage:standup:${userId}:${date}`,
-} as const;
-
-// Default TTLs
-export const CACHE_TTL = {
-  PULSE: 15 * 60 * 1000, // 15 minutes
-} as const;

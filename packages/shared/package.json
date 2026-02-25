@@ -6,10 +6,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
-    },
-    "./constants": {
-      "types": "./dist/constants.d.ts",
-      "default": "./src/constants.ts"
     }
   },
   "scripts": {
@@ -30,8 +26,5 @@
     "typescript": "catalog:",
     "vitest": "4.0.15"
   },
-  "prettier": "@turbo/prettier-config",
-  "dependencies": {
-    "date-fns": "^4.1.0"
-  }
+  "prettier": "@turbo/prettier-config"
 }
