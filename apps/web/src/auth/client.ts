@@ -12,8 +12,6 @@ export const authClient = createAuthClient({
     inferAdditionalFields({
       user: {
         username: { type: "string", required: false },
-        githubUsername: { type: "string", required: false },
-        githubProfileUrl: { type: "string", required: false },
       },
     }),
   ],

@@ -22,11 +22,9 @@
   "dependencies": {
     "@date-fns/tz": "1.4.1",
     "@hono/zod-validator": "^0.7.5",
-    "@turbo/ai": "workspace:*",
     "@turbo/analytics": "workspace:^",
     "@turbo/auth": "workspace:*",
     "@turbo/db": "workspace:*",
-    "@turbo/jobs": "workspace:*",
     "@turbo/mail": "workspace:^",
     "@turbo/shared": "workspace:*",
     "@turbo/validators": "workspace:*",

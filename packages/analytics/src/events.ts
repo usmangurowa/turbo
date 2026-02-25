@@ -10,10 +10,6 @@ export const ANALYTICS_EVENTS = {
   USER_SIGNED_OUT: "user signed out",
   USER_ONBOARDING_COMPLETED: "user onboarding completed",
 
-  // API Key events
-  API_KEY_CREATED: "api key created",
-  API_KEY_REVOKED: "api key revoked",
-
   // Feature usage
   FEATURE_USED: "feature used",
 

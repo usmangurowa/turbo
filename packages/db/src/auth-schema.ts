@@ -20,8 +20,6 @@ export const user = pgTable("user", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   username: text("username").unique(),
-  githubUsername: text("github_username"),
-  githubProfileUrl: text("github_profile_url"),
 });
 
 export const session = pgTable(

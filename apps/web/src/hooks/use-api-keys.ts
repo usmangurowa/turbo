@@ -10,7 +10,6 @@ export interface ApiKey {
   enabled?: boolean | null;
   lastRequest?: string | null;
   createdAt?: string;
-  connectedEditors: string[];
 }
 
 interface ApiKeysResponse {

@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@trigger.dev/sdk": "^4.3.1",
-    "@turbo/ai": "workspace:*",
     "@turbo/analytics": "workspace:*",
     "@turbo/db": "workspace:*",
     "@turbo/shared": "workspace:*"

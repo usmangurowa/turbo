@@ -64,17 +64,6 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
         (socialProviders as Record<SupportedProvider, unknown>)[provider] = {
           ...baseConfig,
           scope: ["repo", "user"],
-          mapProfileToUser: (profile: {
-            login?: string;
-            avatar_url?: string;
-            name?: string;
-            html_url?: string;
-          }) => ({
-            githubUsername: profile.login,
-            githubProfileUrl: profile.html_url,
-            image: profile.avatar_url,
-            name: profile.name ?? profile.login,
-          }),
         };
       } else {
         (socialProviders as Record<SupportedProvider, unknown>)[provider] =
@@ -104,14 +93,6 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
         username: {
           type: "string",
           unique: true,
-          required: false,
-        },
-        githubUsername: {
-          type: "string",
-          required: false,
-        },
-        githubProfileUrl: {
-          type: "string",
           required: false,
         },
       },

@@ -81,7 +81,7 @@ export const GenerateApiKey = ({ onKeyGenerated }: GenerateApiKeyProps) => {
 
     try {
       const { data, error } = await authClient.apiKey.create({
-        name: `VS Code Extension - ${format(new Date(), "yyyy-MM-dd")}`,
+        name: `API Key - ${format(new Date(), "yyyy-MM-dd")}`,
       });
 
       if (error) {
@@ -118,9 +118,9 @@ export const GenerateApiKey = ({ onKeyGenerated }: GenerateApiKeyProps) => {
     <div className="bg-card border-border rounded-lg border p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-semibold">API Key for the Turbo Extension</h3>
+          <h3 className="font-semibold">Generate API Key</h3>
           <p className="text-muted-foreground text-sm">
-            Generate a key to connect the Turbo extension
+            Generate a key for programmatic API access
           </p>
         </div>
         <Button onClick={handleGenerate} disabled={isGenerating}>

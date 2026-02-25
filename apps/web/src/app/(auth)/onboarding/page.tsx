@@ -21,7 +21,7 @@ export default async function OnboardingPage() {
   return (
     <OnboardingForm
       defaultValues={{
-        username: session.user.githubUsername ?? "",
+        username: "",
         firstName: nameParts[0] ?? "",
         lastName: nameParts.slice(1).join(" "),
         avatarUrl: session.user.image ?? "",
