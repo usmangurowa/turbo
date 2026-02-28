@@ -105,7 +105,7 @@ export const sendEmail = async ({
       error = res.error;
     } else {
       console.warn(
-        `[Mail] Mocking email send to ${to} (Subject: "${subject}")`,
+        `[Mail] Mocking email send to ${Array.isArray(to) ? to.join(", ") : to} (Subject: "${subject}")`,
       );
       data = { id: `mock_email_${Date.now()}` };
       error = null;
