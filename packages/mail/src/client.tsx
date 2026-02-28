@@ -19,11 +19,12 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const isProduction =
   process.env.NODE_ENV === "production" && !process.env.SKIP_ENV_VALIDATION;
 
-if (!RESEND_API_KEY && isProduction) {
+const requireResendConfig = isProduction && !process.env.SKIP_ENV_VALIDATION;
+if (!RESEND_API_KEY && requireResendConfig) {
   throw new Error("RESEND_API_KEY environment variable is required");
 }
 
-export const resend = new Resend(RESEND_API_KEY ?? "re_test_key");
+export const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 /**
  * Default sender email address.
  * Override this in your application or per-email.
@@ -86,22 +87,36 @@ export const sendEmail = async ({
   try {
     const html = await render(template);
 
-    const { data, error } = await resend.emails.send({
-      from,
-      to: Array.isArray(to) ? to : [to],
-      subject,
-      html,
-      replyTo,
-      cc: cc ? (Array.isArray(cc) ? cc : [cc]) : undefined,
-      bcc: bcc ? (Array.isArray(bcc) ? bcc : [bcc]) : undefined,
-      headers,
-      tags,
-    });
+    let data, error;
 
-    if (error) {
+    if (resend) {
+      const res = await resend.emails.send({
+        from,
+        to: Array.isArray(to) ? to : [to],
+        subject,
+        html,
+        replyTo,
+        cc: cc ? (Array.isArray(cc) ? cc : [cc]) : undefined,
+        bcc: bcc ? (Array.isArray(bcc) ? bcc : [bcc]) : undefined,
+        headers,
+        tags,
+      });
+      data = res.data;
+      error = res.error;
+    } else {
+      console.warn(
+        `[Mail] Mocking email send to ${to} (Subject: "${subject}")`,
+      );
+      data = { id: `mock_email_${Date.now()}` };
+      error = null;
+    }
+
+    if (error || !data) {
       return {
         success: false,
-        error: new Error(error.message),
+        error: error
+          ? new Error(error.message)
+          : new Error("Failed to send email"),
       };
     }
 
