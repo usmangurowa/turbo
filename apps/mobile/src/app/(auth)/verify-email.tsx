@@ -9,7 +9,7 @@ import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TimeScheduleIcon } from "@hugeicons/core-free-icons";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 
 import type { VerifyEmailFormData } from "@turbo/validators";
 import { verifyEmailSchema } from "@turbo/validators";
@@ -28,7 +28,6 @@ export default function VerifyEmailScreen() {
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<VerifyEmailFormData>({
     resolver: zodResolver(verifyEmailSchema),
@@ -37,7 +36,7 @@ export default function VerifyEmailScreen() {
     },
   });
 
-  const otp = watch("otp");
+  const otp = useWatch({ control, name: "otp", defaultValue: "" });
   const otpType = type ?? "email-verification";
 
   // Countdown timer for resend cooldown
