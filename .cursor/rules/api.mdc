@@ -1,0 +1,20 @@
+---
+description: "API route patterns (Hono)"
+globs: "packages/api/**,apps/web/app/api/**"
+alwaysApply: false
+---
+
+# API Rules
+
+For endpoint creation: `.ai/skills/create-api-endpoint.md`
+
+## Pattern summary
+- Routers in `packages/api/src/router/`
+- Use `Hono<AppContext>` for typed context
+- Apply `authMiddleware` for protected routes
+- Register routes in `packages/api/src/index.ts`
+- Typed client auto-generated via `hcWithType`
+
+## Reference
+- `packages/api/src/router/api-key.ts`
+- `packages/api/src/index.ts`

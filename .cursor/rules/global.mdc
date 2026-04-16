@@ -1,0 +1,18 @@
+---
+description: "Global rules for the Turbo monorepo"
+globs: "**/*"
+alwaysApply: true
+---
+
+# Global Rules
+
+Read `AGENTS.md` at the repository root before starting any task.
+
+## Quick reference
+- Tech stack: `.ai/context/tech-stack.md`
+- Conventions: `.ai/context/conventions.md`
+- Skills index: `.ai/skills/00-index.md`
+
+## Self-Updating Rule
+If your changes introduce new patterns, update `.ai/` files in the same PR.
+See: `.ai/skills/update-ai-memory.md`

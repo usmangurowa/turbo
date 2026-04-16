@@ -1,0 +1,20 @@
+---
+description: "UI component patterns (shadcn/ui)"
+globs: "packages/ui/**,apps/web/components/**,apps/mobile/src/components/**"
+alwaysApply: false
+---
+
+# Component Rules
+
+For component creation: `.ai/skills/create-component.md`
+
+## Pattern summary
+- Use `cva` for variants, `cn()` for class merging
+- Add `data-slot` attribute for identification
+- Props extend `React.ComponentProps<"element">`
+- Named exports only (no default exports)
+- File naming: `kebab-case.tsx`
+
+## Reference
+- `packages/ui/src/components/button.tsx`
+- Deep reference: `.agents/skills/tailwind-patterns/`
