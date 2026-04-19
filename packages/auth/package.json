@@ -17,10 +17,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@better-auth/api-key": "1.6.5",
     "@better-auth/expo": "catalog:",
     "@t3-oss/env-core": "^0.13.8",
     "@turbo/db": "workspace:*",
     "better-auth": "catalog:",
+    "drizzle-orm": "^0.45.2",
     "zod": "catalog:"
   },
   "devDependencies": {

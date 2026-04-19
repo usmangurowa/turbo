@@ -5,10 +5,14 @@ import { db } from "@turbo/db/client";
 
 import type { AppContext } from "../context";
 
+interface AuthWithApi {
+  api: Auth["api"];
+}
+
 /**
  * Context middleware that sets up auth, session, and database for all routes
  */
-export const contextMiddleware = (auth: Auth) =>
+export const contextMiddleware = (auth: AuthWithApi) =>
   createMiddleware<AppContext>(async (c, next) => {
     const authApi = auth.api;
     const session = await authApi.getSession({

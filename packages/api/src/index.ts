@@ -16,6 +16,10 @@ import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
 import supportRouter from "./router/support";
 
+interface AuthWithApi {
+  api: Auth["api"];
+}
+
 /**
  * Options for creating the API app
  */
@@ -29,7 +33,10 @@ export interface CreateAppOptions {
  * @param auth - Auth instance from @turbo/auth
  * @param options - Optional configuration for the app
  */
-export const createApp = (auth: Auth, options: CreateAppOptions = {}) => {
+export const createApp = (
+  auth: AuthWithApi,
+  options: CreateAppOptions = {},
+) => {
   const { security = {} } = options;
 
   const app = new Hono<AppContext>()

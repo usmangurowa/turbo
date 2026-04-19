@@ -1,8 +1,9 @@
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
+import { apiKey } from "@better-auth/api-key";
 import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { apiKey, emailOTP, oAuthProxy } from "better-auth/plugins";
+import { emailOTP, oAuthProxy } from "better-auth/plugins";
 
 import { db } from "@turbo/db/client";
 
@@ -11,7 +12,11 @@ interface SocialProviderConfig {
   clientSecret: string;
 }
 
-type OTPType = "sign-in" | "email-verification" | "forget-password";
+type OTPType =
+  | "sign-in"
+  | "email-verification"
+  | "forget-password"
+  | "change-email";
 
 interface SendOTPEmailParams {
   email: string;

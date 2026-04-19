@@ -22,9 +22,11 @@
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "generate": "node ./scripts/drizzle.mjs generate",
     "lint": "eslint",
-    "push": "pnpm with-env drizzle-kit push",
-    "studio": "pnpm with-env drizzle-kit studio",
+    "migrate": "node ./scripts/drizzle.mjs migrate",
+    "push:local": "node ./scripts/drizzle.mjs push",
+    "studio": "node ./scripts/drizzle.mjs studio",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
@@ -32,7 +34,7 @@
   "dependencies": {
     "@paralleldrive/cuid2": "^3.0.4",
     "@vercel/postgres": "^0.10.0",
-    "drizzle-orm": "^0.44.7",
+    "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.8.3",
     "zod": "catalog:"
   },
@@ -40,7 +42,7 @@
     "@turbo/eslint-config": "workspace:*",
     "@turbo/prettier-config": "workspace:*",
     "@turbo/tsconfig": "workspace:*",
-    "drizzle-kit": "^0.31.5",
+    "drizzle-kit": "^0.31.10",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",

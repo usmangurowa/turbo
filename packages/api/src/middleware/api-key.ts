@@ -28,7 +28,7 @@ export const apiKeyMiddleware = createMiddleware<AppContext>(
     }
 
     // Set user ID and key ID in context for route handlers
-    c.set("apiKeyUserId", result.key.userId);
+    c.set("apiKeyUserId", result.key.referenceId);
     c.set("apiKeyId", result.key.id);
 
     await next();

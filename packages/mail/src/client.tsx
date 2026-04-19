@@ -155,6 +155,7 @@ const OTP_SUBJECTS = {
   "sign-in": "Your sign-in code",
   "email-verification": "Verify your email",
   "forget-password": "Reset your password",
+  "change-email": "Confirm your new email address",
 } as const;
 
 /**
