@@ -7,7 +7,10 @@
 1. Read this file completely.
 2. Read `.ai/context/tech-stack.md` for the technology stack.
 3. Read `.ai/context/conventions.md` for coding conventions.
-4. Identify the matching skill in `.ai/skills/` and read it.
+4. Read `ARCHITECTURE.md` for the repository mental model.
+5. Read `ROADMAP_AI.md` before writing code or changing files.
+6. Identify the matching skill in `.ai/skills/` and read it.
+7. For non-trivial or cross-package work, create/update a spec with `.ai/skills/feature-spec.md`.
 
 ## Repository Overview
 
@@ -21,6 +24,7 @@ Full-stack TypeScript monorepo using Turborepo + pnpm workspaces.
 | `tooling/*`       | Shared configs (ESLint, Prettier, TypeScript, Tailwind, Vitest) |
 | `.ai/`            | Agent memory: context, skills, patterns, decisions              |
 | `.agents/skills/` | Deep technology reference bundles                               |
+| `scripts/ai/`     | Generated contract and context helper scripts                   |
 
 ## Task Skills
 
@@ -40,6 +44,7 @@ Before executing a task, find and read the matching skill file:
 | Review code            | `.ai/skills/code-review.md`         |
 | Debug a failure        | `.ai/skills/debug-failure.md`       |
 | Refactor code          | `.ai/skills/refactor.md`            |
+| Non-trivial feature    | `.ai/skills/feature-spec.md`        |
 
 Full index: `.ai/skills/00-index.md`
 
@@ -60,6 +65,12 @@ See: `.ai/skills/update-ai-memory.md`
 
 Before completing any task, complete the `update-ai-memory` checklist and update `.ai/` files when required.
 
+## AI Contract Snapshots
+
+- Run `pnpm ai:contracts` after API, DB, env, package export, or dependency graph changes.
+- Run `pnpm ai:context` to refresh the consolidated AI context pack.
+- Use `pnpm ai:env` to report environment contract drift and `pnpm ai:env:strict` when drift should fail CI.
+
 ## Key Conventions (Quick Reference)
 
 - **Package scope**: `@turbo/*`
@@ -69,6 +80,7 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 - **Tests**: Vitest in `__tests__/<name>.test.ts`
 - **Commits**: `type(scope): description` (conventional commits)
 - **Formatting**: Prettier with import sorting + Tailwind class sorting
+- **Specs**: Non-trivial work uses `.ai/specs/active/<slug>.spec.md` before implementation
 
 ## Deep References
 

@@ -17,13 +17,15 @@
 | Write Tests         | [write-tests.md](./write-tests.md)                 | "write tests", "add test coverage"                     |
 | Refactor            | [refactor.md](./refactor.md)                       | "refactor", "clean up this code"                       |
 | Update AI Memory    | [update-ai-memory.md](./update-ai-memory.md)       | After introducing new patterns                         |
+| Feature Spec        | [feature-spec.md](./feature-spec.md)               | Non-trivial or cross-package feature work              |
 
 ## How to use this index
 
 1. Read `AGENTS.md`, then `.ai/context/tech-stack.md` and `.ai/context/conventions.md`.
 2. Match the task to the closest skill in this index.
 3. If no exact match exists, use the closest skill and follow observed conventions from context files.
-4. Before completing the task, apply `update-ai-memory.md`.
+4. For non-trivial work, apply `feature-spec.md` before implementation.
+5. Before completing the task, apply `update-ai-memory.md`.
 
 ## See also
 

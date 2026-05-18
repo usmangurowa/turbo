@@ -9,10 +9,19 @@ alwaysApply: true
 Read `AGENTS.md` at the repository root before starting any task.
 
 ## Quick reference
+
 - Tech stack: `.ai/context/tech-stack.md`
 - Conventions: `.ai/context/conventions.md`
+- Architecture: `ARCHITECTURE.md`
+- AI roadmap ledger: `ROADMAP_AI.md`
 - Skills index: `.ai/skills/00-index.md`
+- Generated contracts: `.ai/contracts/*.generated.md`
+
+## Spec-first work
+
+For non-trivial work or changes touching more than three implementation files, read `.ai/skills/feature-spec.md` and create/update a spec in `.ai/specs/active/` before editing code.
 
 ## Self-Updating Rule
+
 If your changes introduce new patterns, update `.ai/` files in the same PR.
 See: `.ai/skills/update-ai-memory.md`

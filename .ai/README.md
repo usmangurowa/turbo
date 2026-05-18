@@ -4,18 +4,22 @@ This directory is the **source of truth** for all AI coding agents working in th
 
 ## Structure
 
-| Path | Purpose |
-|------|---------|
-| `context/` | Repository-level context: tech stack, conventions, glossary, roadmap |
-| `skills/` | Step-by-step procedures for common tasks (create component, write test, etc.) |
-| `patterns/` | Documented patterns: data fetching, error handling, state management |
-| `decisions/` | Architecture Decision Records (ADRs) |
+| Path         | Purpose                                                                       |
+| ------------ | ----------------------------------------------------------------------------- |
+| `context/`   | Repository-level context: tech stack, conventions, glossary, roadmap          |
+| `skills/`    | Step-by-step procedures for common tasks (create component, write test, etc.) |
+| `patterns/`  | Documented patterns: data fetching, error handling, state management          |
+| `decisions/` | Architecture Decision Records (ADRs)                                          |
+| `contracts/` | Generated snapshots of API, DB, env, package exports, and dependency graph    |
+| `specs/`     | Spec-first plans for non-trivial work                                         |
 
 ## How agents consume this
 
 1. **Before any task**, read `../AGENTS.md`, `context/tech-stack.md`, `context/conventions.md`, and the matching skill file.
-2. **During the task**, follow the step-by-step procedure in the skill file.
-3. **After the task**, if you introduced a new pattern or convention, update the relevant files here in the **same PR**.
+2. **Before non-trivial work**, read `../ARCHITECTURE.md`, `../ROADMAP_AI.md`, and create/update a spec with `skills/feature-spec.md`.
+3. **During the task**, follow the step-by-step procedure in the skill file.
+4. **After the task**, if you introduced a new pattern or convention, update the relevant files here in the **same PR**.
+5. **After contract changes**, run `pnpm ai:contracts` and commit the generated snapshots.
 
 ## Cross-tool wiring
 

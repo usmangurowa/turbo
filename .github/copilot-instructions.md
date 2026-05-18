@@ -4,7 +4,9 @@
 
 ## Before any task
 
-Read `AGENTS.md`, `.ai/context/tech-stack.md`, and `.ai/context/conventions.md`.
+Read `AGENTS.md`, `.ai/context/tech-stack.md`, `.ai/context/conventions.md`, `ARCHITECTURE.md`, and `ROADMAP_AI.md`.
+
+For non-trivial work or changes touching more than three implementation files, read `.ai/skills/feature-spec.md` and create/update a spec in `.ai/specs/active/` before editing code.
 
 ## Task → Skill mapping
 
@@ -19,6 +21,7 @@ Read `AGENTS.md`, `.ai/context/tech-stack.md`, and `.ai/context/conventions.md`.
 | "review this"            | `.ai/skills/code-review.md`         |
 | "fix this error"         | `.ai/skills/debug-failure.md`       |
 | "refactor"               | `.ai/skills/refactor.md`            |
+| "plan a feature"         | `.ai/skills/feature-spec.md`        |
 
 If no exact skill matches a task, use the closest skill and follow `.ai/context/conventions.md`.
 
@@ -34,3 +37,4 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 - API: Hono routers in `packages/api/src/router/`
 - DB: Drizzle schemas in `packages/db/src/`
 - Tests: Vitest in `__tests__/*.test.ts`
+- Contracts: generated snapshots in `.ai/contracts/*.generated.md`

@@ -27,6 +27,12 @@
     "verify": "turbo run typecheck lint format && pnpm dlx sherif@latest",
     "verify:fix": "turbo run typecheck lint:fix format:fix && pnpm dlx sherif@latest",
     "check:fix": "pnpm format:fix && pnpm lint:fix && pnpm typecheck",
+    "ai:contracts": "node scripts/ai/generate-contracts.mjs",
+    "ai:env": "node scripts/ai/check-env-contract.mjs",
+    "ai:env:strict": "node scripts/ai/check-env-contract.mjs --strict",
+    "ai:graph": "node scripts/ai/package-graph.mjs",
+    "ai:context": "pnpm ai:contracts && node scripts/ai/context-pack.mjs",
+    "ai:verify": "pnpm ai:contracts && pnpm verify",
     "ui-add": "turbo run ui-add",
     "android": "expo run:android",
     "ios": "expo run:ios"
