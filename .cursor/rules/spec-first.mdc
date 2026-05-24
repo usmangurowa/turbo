@@ -1,0 +1,11 @@
+---
+description: "Spec-first workflow for non-trivial work"
+globs: "**/*"
+alwaysApply: false
+---
+
+# Spec-first Workflow
+
+Use `.ai/skills/feature-spec.md` for non-trivial work, cross-package changes, architecture changes, API changes, database changes, or tasks likely to touch more than three implementation files.
+
+Specs live in `.ai/specs/active/` while work is in progress and move to `.ai/specs/accepted/` when complete.
