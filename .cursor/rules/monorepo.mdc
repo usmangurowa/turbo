@@ -1,0 +1,17 @@
+---
+description: "Monorepo structure and package conventions"
+globs: "packages/**,tooling/**,apps/**,turbo.json,pnpm-workspace.yaml"
+alwaysApply: false
+---
+
+# Monorepo Rules
+
+For package creation: `.ai/skills/create-package.md`
+For app creation: `.ai/skills/create-app.md`
+
+## Key conventions
+- Package scope: `@turbo/*`
+- All packages use `"type": "module"`
+- Exports defined via `package.json` `exports` field
+- Shared configs in `tooling/*`
+- Deep reference: `.agents/skills/turborepo/`

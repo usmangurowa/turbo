@@ -4,27 +4,27 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
 
 ## Tech Stack
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Runtime | Node.js | ^22.14.0 |
-| Package Manager | pnpm | ^10.19.0 |
-| Monorepo Tool | Turborepo | ^2.5.8 |
-| Language | TypeScript | ^5.9.3 |
-| Web Framework | Next.js | 16.0.10 |
-| Mobile Framework | Expo SDK | ~54.0.20 |
-| React | React | 19.1.2 |
-| React Native | React Native | ~0.81.5 |
-| Styling | Tailwind CSS | ^4.1.16 |
-| Mobile Styling | NativeWind | 5.0.0-preview.2 |
-| API Framework | Hono | ^4.10.7 |
-| API Validation | @hono/zod-validator | ^0.7.5 |
-| Database ORM | Drizzle ORM | ^0.44.7 |
-| Database Driver | @vercel/postgres | ^0.10.0 |
-| Auth | Better Auth | 1.4.0-beta.9 |
-| Validation | Zod | ^4.1.12 |
-| Query Client | TanStack Query | ^5.90.8 |
-| UI Components | shadcn/ui | latest |
-| Testing | Vitest | 4.0.15 |
+| Category         | Technology          | Version      |
+| ---------------- | ------------------- | ------------ |
+| Runtime          | Node.js             | ^22.14.0     |
+| Package Manager  | pnpm                | ^10.19.0     |
+| Monorepo Tool    | Turborepo           | ^2.5.8       |
+| Language         | TypeScript          | ^5.9.3       |
+| Web Framework    | Next.js             | 16.0.10      |
+| Mobile Framework | Expo SDK            | ~55.0.4      |
+| React            | React               | 19.2.0       |
+| React Native     | React Native        | ~0.83.2      |
+| Styling          | Tailwind CSS        | ^4.1.16      |
+| Mobile Styling   | Uniwind             | ~1.0.0       |
+| API Framework    | Hono                | ^4.10.7      |
+| API Validation   | @hono/zod-validator | ^0.7.5       |
+| Database ORM     | Drizzle ORM         | ^0.44.7      |
+| Database Driver  | @vercel/postgres    | ^0.10.0      |
+| Auth             | Better Auth         | 1.4.0-beta.9 |
+| Validation       | Zod                 | ^4.1.12      |
+| Query Client     | TanStack Query      | ^5.90.8      |
+| UI Components    | shadcn/ui           | latest       |
+| Testing          | Vitest              | 4.0.15       |
 
 ## Codebase Structure
 
@@ -36,14 +36,14 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
   └─ Recommended extensions and settings for VSCode users
 apps/
   ├─ mobile/                          # Expo mobile app
-  │   ├─ Expo SDK 54 (~54.0.20)
-  │   ├─ React Native 0.81.5 with React 19.1.2
+  │   ├─ Expo SDK 55 (~55.0.4)
+  │   ├─ React Native 0.83.2 with React 19.2.0
   │   ├─ Navigation using Expo Router
-  │   ├─ Tailwind CSS using NativeWind v5
+  │   ├─ Tailwind CSS using Uniwind
   │   └─ Type-safe API calls using Hono RPC client
   └─ web/                             # Next.js web app
       ├─ Next.js 16.0.10
-      ├─ React 19.1.2
+      ├─ React 19.2.0
       ├─ Tailwind CSS v4.1.16
       └─ Hono RPC API server & type-safe client
 packages/
@@ -153,6 +153,7 @@ eas build:configure
 After running `eas init` or `eas build:configure`, you'll receive an **EAS Project ID**. Update these files with your project ID:
 
 1. **`apps/mobile/app.config.ts`** - Update the `extra.eas.projectId` and `updates.url`:
+
    ```typescript
    updates: {
      url: "https://u.expo.dev/YOUR_PROJECT_ID",
@@ -169,6 +170,7 @@ After running `eas init` or `eas build:configure`, you'll receive an **EAS Proje
 ### Running on Simulators/Emulators
 
 **iOS Simulator:**
+
 ```bash
 cd apps/mobile
 pnpm dev:ios
@@ -177,6 +179,7 @@ expo start --ios
 ```
 
 **Android Emulator:**
+
 ```bash
 cd apps/mobile
 pnpm dev:android
@@ -188,41 +191,42 @@ expo start --android
 
 The mobile app includes pre-configured build scripts for all environments:
 
-| Script | Description |
-|--------|-------------|
-| `pnpm build:dev:android` | Development build for Android (cloud) |
-| `pnpm build:dev:ios` | Development build for iOS (cloud) |
-| `pnpm build:dev:android:local` | Development build for Android (local) |
-| `pnpm build:dev:ios:local` | Development build for iOS (local) |
-| `pnpm build:dev:simulator` | Development build for iOS Simulator (local) |
-| `pnpm build:preview:android` | Preview build for Android (cloud) |
-| `pnpm build:preview:ios` | Preview build for iOS (cloud) |
-| `pnpm build:prod:android` | Production build for Android (cloud) |
-| `pnpm build:prod:ios` | Production build for iOS (cloud) |
+| Script                         | Description                                 |
+| ------------------------------ | ------------------------------------------- |
+| `pnpm build:dev:android`       | Development build for Android (cloud)       |
+| `pnpm build:dev:ios`           | Development build for iOS (cloud)           |
+| `pnpm build:dev:android:local` | Development build for Android (local)       |
+| `pnpm build:dev:ios:local`     | Development build for iOS (local)           |
+| `pnpm build:dev:simulator`     | Development build for iOS Simulator (local) |
+| `pnpm build:preview:android`   | Preview build for Android (cloud)           |
+| `pnpm build:preview:ios`       | Preview build for iOS (cloud)               |
+| `pnpm build:prod:android`      | Production build for Android (cloud)        |
+| `pnpm build:prod:ios`          | Production build for iOS (cloud)            |
 
 **Local builds** run on your machine and require:
+
 - **Android**: Android Studio, JDK 17+, Android SDK
 - **iOS**: Xcode, CocoaPods, Apple Developer account (for device builds)
 
 ## Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start all apps in development mode |
-| `pnpm dev:web` | Start web app only |
-| `pnpm dev:mobile` | Start mobile app only |
-| `pnpm build` | Build all packages and apps |
-| `pnpm typecheck` | Run TypeScript type checking |
-| `pnpm lint` | Run ESLint |
-| `pnpm lint:fix` | Run ESLint with auto-fix |
-| `pnpm format` | Check Prettier formatting |
-| `pnpm format:fix` | Fix Prettier formatting |
-| `pnpm test` | Run tests |
-| `pnpm db:push` | Push Drizzle schema to database |
-| `pnpm db:studio` | Open Drizzle Studio |
-| `pnpm auth:generate` | Generate Better Auth schema |
-| `pnpm ui-add` | Add shadcn/ui components |
-| `pnpm verify` | Run typecheck, lint, and format |
+| Command              | Description                        |
+| -------------------- | ---------------------------------- |
+| `pnpm dev`           | Start all apps in development mode |
+| `pnpm dev:web`       | Start web app only                 |
+| `pnpm dev:mobile`    | Start mobile app only              |
+| `pnpm build`         | Build all packages and apps        |
+| `pnpm typecheck`     | Run TypeScript type checking       |
+| `pnpm lint`          | Run ESLint                         |
+| `pnpm lint:fix`      | Run ESLint with auto-fix           |
+| `pnpm format`        | Check Prettier formatting          |
+| `pnpm format:fix`    | Fix Prettier formatting            |
+| `pnpm test`          | Run tests                          |
+| `pnpm db:push`       | Push Drizzle schema to database    |
+| `pnpm db:studio`     | Open Drizzle Studio                |
+| `pnpm auth:generate` | Generate Better Auth schema        |
+| `pnpm ui-add`        | Add shadcn/ui components           |
+| `pnpm verify`        | Run typecheck, lint, and format    |
 
 ## Adding Components and Packages
 
@@ -268,6 +272,7 @@ The auth proxy is a Better Auth plugin for OAuth in preview deployments. Deploy 
 1. Update `getBaseUrl` in `apps/mobile/src/utils/api.tsx` to point to production URL
 
 2. Build for production:
+
    ```bash
    cd apps/mobile
    pnpm build:prod:ios
@@ -275,6 +280,7 @@ The auth proxy is a Better Auth plugin for OAuth in preview deployments. Deploy 
    ```
 
 3. Submit to app stores:
+
    ```bash
    eas submit --platform ios --latest
    eas submit --platform android --latest
@@ -284,4 +290,3 @@ The auth proxy is a Better Auth plugin for OAuth in preview deployments. Deploy 
    ```bash
    eas update --auto
    ```
-

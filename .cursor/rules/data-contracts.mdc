@@ -1,0 +1,15 @@
+---
+description: "API, database, environment, and package contract rules"
+globs: "packages/api/**,packages/db/**,packages/validators/**,turbo.json,.env.example,packages/*/package.json,apps/*/package.json"
+alwaysApply: false
+---
+
+# Data Contract Rules
+
+Read `.ai/context/data-contracts.md` before changing API routes, database schemas, env vars, package exports, or shared validators.
+
+## Key reminders
+
+- Refresh snapshots with `pnpm ai:contracts` after contract changes.
+- Use `pnpm ai:env` to report env drift.
+- Do not infer contracts from memory when `.ai/contracts/*.generated.md` exists.
