@@ -19,6 +19,16 @@ const methodNames = new Set([
   "all",
 ]);
 
+const routeRowCompare = (a, b) => {
+  const methodDiff = a[0].localeCompare(b[0]);
+  if (methodDiff !== 0) return methodDiff;
+
+  const pathDiff = a[1].localeCompare(b[1]);
+  if (pathDiff !== 0) return pathDiff;
+
+  return a[2].localeCompare(b[2]);
+};
+
 const joinRoute = (basePath, routePath) => {
   const joined = `${basePath}/${routePath}`.replaceAll(/\/+/g, "/");
   return joined === "/" ? "/" : joined.replace(/\/$/, "");
@@ -238,6 +248,7 @@ const generateApiSnapshot = async () => {
 
   walk(sourceFile);
   await Promise.all(routeTasks);
+  routeRows.sort(routeRowCompare);
 
   await writeGenerated(
     ".ai/contracts/api-routes.generated.md",

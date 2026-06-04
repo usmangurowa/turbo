@@ -28,7 +28,7 @@
     "verify:fix": "turbo run typecheck lint:fix format:fix && pnpm dlx sherif@latest",
     "check:fix": "pnpm format:fix && pnpm lint:fix && pnpm typecheck",
     "ai:contracts": "node scripts/ai/generate-contracts.mjs",
-    "ai:contracts:check": "pnpm ai:contracts && git diff --exit-code -- .ai/contracts",
+    "ai:contracts:check": "pnpm ai:context && test -z \"$(git status --porcelain -- .ai/contracts)\"",
     "ai:env": "node scripts/ai/check-env-contract.mjs",
     "ai:env:strict": "node scripts/ai/check-env-contract.mjs --strict",
     "ai:graph": "node scripts/ai/package-graph.mjs",
