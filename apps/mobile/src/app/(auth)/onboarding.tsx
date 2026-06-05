@@ -10,7 +10,7 @@ import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TimeScheduleIcon } from "@hugeicons/core-free-icons";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import type { OnboardingFormData } from "@turbo/validators";
 import { onboardingSchema } from "@turbo/validators";
@@ -19,7 +19,6 @@ export default function OnboardingScreen() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { isSubmitting },
   } = useForm<OnboardingFormData>({
     resolver: zodResolver(onboardingSchema),
@@ -31,9 +30,13 @@ export default function OnboardingScreen() {
     },
   });
 
-  const firstName = watch("firstName");
-  const lastName = watch("lastName");
-  const avatarUrl = watch("avatarUrl");
+  const firstName = useWatch({ control, name: "firstName", defaultValue: "" });
+  const lastName = useWatch({ control, name: "lastName", defaultValue: "" });
+  const avatarUrl = useWatch({
+    control,
+    name: "avatarUrl",
+    defaultValue: "",
+  });
 
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 

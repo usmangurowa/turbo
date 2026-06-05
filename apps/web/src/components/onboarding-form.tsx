@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TimeScheduleIcon } from "@hugeicons/core-free-icons";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import type { OnboardingFormData } from "@turbo/validators";
 import { cn } from "@turbo/ui";
@@ -35,9 +35,9 @@ export const OnboardingForm = ({
   const router = useRouter();
 
   const {
+    control,
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<OnboardingFormData>({
     resolver: zodResolver(onboardingSchema),
@@ -49,9 +49,13 @@ export const OnboardingForm = ({
     },
   });
 
-  const firstName = watch("firstName");
-  const lastName = watch("lastName");
-  const avatarUrl = watch("avatarUrl");
+  const firstName = useWatch({ control, name: "firstName", defaultValue: "" });
+  const lastName = useWatch({ control, name: "lastName", defaultValue: "" });
+  const avatarUrl = useWatch({
+    control,
+    name: "avatarUrl",
+    defaultValue: "",
+  });
 
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 

@@ -1,9 +1,7 @@
 import { Hono } from "hono";
 import { hc } from "hono/client";
 
-import type { Auth } from "@turbo/auth";
-
-import type { AppContext } from "./context";
+import type { AppContext, AuthWithApi } from "./context";
 import type { SecurityConfig } from "./middleware/security";
 import { contextMiddleware } from "./middleware/context";
 import {
@@ -29,7 +27,10 @@ export interface CreateAppOptions {
  * @param auth - Auth instance from @turbo/auth
  * @param options - Optional configuration for the app
  */
-export const createApp = (auth: Auth, options: CreateAppOptions = {}) => {
+export const createApp = (
+  auth: AuthWithApi,
+  options: CreateAppOptions = {},
+) => {
   const { security = {} } = options;
 
   const app = new Hono<AppContext>()

@@ -4,27 +4,27 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
 
 ## Tech Stack
 
-| Category         | Technology          | Version      |
-| ---------------- | ------------------- | ------------ |
-| Runtime          | Node.js             | ^22.14.0     |
-| Package Manager  | pnpm                | ^10.19.0     |
-| Monorepo Tool    | Turborepo           | ^2.5.8       |
-| Language         | TypeScript          | ^5.9.3       |
-| Web Framework    | Next.js             | 16.0.10      |
-| Mobile Framework | Expo SDK            | ~55.0.4      |
-| React            | React               | 19.2.0       |
-| React Native     | React Native        | ~0.83.2      |
-| Styling          | Tailwind CSS        | ^4.1.16      |
-| Mobile Styling   | Uniwind             | ~1.0.0       |
-| API Framework    | Hono                | ^4.10.7      |
-| API Validation   | @hono/zod-validator | ^0.7.5       |
-| Database ORM     | Drizzle ORM         | ^0.44.7      |
-| Database Driver  | @vercel/postgres    | ^0.10.0      |
-| Auth             | Better Auth         | 1.4.0-beta.9 |
-| Validation       | Zod                 | ^4.1.12      |
-| Query Client     | TanStack Query      | ^5.90.8      |
-| UI Components    | shadcn/ui           | latest       |
-| Testing          | Vitest              | 4.0.15       |
+| Category         | Technology          | Version  |
+| ---------------- | ------------------- | -------- |
+| Runtime          | Node.js             | ^22.14.0 |
+| Package Manager  | pnpm                | ^10.19.0 |
+| Monorepo Tool    | Turborepo           | ^2.5.8   |
+| Language         | TypeScript          | ^5.9.3   |
+| Web Framework    | Next.js             | 16.2.4   |
+| Mobile Framework | Expo SDK            | ~55.0.15 |
+| React            | React               | 19.2.0   |
+| React Native     | React Native        | ~0.83.4  |
+| Styling          | Tailwind CSS        | ^4.1.16  |
+| Mobile Styling   | Uniwind             | ~1.0.0   |
+| API Framework    | Hono                | ^4.12.14 |
+| API Validation   | @hono/zod-validator | ^0.7.6   |
+| Database ORM     | Drizzle ORM         | ^0.45.2  |
+| Database Driver  | @vercel/postgres    | ^0.10.0  |
+| Auth             | Better Auth         | 1.6.5    |
+| Validation       | Zod                 | ^4.1.12  |
+| Query Client     | TanStack Query      | ^5.90.8  |
+| UI Components    | shadcn/ui           | latest   |
+| Testing          | Vitest              | 4.0.15   |
 
 ## Codebase Structure
 
@@ -36,13 +36,13 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
   └─ Recommended extensions and settings for VSCode users
 apps/
   ├─ mobile/                          # Expo mobile app
-  │   ├─ Expo SDK 55 (~55.0.4)
-  │   ├─ React Native 0.83.2 with React 19.2.0
+  │   ├─ Expo SDK 55 (~55.0.15)
+  │   ├─ React Native 0.83.4 with React 19.2.0
   │   ├─ Navigation using Expo Router
   │   ├─ Tailwind CSS using Uniwind
   │   └─ Type-safe API calls using Hono RPC client
   └─ web/                             # Next.js web app
-      ├─ Next.js 16.0.10
+      ├─ Next.js 16.2.4
       ├─ React 19.2.0
       ├─ Tailwind CSS v4.1.16
       └─ Hono RPC API server & type-safe client
@@ -84,18 +84,30 @@ cp .env.example .env
 
 ### 2. Database Setup (Drizzle ORM)
 
-The database schema is defined in `packages/db/src/schema.ts`. To push the schema to your database:
+The database schema is defined in `packages/db/src/schema.ts`, and durable SQL migrations are generated into `packages/db/drizzle/`.
+
+Use this workflow when you add tables or change columns:
 
 ```bash
-# Push schema to database (creates/updates tables)
-pnpm db:push
+# 1. Generate a reviewed SQL migration from schema changes
+pnpm db:generate -- --name add_projects_table
 
-# Open Drizzle Studio to view/edit data
+# 2. Apply pending migrations to your database
+pnpm db:migrate
+
+# 3. Inspect data locally
 pnpm db:studio
 ```
 
 > [!TIP]
-> When you modify `packages/db/src/schema.ts`, run `pnpm db:push` again to sync changes.
+> Use `pnpm db:generate` and `pnpm db:migrate` for all shared, staging, and production schema changes. `pnpm db:push:local` is only for disposable local databases.
+
+Migration safety rules:
+
+- Treat generated SQL as a reviewed artifact and commit it with the schema change.
+- Prefer additive changes first: add nullable columns or columns with defaults, backfill, then enforce constraints in a later migration.
+- Avoid rename-in-place for important tables or columns. Prefer add, backfill, switch reads/writes, then drop later.
+- Run `pnpm db:migrate` in deployment instead of pushing schema state directly.
 
 ### 3. Generate Better Auth Schema
 
@@ -108,10 +120,11 @@ pnpm auth:generate
 
 This generates `packages/db/src/auth-schema.ts` from the config at `packages/auth/script/auth-cli.ts`.
 
-After generating, push the new auth tables to your database:
+After generating, create and apply a real migration for the new auth tables:
 
 ```bash
-pnpm db:push
+pnpm db:generate -- --name auth_schema_update
+pnpm db:migrate
 ```
 
 ### 4. Start Development
@@ -262,6 +275,26 @@ Add your local IP (e.g., `192.168.x.y:PORT`) to your OAuth provider's allowed ca
 2. Select `apps/web` as the root directory
 3. Add `POSTGRES_URL` environment variable
 4. Deploy
+
+### Production Database Migrations
+
+Production migrations are handled by the GitHub Actions workflow at `.github/workflows/db-migrate-production.yml`.
+
+- The workflow runs automatically on pushes to `main` when a committed migration under `packages/db/drizzle/` changes.
+- The workflow can also be run manually from the Actions tab.
+- The job uses the protected GitHub Environment named `production` and runs `pnpm db:migrate` against the production database.
+
+If GitHub Actions is running your production migrations, store the production database URL as a GitHub Environment secret named `PRODUCTION_POSTGRES_URL`.
+
+- GitHub repository secrets work, but a GitHub Environment secret is safer because it lets you add production approvals and branch restrictions.
+- You do not need that GitHub secret if another platform runs the migration for you and already provides `POSTGRES_URL` there.
+
+Recommended setup:
+
+1. Create a GitHub Environment named `production`.
+2. Add `PRODUCTION_POSTGRES_URL` as an Environment secret on that environment.
+3. Optionally add required reviewers so production migrations need approval.
+4. Keep app deploys backward-compatible with the migration sequence.
 
 ### Auth Proxy
 

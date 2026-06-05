@@ -1,6 +1,8 @@
 import type { Auth } from "@turbo/auth";
 import type { db } from "@turbo/db/client";
 
+export type AuthWithApi = Pick<Auth, "api">;
+
 /**
  * Context Variables available in all Hono route handlers
  */
