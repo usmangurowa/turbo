@@ -14,7 +14,7 @@
     "@turbo/tsconfig": "workspace:*",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "vitest": "4.0.15"
+    "vitest": "4.1.8"
   },
   "prettier": "@turbo/prettier-config"
 }

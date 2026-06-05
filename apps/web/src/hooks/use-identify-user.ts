@@ -5,7 +5,6 @@ import { useSession } from "@/hooks/use-session";
 import * as Sentry from "@sentry/nextjs";
 import posthog from "posthog-js";
 
-import type { PostHogIdentifier, SentryUserSetter } from "@turbo/analytics";
 import { syncUserIdentity } from "@turbo/analytics";
 
 export const useIdentifyUser = () => {
@@ -16,8 +15,8 @@ export const useIdentifyUser = () => {
     const newId = syncUserIdentity(
       session?.user,
       identifiedRef.current,
-      Sentry as SentryUserSetter,
-      posthog as PostHogIdentifier,
+      Sentry,
+      posthog,
     );
 
     if (newId !== identifiedRef.current) {

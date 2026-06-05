@@ -1,6 +1,7 @@
 {
   "extends": "@turbo/tsconfig/compiled-package.json",
   "compilerOptions": {
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     }

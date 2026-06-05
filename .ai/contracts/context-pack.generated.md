@@ -359,7 +359,7 @@ points that should reference `.ai/` instead of duplicating long-form rules.
 
 | Tool      | Version                                | Purpose                                     |
 | --------- | -------------------------------------- | ------------------------------------------- |
-| Turborepo | ^2.5.8                                 | Task orchestration, caching, build pipeline |
+| Turborepo | ^2.9.16                                | Task orchestration, caching, build pipeline |
 | pnpm      | ^10.19.0                               | Package manager with workspace support      |
 | Node.js   | 22.21.0 (`.nvmrc`), engines `^22.14.0` | Runtime                                     |
 
@@ -393,28 +393,29 @@ tooling/
 
 ## Languages & Frameworks
 
-| Layer            | Technology  | Version                                  |
-| ---------------- | ----------- | ---------------------------------------- |
-| Language         | TypeScript  | catalog (workspace-managed)              |
-| Web framework    | Next.js     | 16.0.10                                  |
-| Mobile framework | Expo SDK    | 55 (React Native 0.83)                   |
-| React            | React       | catalog:react19                          |
-| API framework    | Hono        | 4.10.7                                   |
-| ORM              | Drizzle ORM | drizzle-orm ^0.44.7; drizzle-kit ^0.31.5 |
-| Database         | PostgreSQL  | via Supabase                             |
-| Auth             | Better Auth | 1.4.0-beta.9                             |
-| Validation       | Zod         | catalog (workspace-managed)              |
+| Layer            | Technology  | Version                                   |
+| ---------------- | ----------- | ----------------------------------------- |
+| Language         | TypeScript  | catalog (`^6.0.3`)                        |
+| Web framework    | Next.js     | 16.2.7                                    |
+| Mobile framework | Expo SDK    | 56 (`react-native` ~0.85.3)               |
+| React            | React       | 19.2.3 via `catalog:react19`              |
+| API framework    | Hono        | ^4.12.23                                  |
+| ORM              | Drizzle ORM | drizzle-orm ^0.45.2; drizzle-kit ^0.31.10 |
+| Database         | PostgreSQL  | via Supabase                              |
+| Database driver  | postgres.js | ^3.4.9 (`prepare: false` for pooled URLs) |
+| Auth             | Better Auth | 1.6.14                                    |
+| Validation       | Zod         | catalog (`4.4.3`)                         |
 
 ## UI & Styling
 
-| Tool               | Details                                     |
-| ------------------ | ------------------------------------------- |
-| Component library  | shadcn/ui (Radix primitives + CVA variants) |
-| CSS framework      | Tailwind CSS 4.1.16                         |
-| Mobile styling     | Uniwind 1.0 (Tailwind for RN)               |
-| Icons              | HugeIcons (React + React Native)            |
-| Animation (web)    | Motion (Framer Motion) 12.x                 |
-| Animation (mobile) | react-native-reanimated                     |
+| Tool               | Details                                        |
+| ------------------ | ---------------------------------------------- |
+| Component library  | shadcn/ui (Radix primitives + CVA variants)    |
+| CSS framework      | Tailwind CSS 4.3.0                             |
+| Mobile styling     | Uniwind 1.0 (Tailwind for RN)                  |
+| Icons              | HugeIcons (React + React Native)               |
+| Animation (web)    | Motion (Framer Motion) 12.x                    |
+| Animation (mobile) | react-native-reanimated 4.3.1 + worklets 0.8.3 |
 
 ## State & Data
 
@@ -441,9 +442,9 @@ tooling/
 
 | Tool              | Purpose                                          |
 | ----------------- | ------------------------------------------------ |
-| Vitest            | Unit/integration testing                         |
+| Vitest            | Unit/integration testing (4.1.x)                 |
 | ESLint 9          | Linting (flat config)                            |
-| Prettier 3.5      | Code formatting with import sort + tailwind sort |
+| Prettier 3.8      | Code formatting with import sort + tailwind sort |
 | TypeScript strict | Type checking across all packages                |
 
 ## CI/CD
@@ -796,7 +797,6 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 | `userRelations` | `user` | `packages/db/src/auth-schema.ts` |
 | `sessionRelations` | `session` | `packages/db/src/auth-schema.ts` |
 | `accountRelations` | `account` | `packages/db/src/auth-schema.ts` |
-| `apikeyRelations` | `apikey` | `packages/db/src/auth-schema.ts` |
 ````
 
 ## .ai/contracts/env.generated.md

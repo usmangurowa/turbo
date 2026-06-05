@@ -30,7 +30,7 @@
     "deploy": "npx trigger.dev@latest deploy"
   },
   "dependencies": {
-    "@trigger.dev/sdk": "^4.3.1",
+    "@trigger.dev/sdk": "^4.4.6",
     "@turbo/ai": "workspace:*",
     "@turbo/analytics": "workspace:*",
     "@turbo/db": "workspace:*",
@@ -44,7 +44,7 @@
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "vitest": "4.0.15"
+    "vitest": "4.1.8"
   },
   "prettier": "@turbo/prettier-config"
 }

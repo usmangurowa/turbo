@@ -25,4 +25,3 @@
 | `userRelations` | `user` | `packages/db/src/auth-schema.ts` |
 | `sessionRelations` | `session` | `packages/db/src/auth-schema.ts` |
 | `accountRelations` | `account` | `packages/db/src/auth-schema.ts` |
-| `apikeyRelations` | `apikey` | `packages/db/src/auth-schema.ts` |

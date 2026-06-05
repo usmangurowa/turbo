@@ -19,7 +19,7 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
 | API Framework    | Hono                | ^4.10.7      |
 | API Validation   | @hono/zod-validator | ^0.7.5       |
 | Database ORM     | Drizzle ORM         | ^0.44.7      |
-| Database Driver  | @vercel/postgres    | ^0.10.0      |
+| Database Driver  | postgres.js         | ^3.4.9       |
 | Auth             | Better Auth         | 1.4.0-beta.9 |
 | Validation       | Zod                 | ^4.1.12      |
 | Query Client     | TanStack Query      | ^5.90.8      |

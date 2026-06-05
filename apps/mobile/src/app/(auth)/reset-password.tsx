@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { useState } from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { Link, router, useLocalSearchParams } from "expo-router";
@@ -52,7 +51,7 @@ export default function ResetPasswordScreen() {
     }
 
     Alert.alert("Success", "Password reset successfully!");
-    router.replace("/(auth)/login" as Href);
+    router.replace("/(auth)/login");
   };
 
   return (
@@ -110,7 +109,7 @@ export default function ResetPasswordScreen() {
         <View className="items-center">
           <Text className="text-muted-foreground text-sm">
             Remember your password?{" "}
-            <Link href={"/(auth)/login" as Href} asChild>
+            <Link href={"/(auth)/login"} asChild>
               <Text className="text-primary underline">Back to login</Text>
             </Link>
           </Text>

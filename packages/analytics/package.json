@@ -36,7 +36,7 @@
   },
   "prettier": "@turbo/prettier-config",
   "dependencies": {
-    "@sentry/node": "^9.47.1",
-    "posthog-node": "^4.18.0"
+    "@sentry/node": "^10.56.0",
+    "posthog-node": "^5.36.2"
   }
 }

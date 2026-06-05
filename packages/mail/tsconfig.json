@@ -2,6 +2,7 @@
   "extends": "@turbo/tsconfig/compiled-package.json",
   "compilerOptions": {
     "jsx": "react-jsx",
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -1,15 +1,21 @@
-import { createPool } from "@vercel/postgres";
-import { drizzle } from "drizzle-orm/vercel-postgres";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
 import * as schema from "./schema";
 
-// Workaround for @vercel/postgres with Supabase pooler
-// Vercel checks for "-pooler." in the URL, so we add a query param to trick it
-// See: https://github.com/orgs/supabase/discussions/14165
-const connectionString =
-  process.env.POSTGRES_URL + "?workaround=supabase-pooler.vercel";
+const connectionString = process.env.POSTGRES_URL;
+const skipEnvValidation = !!process.env.SKIP_ENV_VALIDATION;
 
-const client = createPool({ connectionString });
+if (!connectionString && !skipEnvValidation) {
+  throw new Error("Missing POSTGRES_URL");
+}
+
+const client = postgres(
+  connectionString ?? "postgres://postgres:postgres@localhost:5432/postgres",
+  {
+    prepare: false,
+  },
+);
 
 export const db = drizzle({
   client,

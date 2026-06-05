@@ -42,12 +42,12 @@
     "ios": "expo run:ios"
   },
   "devDependencies": {
-    "@turbo/gen": "^2.5.8",
+    "@turbo/gen": "^2.9.16",
     "@turbo/prettier-config": "workspace:*",
-    "baseline-browser-mapping": "^2.9.7",
-    "dotenv-cli": "^10.0.0",
+    "baseline-browser-mapping": "^2.10.33",
+    "dotenv-cli": "^11.0.0",
     "prettier": "catalog:",
-    "turbo": "^2.5.8",
+    "turbo": "^2.9.16",
     "typescript": "catalog:"
   },
   "prettier": "@turbo/prettier-config"

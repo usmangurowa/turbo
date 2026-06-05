@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useRef } from "react";
 import { router, useSegments } from "expo-router";
@@ -6,7 +5,7 @@ import { authClient } from "@/auth/client";
 import * as Sentry from "@sentry/react-native";
 import { usePostHog } from "posthog-react-native";
 
-import type { PostHogIdentifier, SentryUserSetter } from "@turbo/analytics";
+import type { PostHogIdentifier } from "@turbo/analytics";
 import { syncUserIdentity } from "@turbo/analytics";
 
 interface AuthContextType {
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const newId = syncUserIdentity(
       session?.user,
       identifiedRef.current,
-      Sentry as SentryUserSetter,
+      Sentry,
       posthog as PostHogIdentifier,
     );
 
@@ -53,9 +52,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const isAuthenticated = !!session?.user;
 
     if (!isAuthenticated && inTabsGroup) {
-      router.replace("/(auth)/login" as Href);
+      router.replace("/(auth)/login");
     } else if (isAuthenticated && inAuthGroup) {
-      router.replace("/(tabs)" as Href);
+      router.replace("/(tabs)");
     }
   }, [session, isPending, segments]);
 

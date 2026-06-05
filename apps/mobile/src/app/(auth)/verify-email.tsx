@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, TextInput, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
@@ -79,7 +78,7 @@ export default function VerifyEmailScreen() {
     // For password reset, redirect to reset password page with OTP
     if (otpType === "forget-password") {
       router.push(
-        `/(auth)/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(data.otp)}` as Href,
+        `/(auth)/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(data.otp)}`,
       );
       return;
     }
@@ -98,7 +97,7 @@ export default function VerifyEmailScreen() {
     Alert.alert("Success", "Email verified successfully!");
 
     // Navigate to onboarding page after verification
-    router.push("/(auth)/onboarding" as Href);
+    router.push("/(auth)/onboarding");
   };
 
   return (

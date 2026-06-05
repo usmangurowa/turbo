@@ -1,9 +1,10 @@
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { apiKey } from "@better-auth/api-key";
 import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { emailOTP, oAuthProxy } from "better-auth/plugins";
+import { betterAuth } from "better-auth/minimal";
+import { emailOTP } from "better-auth/plugins/email-otp";
+import { oAuthProxy } from "better-auth/plugins/oauth-proxy";
 
 import { db } from "@turbo/db/client";
 

@@ -1,6 +1,7 @@
 {
   "extends": "@turbo/tsconfig/base.json",
   "compilerOptions": {
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     }

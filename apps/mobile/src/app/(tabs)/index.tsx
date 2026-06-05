@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { View } from "react-native";
 import { Link } from "expo-router";
 import { authClient } from "@/auth/client";
@@ -45,7 +44,7 @@ export default function HomeScreen() {
         </View>
 
         <View className="mt-8">
-          <Link href={"/(auth)/login" as Href} asChild>
+          <Link href={"/(auth)/login"} asChild>
             <Button variant="outline">Logout</Button>
           </Link>
         </View>

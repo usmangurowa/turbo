@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { Alert, ScrollView, View } from "react-native";
 import { Link, router } from "expo-router";
 import { authClient } from "@/auth/client";
@@ -37,7 +36,7 @@ export default function ForgotPasswordScreen() {
 
     // Navigate to verify-email page with email and reset type
     router.push(
-      `/(auth)/verify-email?email=${encodeURIComponent(data.email)}&type=forget-password` as Href,
+      `/(auth)/verify-email?email=${encodeURIComponent(data.email)}&type=forget-password`,
     );
   };
 
@@ -77,7 +76,7 @@ export default function ForgotPasswordScreen() {
         <View className="items-center">
           <Text className="text-muted-foreground text-sm">
             Remember your password?{" "}
-            <Link href={"/(auth)/login" as Href} asChild>
+            <Link href={"/(auth)/login"} asChild>
               <Text className="text-primary underline">Back to login</Text>
             </Link>
           </Text>
