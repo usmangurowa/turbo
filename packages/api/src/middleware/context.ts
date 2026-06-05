@@ -1,13 +1,8 @@
 import { createMiddleware } from "hono/factory";
 
-import type { Auth } from "@turbo/auth";
 import { db } from "@turbo/db/client";
 
-import type { AppContext } from "../context";
-
-interface AuthWithApi {
-  api: Auth["api"];
-}
+import type { AppContext, AuthWithApi } from "../context";
 
 /**
  * Context middleware that sets up auth, session, and database for all routes

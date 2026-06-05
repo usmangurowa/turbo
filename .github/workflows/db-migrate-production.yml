@@ -40,4 +40,5 @@ jobs:
       - name: Run Drizzle migrations
         env:
           POSTGRES_URL: ${{ secrets.PRODUCTION_POSTGRES_URL }}
+          TURBO_DB_SKIP_DOTENV: "1"
         run: pnpm db:migrate

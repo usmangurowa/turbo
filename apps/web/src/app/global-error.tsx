@@ -16,7 +16,7 @@ export default function GlobalError({ error }: GlobalErrorProps) {
   return (
     <html>
       <body>
-        <NextError statusCode={0} />
+        <NextError statusCode={500} />
       </body>
     </html>
   );

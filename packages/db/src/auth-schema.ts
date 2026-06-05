@@ -90,7 +90,9 @@ export const apikey = pgTable(
     configId: text("config_id").default("default").notNull(),
     name: text("name"),
     start: text("start"),
-    referenceId: text("reference_id").notNull(),
+    referenceId: text("reference_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
     prefix: text("prefix"),
     key: text("key").notNull(),
     refillInterval: integer("refill_interval"),
@@ -104,8 +106,11 @@ export const apikey = pgTable(
     remaining: integer("remaining"),
     lastRequest: timestamp("last_request"),
     expiresAt: timestamp("expires_at"),
-    createdAt: timestamp("created_at").notNull(),
-    updatedAt: timestamp("updated_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
     permissions: text("permissions"),
     metadata: text("metadata"),
   },
@@ -119,6 +124,7 @@ export const apikey = pgTable(
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
+  apikeys: many(apikey),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -131,6 +137,13 @@ export const sessionRelations = relations(session, ({ one }) => ({
 export const accountRelations = relations(account, ({ one }) => ({
   user: one(user, {
     fields: [account.userId],
+    references: [user.id],
+  }),
+}));
+
+export const apikeyRelations = relations(apikey, ({ one }) => ({
+  user: one(user, {
+    fields: [apikey.referenceId],
     references: [user.id],
   }),
 }));

@@ -5,7 +5,7 @@ import type { AppContext } from "../context";
 /**
  * API Key middleware for extension authentication.
  * Validates API key from x-api-key or Authorization header using Better Auth's verifyApiKey.
- * Sets apiKeyUserId in context for use in route handlers.
+ * Sets the API key owner user ID in context for use in route handlers.
  */
 export const apiKeyMiddleware = createMiddleware<AppContext>(
   async (c, next) => {
@@ -27,7 +27,7 @@ export const apiKeyMiddleware = createMiddleware<AppContext>(
       return c.json({ error: result.error?.message ?? "Invalid API key" }, 401);
     }
 
-    // Set user ID and key ID in context for route handlers
+    // Better Auth stores the owning user ID in referenceId for this plugin.
     c.set("apiKeyUserId", result.key.referenceId);
     c.set("apiKeyId", result.key.id);
 

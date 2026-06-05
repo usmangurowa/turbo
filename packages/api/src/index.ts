@@ -1,9 +1,7 @@
 import { Hono } from "hono";
 import { hc } from "hono/client";
 
-import type { Auth } from "@turbo/auth";
-
-import type { AppContext } from "./context";
+import type { AppContext, AuthWithApi } from "./context";
 import type { SecurityConfig } from "./middleware/security";
 import { contextMiddleware } from "./middleware/context";
 import {
@@ -15,10 +13,6 @@ import { timingMiddleware } from "./middleware/timing";
 import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
 import supportRouter from "./router/support";
-
-interface AuthWithApi {
-  api: Auth["api"];
-}
 
 /**
  * Options for creating the API app

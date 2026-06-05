@@ -4,27 +4,27 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
 
 ## Tech Stack
 
-| Category         | Technology          | Version      |
-| ---------------- | ------------------- | ------------ |
-| Runtime          | Node.js             | ^22.14.0     |
-| Package Manager  | pnpm                | ^10.19.0     |
-| Monorepo Tool    | Turborepo           | ^2.5.8       |
-| Language         | TypeScript          | ^5.9.3       |
-| Web Framework    | Next.js             | 16.0.10      |
-| Mobile Framework | Expo SDK            | ~55.0.4      |
-| React            | React               | 19.2.0       |
-| React Native     | React Native        | ~0.83.2      |
-| Styling          | Tailwind CSS        | ^4.1.16      |
-| Mobile Styling   | Uniwind             | ~1.0.0       |
-| API Framework    | Hono                | ^4.10.7      |
-| API Validation   | @hono/zod-validator | ^0.7.5       |
-| Database ORM     | Drizzle ORM         | ^0.44.7      |
-| Database Driver  | @vercel/postgres    | ^0.10.0      |
-| Auth             | Better Auth         | 1.4.0-beta.9 |
-| Validation       | Zod                 | ^4.1.12      |
-| Query Client     | TanStack Query      | ^5.90.8      |
-| UI Components    | shadcn/ui           | latest       |
-| Testing          | Vitest              | 4.0.15       |
+| Category         | Technology          | Version  |
+| ---------------- | ------------------- | -------- |
+| Runtime          | Node.js             | ^22.14.0 |
+| Package Manager  | pnpm                | ^10.19.0 |
+| Monorepo Tool    | Turborepo           | ^2.5.8   |
+| Language         | TypeScript          | ^5.9.3   |
+| Web Framework    | Next.js             | 16.2.4   |
+| Mobile Framework | Expo SDK            | ~55.0.15 |
+| React            | React               | 19.2.0   |
+| React Native     | React Native        | ~0.83.4  |
+| Styling          | Tailwind CSS        | ^4.1.16  |
+| Mobile Styling   | Uniwind             | ~1.0.0   |
+| API Framework    | Hono                | ^4.12.14 |
+| API Validation   | @hono/zod-validator | ^0.7.6   |
+| Database ORM     | Drizzle ORM         | ^0.45.2  |
+| Database Driver  | @vercel/postgres    | ^0.10.0  |
+| Auth             | Better Auth         | 1.6.5    |
+| Validation       | Zod                 | ^4.1.12  |
+| Query Client     | TanStack Query      | ^5.90.8  |
+| UI Components    | shadcn/ui           | latest   |
+| Testing          | Vitest              | 4.0.15   |
 
 ## Codebase Structure
 
@@ -36,13 +36,13 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
   └─ Recommended extensions and settings for VSCode users
 apps/
   ├─ mobile/                          # Expo mobile app
-  │   ├─ Expo SDK 55 (~55.0.4)
-  │   ├─ React Native 0.83.2 with React 19.2.0
+  │   ├─ Expo SDK 55 (~55.0.15)
+  │   ├─ React Native 0.83.4 with React 19.2.0
   │   ├─ Navigation using Expo Router
   │   ├─ Tailwind CSS using Uniwind
   │   └─ Type-safe API calls using Hono RPC client
   └─ web/                             # Next.js web app
-      ├─ Next.js 16.0.10
+      ├─ Next.js 16.2.4
       ├─ React 19.2.0
       ├─ Tailwind CSS v4.1.16
       └─ Hono RPC API server & type-safe client
