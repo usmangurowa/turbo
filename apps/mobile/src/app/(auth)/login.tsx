@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { Alert, Pressable, ScrollView, View } from "react-native";
 import { Link, router } from "expo-router";
 import { authClient } from "@/auth/client";
@@ -41,7 +40,7 @@ export default function LoginScreen() {
           type: "email-verification",
         });
         router.push(
-          `/(auth)/verify-email?email=${encodeURIComponent(data.email)}` as Href,
+          `/(auth)/verify-email?email=${encodeURIComponent(data.email)}`,
         );
         return;
       }
@@ -50,7 +49,7 @@ export default function LoginScreen() {
     }
 
     // Navigate to main app after login
-    router.replace("/(tabs)" as Href);
+    router.replace("/(tabs)");
   };
 
   return (
@@ -68,7 +67,7 @@ export default function LoginScreen() {
             <Text className="text-xl font-bold">Welcome back</Text>
             <Text className="text-muted-foreground text-center text-sm">
               Don't have an account?{" "}
-              <Link href={"/(auth)/create-account" as Href} asChild>
+              <Link href={"/(auth)/create-account"} asChild>
                 <Text className="text-primary underline">Sign up</Text>
               </Link>
             </Text>
@@ -87,7 +86,7 @@ export default function LoginScreen() {
             <View className="gap-2">
               <View className="flex-row items-center justify-between">
                 <Text className="text-sm font-medium">Password</Text>
-                <Link href={"/(auth)/forgot-password" as Href} asChild>
+                <Link href={"/(auth)/forgot-password"} asChild>
                   <Pressable>
                     <Text className="text-muted-foreground text-sm underline">
                       Forgot password?

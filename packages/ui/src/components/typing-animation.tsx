@@ -77,7 +77,7 @@ export const TypingAnimation = ({
 
     const text = children;
     let currentIndex = 0;
-    let intervalId: NodeJS.Timeout;
+    let intervalId: ReturnType<typeof setInterval>;
 
     const timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {

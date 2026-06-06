@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { Alert, ScrollView, View } from "react-native";
 import { Link, router } from "expo-router";
 import { authClient } from "@/auth/client";
@@ -55,9 +54,7 @@ export default function CreateAccountScreen() {
     }
 
     // Navigate to verify-email with email param
-    router.push(
-      `/(auth)/verify-email?email=${encodeURIComponent(data.email)}` as Href,
-    );
+    router.push(`/(auth)/verify-email?email=${encodeURIComponent(data.email)}`);
   };
 
   return (
@@ -74,7 +71,7 @@ export default function CreateAccountScreen() {
           <Text className="text-xl font-bold">Create your account</Text>
           <Text className="text-muted-foreground text-center text-sm">
             Already have an account?{" "}
-            <Link href={"/(auth)/login" as Href} asChild>
+            <Link href={"/(auth)/login"} asChild>
               <Text className="text-primary underline">Sign in</Text>
             </Link>
           </Text>

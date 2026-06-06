@@ -20,8 +20,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@date-fns/tz": "1.4.1",
-    "@hono/zod-validator": "^0.7.6",
+    "@date-fns/tz": "1.5.0",
+    "@hono/zod-validator": "^0.8.0",
     "@turbo/ai": "workspace:*",
     "@turbo/analytics": "workspace:^",
     "@turbo/auth": "workspace:*",
@@ -30,8 +30,8 @@
     "@turbo/mail": "workspace:^",
     "@turbo/shared": "workspace:*",
     "@turbo/validators": "workspace:*",
-    "date-fns": "^4.1.0",
-    "hono": "^4.12.14",
+    "date-fns": "^4.4.0",
+    "hono": "^4.12.23",
     "hono-rate-limiter": "^0.5.3",
     "zod": "catalog:"
   },
@@ -39,10 +39,11 @@
     "@turbo/eslint-config": "workspace:*",
     "@turbo/prettier-config": "workspace:*",
     "@turbo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "vitest": "4.0.15"
+    "vitest": "4.1.8"
   },
   "prettier": "@turbo/prettier-config"
 }

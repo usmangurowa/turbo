@@ -1,4 +1,3 @@
-import type { Href } from "expo-router";
 import { Alert, ScrollView, View } from "react-native";
 import { Image } from "expo-image";
 import { router } from "expo-router";
@@ -54,7 +53,7 @@ export default function OnboardingScreen() {
     }
 
     Alert.alert("Success", "Profile updated successfully!");
-    router.replace("/(tabs)" as Href);
+    router.replace("/(tabs)");
   };
 
   return (

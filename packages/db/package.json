@@ -32,21 +32,22 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@paralleldrive/cuid2": "^3.0.4",
-    "@vercel/postgres": "^0.10.0",
+    "@paralleldrive/cuid2": "^3.3.0",
     "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.8.3",
+    "postgres": "^3.4.9",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@turbo/eslint-config": "workspace:*",
     "@turbo/prettier-config": "workspace:*",
     "@turbo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
     "drizzle-kit": "^0.31.10",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "vitest": "4.0.15"
+    "vitest": "4.1.8"
   },
   "prettier": "@turbo/prettier-config"
 }

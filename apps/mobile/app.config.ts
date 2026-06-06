@@ -73,6 +73,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     "expo-web-browser",
     "expo-notifications",
+    "@sentry/react-native",
     [
       "expo-updates",
       {

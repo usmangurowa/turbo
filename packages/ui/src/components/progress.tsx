@@ -5,8 +5,9 @@ import { Progress as ProgressPrimitive } from "radix-ui";
 
 import { cn } from "..";
 
-interface ProgressProps
-  extends React.ComponentProps<typeof ProgressPrimitive.Root> {
+interface ProgressProps extends React.ComponentProps<
+  typeof ProgressPrimitive.Root
+> {
   /** Whether to animate from 0 to value on mount. Defaults to false. */
   animate?: boolean;
 }

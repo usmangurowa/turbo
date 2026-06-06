@@ -8,23 +8,23 @@ A full-stack TypeScript monorepo with Next.js, Expo, and Hono RPC.
 | ---------------- | ------------------- | -------- |
 | Runtime          | Node.js             | ^22.14.0 |
 | Package Manager  | pnpm                | ^10.19.0 |
-| Monorepo Tool    | Turborepo           | ^2.5.8   |
-| Language         | TypeScript          | ^5.9.3   |
-| Web Framework    | Next.js             | 16.2.4   |
-| Mobile Framework | Expo SDK            | ~55.0.15 |
-| React            | React               | 19.2.0   |
-| React Native     | React Native        | ~0.83.4  |
-| Styling          | Tailwind CSS        | ^4.1.16  |
-| Mobile Styling   | Uniwind             | ~1.0.0   |
-| API Framework    | Hono                | ^4.12.14 |
-| API Validation   | @hono/zod-validator | ^0.7.6   |
+| Monorepo Tool    | Turborepo           | ^2.9.16  |
+| Language         | TypeScript          | ^6.0.3   |
+| Web Framework    | Next.js             | 16.2.7   |
+| Mobile Framework | Expo SDK            | ~56.0.8  |
+| React            | React               | 19.2.3   |
+| React Native     | React Native        | ~0.85.3  |
+| Styling          | Tailwind CSS        | ^4.3.0   |
+| Mobile Styling   | Uniwind             | ~1.8.0   |
+| API Framework    | Hono                | ^4.12.23 |
+| API Validation   | @hono/zod-validator | ^0.8.0   |
 | Database ORM     | Drizzle ORM         | ^0.45.2  |
-| Database Driver  | @vercel/postgres    | ^0.10.0  |
-| Auth             | Better Auth         | 1.6.5    |
-| Validation       | Zod                 | ^4.1.12  |
-| Query Client     | TanStack Query      | ^5.90.8  |
+| Database Driver  | postgres.js         | ^3.4.9   |
+| Auth             | Better Auth         | 1.6.14   |
+| Validation       | Zod                 | 4.4.3    |
+| Query Client     | TanStack Query      | ^5.101.0 |
 | UI Components    | shadcn/ui           | latest   |
-| Testing          | Vitest              | 4.0.15   |
+| Testing          | Vitest              | 4.1.8    |
 
 ## Codebase Structure
 

@@ -107,7 +107,7 @@ const ChartTooltip = RechartsPrimitive.Tooltip;
 
 function ChartTooltipContent({
   active,
-  payload,
+  payload = [],
   className,
   indicator = "dot",
   hideLabel = false,
@@ -120,6 +120,7 @@ function ChartTooltipContent({
   nameKey,
   labelKey,
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+  RechartsPrimitive.TooltipContentProps &
   React.ComponentProps<"div"> & {
     hideLabel?: boolean;
     hideIndicator?: boolean;
@@ -130,12 +131,20 @@ function ChartTooltipContent({
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload?.length) {
+    if (hideLabel || !payload.length) {
       return null;
     }
 
     const [item] = payload;
-    const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
+    if (!item) {
+      return null;
+    }
+
+    const key =
+      labelKey ??
+      getStringPayloadValue(item.dataKey) ??
+      getStringPayloadValue(item.name) ??
+      "value";
     const itemConfig = getPayloadConfigFromPayload(config, item, key);
     const value =
       !labelKey && typeof label === "string"
@@ -165,7 +174,7 @@ function ChartTooltipContent({
     labelKey,
   ]);
 
-  if (!active || !payload?.length) {
+  if (!active || !payload.length) {
     return null;
   }
 
@@ -183,7 +192,11 @@ function ChartTooltipContent({
         {payload
           .filter((item) => item.type !== "none")
           .map((item, index) => {
-            const key = `${nameKey ?? item.name ?? (item.dataKey != null ? String(item.dataKey) : "value")}`;
+            const key =
+              nameKey ??
+              getStringPayloadValue(item.name) ??
+              getStringPayloadValue(item.dataKey) ??
+              "value";
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
             const itemPayload = item.payload as
               | Record<string, unknown>
@@ -196,7 +209,11 @@ function ChartTooltipContent({
 
             return (
               <div
-                key={item.dataKey}
+                key={
+                  getStringPayloadValue(item.dataKey) ??
+                  getStringPayloadValue(item.name) ??
+                  index
+                }
                 className={cn(
                   "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                   indicator === "dot" && "items-center",
@@ -267,7 +284,8 @@ function ChartLegendContent({
   verticalAlign = "bottom",
   nameKey,
 }: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+  Pick<RechartsPrimitive.DefaultLegendContentProps, "verticalAlign"> & {
+    payload?: readonly RechartsPrimitive.LegendPayload[];
     hideIcon?: boolean;
     nameKey?: string;
   }) {
@@ -293,7 +311,7 @@ function ChartLegendContent({
 
           return (
             <div
-              key={item.value as string}
+              key={item.value}
               className={cn(
                 "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3",
               )}
@@ -338,18 +356,24 @@ function getPayloadConfigFromPayload(
     key in payload &&
     typeof payload[key as keyof typeof payload] === "string"
   ) {
-    configLabelKey = payload[key as keyof typeof payload] as string;
+    configLabelKey = payload[key as keyof typeof payload];
   } else if (
     payloadPayload &&
     key in payloadPayload &&
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string;
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
   }
 
   return configLabelKey in config ? config[configLabelKey] : config[key];
+}
+
+function getStringPayloadValue(value: unknown) {
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  return undefined;
 }
 
 export {
