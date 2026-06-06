@@ -5,7 +5,7 @@
 
 ## AGENTS.md
 
-```md
+````md
 # Agent Instructions
 
 > Universal rules for all AI coding agents working in this repository.
@@ -101,7 +101,7 @@ For detailed technology guides, see `.agents/skills/`:
 - Drizzle ORM → `.agents/skills/drizzle/`
 - Trigger.dev → `.agents/skills/trigger-dev-tasks/`
 - Turborepo → `.agents/skills/turborepo/`
-```
+````
 
 ## ARCHITECTURE.md
 
@@ -186,7 +186,7 @@ then update the stale documentation in the same change.
 
 ## ROADMAP_AI.md
 
-```md
+````md
 # AI Roadmap Ledger
 
 This file is the agent-readable implementation ledger. Every coding agent should
@@ -201,11 +201,11 @@ architecture, contracts, or conventions.
 
 ## Active Sprint
 
-| ID     | Status   | Task                                                 | Files                                                                              | Validation                |
-| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------- |
-| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`       |
-| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict`      |
-| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`       |
+| ID     | Status   | Task                                                 | Files                                                                              | Validation           |
+| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------- |
+| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`  |
+| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict` |
+| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`  |
 | AI-004 | complete | Enforce fresh AI contract snapshots in CI            | `.github/workflows/ci.yml`, `package.json`                                         | `pnpm ai:contracts:check` |
 
 ## Implemented Features
@@ -257,11 +257,11 @@ After non-trivial changes, update the rows above when any of these changed:
 - Environment variables
 - Design tokens or UI conventions
 - Agent workflows, prompts, rules, or skills
-```
+````
 
 ## system_prompt.md
 
-```md
+````md
 # Turbo System Prompt
 
 You are working in a TypeScript Turborepo optimized for AI-assisted development.
@@ -346,7 +346,7 @@ points that should reference `.ai/` instead of duplicating long-form rules.
 - Update `ROADMAP_AI.md` for meaningful feature, contract, or architecture
   changes.
 - Follow `.ai/skills/update-ai-memory.md` before finishing.
-```
+````
 
 ## .ai/context/tech-stack.md
 
@@ -461,7 +461,7 @@ Turbo remote caching via Vercel.
 
 ## .ai/context/conventions.md
 
-```md
+````md
 # Conventions
 
 > Derived from actual patterns observed in this repository. Update when conventions change.
@@ -556,7 +556,7 @@ Example: `packages/db/src/auth-schema.ts`
 - **TypeScript strict mode** across all packages
 - Import sorting via `@ianvs/prettier-plugin-sort-imports`
 - Tailwind class sorting via `prettier-plugin-tailwindcss`
-```
+````
 
 ## .ai/context/architecture.md
 
@@ -609,7 +609,7 @@ and update `ROADMAP_AI.md` if the boundary or flow changes.
 
 ## .ai/context/data-contracts.md
 
-```md
+````md
 # Data Contracts
 
 > Generated snapshots live in `.ai/contracts/*.generated.md`.
@@ -652,11 +652,11 @@ and update `ROADMAP_AI.md` if the boundary or flow changes.
 
 Do not infer contracts from memory. Read source files or generated snapshots, then
 update snapshots after contract changes.
-```
+````
 
 ## .ai/context/design-system.md
 
-```md
+````md
 # Design System Context
 
 ## Baseline
@@ -707,11 +707,11 @@ baseline unless a task explicitly requests a visual identity change.
 - Mobile screens live under `apps/mobile/src/app` and use Expo Router.
 - Mobile styling uses Uniwind conventions and local/native primitives rather
   than importing web-only `@turbo/ui` components.
-```
+````
 
 ## .ai/context/routing.md
 
-```md
+````md
 # Routing Context
 
 ## Web Routing
@@ -741,11 +741,11 @@ baseline unless a task explicitly requests a visual identity change.
 
 Before adding a route, identify whether it is a web page, mobile screen, API
 router, or auth adapter. Use the matching `.ai/skills/*` procedure.
-```
+````
 
 ## .ai/contracts/api-routes.generated.md
 
-```md
+````md
 # API Routes Snapshot
 
 > Generated file. Do not edit by hand.
@@ -753,25 +753,25 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## Routes
 
-| Method | Path            | Source                               | Auth middleware |
-| ------ | --------------- | ------------------------------------ | --------------- |
-| DELETE | `/apikeys/:id`  | `packages/api/src/router/api-key.ts` | no              |
-| GET    | `/apikeys`      | `packages/api/src/router/api-key.ts` | no              |
-| GET    | `/auth/secret`  | `packages/api/src/router/auth.ts`    | yes             |
-| GET    | `/auth/session` | `packages/api/src/router/auth.ts`    | no              |
-| GET    | `/health`       | `packages/api/src/index.ts`          | no              |
-| POST   | `/apikeys`      | `packages/api/src/router/api-key.ts` | no              |
-| POST   | `/support`      | `packages/api/src/router/support.ts` | no              |
+| Method | Path | Source | Auth middleware |
+| --- | --- | --- | --- |
+| DELETE | `/apikeys/:id` | `packages/api/src/router/api-key.ts` | no |
+| GET | `/apikeys` | `packages/api/src/router/api-key.ts` | no |
+| GET | `/auth/secret` | `packages/api/src/router/auth.ts` | yes |
+| GET | `/auth/session` | `packages/api/src/router/auth.ts` | no |
+| GET | `/health` | `packages/api/src/index.ts` | no |
+| POST | `/apikeys` | `packages/api/src/router/api-key.ts` | no |
+| POST | `/support` | `packages/api/src/router/support.ts` | no |
 
 ## Typed client source
 
 - `packages/api/src/index.ts` exports `AppType` and `hcWithType`.
 - Web and mobile clients should infer from `AppType` instead of hand-written route types.
-```
+````
 
 ## .ai/contracts/db-schema.generated.md
 
-```md
+````md
 # Database Schema Snapshot
 
 > Generated file. Do not edit by hand.
@@ -784,27 +784,27 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## Tables
 
-| Export         | DB table       | Source                           |
-| -------------- | -------------- | -------------------------------- |
-| `user`         | `user`         | `packages/db/src/auth-schema.ts` |
-| `session`      | `session`      | `packages/db/src/auth-schema.ts` |
-| `account`      | `account`      | `packages/db/src/auth-schema.ts` |
+| Export | DB table | Source |
+| --- | --- | --- |
+| `user` | `user` | `packages/db/src/auth-schema.ts` |
+| `session` | `session` | `packages/db/src/auth-schema.ts` |
+| `account` | `account` | `packages/db/src/auth-schema.ts` |
 | `verification` | `verification` | `packages/db/src/auth-schema.ts` |
-| `apikey`       | `apikey`       | `packages/db/src/auth-schema.ts` |
+| `apikey` | `apikey` | `packages/db/src/auth-schema.ts` |
 
 ## Relations
 
-| Export             | Table export | Source                           |
-| ------------------ | ------------ | -------------------------------- |
-| `userRelations`    | `user`       | `packages/db/src/auth-schema.ts` |
-| `sessionRelations` | `session`    | `packages/db/src/auth-schema.ts` |
-| `accountRelations` | `account`    | `packages/db/src/auth-schema.ts` |
-| `apikeyRelations`  | `apikey`     | `packages/db/src/auth-schema.ts` |
-```
+| Export | Table export | Source |
+| --- | --- | --- |
+| `userRelations` | `user` | `packages/db/src/auth-schema.ts` |
+| `sessionRelations` | `session` | `packages/db/src/auth-schema.ts` |
+| `accountRelations` | `account` | `packages/db/src/auth-schema.ts` |
+| `apikeyRelations` | `apikey` | `packages/db/src/auth-schema.ts` |
+````
 
 ## .ai/contracts/env.generated.md
 
-```md
+````md
 # Environment Contract Snapshot
 
 > Generated file. Do not edit by hand.
@@ -890,10 +890,10 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## Env validation modules
 
-| File                 | Variables                                                                                                                                                       |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| apps/web/src/env.ts  | `CI`, `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_PORT`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NODE_ENV`, `POSTGRES_URL`, `SKIP_ENV_VALIDATION` |
-| packages/auth/env.ts | `AUTH_SECRET`, `CI`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NODE_ENV`, `SKIP_ENV_VALIDATION`, `SUPABASE_JWT_SECRET`                                       |
+| File | Variables |
+| --- | --- |
+| apps/web/src/env.ts | `CI`, `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_PORT`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NODE_ENV`, `POSTGRES_URL`, `SKIP_ENV_VALIDATION` |
+| packages/auth/env.ts | `AUTH_SECRET`, `CI`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NODE_ENV`, `SKIP_ENV_VALIDATION`, `SUPABASE_JWT_SECRET` |
 
 ## Drift Report
 
@@ -908,43 +908,43 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 ### Validated in env modules but missing from .env.example
 
 - None
-```
+````
 
 ## .ai/contracts/package-exports.generated.md
 
-```md
+````md
 # Package Exports Snapshot
 
 > Generated file. Do not edit by hand.
 > Run `pnpm ai:contracts` to refresh this generated file.
 
-| Package                  | Path                  | Exports                                  |
-| ------------------------ | --------------------- | ---------------------------------------- |
-| `@turbo/mobile`          | `apps/mobile`         | None                                     |
-| `@turbo/web`             | `apps/web`            | None                                     |
-| `@turbo/ai`              | `packages/ai`         | `.`, `./client`                          |
-| `@turbo/analytics`       | `packages/analytics`  | `.`, `./server`, `./events`              |
-| `@turbo/api`             | `packages/api`        | `.`                                      |
-| `@turbo/assets`          | `packages/assets`     | `./fonts/*`                              |
-| `@turbo/auth`            | `packages/auth`       | `.`, `./middleware`, `./client`, `./env` |
-| `@turbo/db`              | `packages/db`         | `.`, `./client`, `./schema`              |
-| `@turbo/jobs`            | `packages/jobs`       | `.`, `./tasks/*`, `./domain/*`           |
-| `@turbo/mail`            | `packages/mail`       | `.`, `./client`, `./templates/*`         |
-| `@turbo/shared`          | `packages/shared`     | `.`, `./constants`                       |
-| `@turbo/supabase`        | `packages/supabase`   | `.`, `./client`                          |
-| `@turbo/ui`              | `packages/ui`         | `.`, `./*`, `./hooks/*`                  |
-| `@turbo/validators`      | `packages/validators` | `.`                                      |
-| `@turbo/eslint-config`   | `tooling/eslint`      | `./base`, `./nextjs`, `./react`          |
-| `@turbo/github`          | `tooling/github`      | None                                     |
-| `@turbo/prettier-config` | `tooling/prettier`    | `.`                                      |
-| `@turbo/tailwind-config` | `tooling/tailwind`    | `./theme`, `./postcss-config`            |
-| `@turbo/tsconfig`        | `tooling/typescript`  | None                                     |
-| `@turbo/vitest-config`   | `tooling/vitest`      | `.`                                      |
-```
+| Package | Path | Exports |
+| --- | --- | --- |
+| `@turbo/mobile` | `apps/mobile` | None |
+| `@turbo/web` | `apps/web` | None |
+| `@turbo/ai` | `packages/ai` | `.`, `./client` |
+| `@turbo/analytics` | `packages/analytics` | `.`, `./server`, `./events` |
+| `@turbo/api` | `packages/api` | `.` |
+| `@turbo/assets` | `packages/assets` | `./fonts/*` |
+| `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env` |
+| `@turbo/db` | `packages/db` | `.`, `./client`, `./schema` |
+| `@turbo/jobs` | `packages/jobs` | `.`, `./tasks/*`, `./domain/*` |
+| `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |
+| `@turbo/shared` | `packages/shared` | `.`, `./constants` |
+| `@turbo/supabase` | `packages/supabase` | `.`, `./client` |
+| `@turbo/ui` | `packages/ui` | `.`, `./*`, `./hooks/*` |
+| `@turbo/validators` | `packages/validators` | `.` |
+| `@turbo/eslint-config` | `tooling/eslint` | `./base`, `./nextjs`, `./react` |
+| `@turbo/github` | `tooling/github` | None |
+| `@turbo/prettier-config` | `tooling/prettier` | `.` |
+| `@turbo/tailwind-config` | `tooling/tailwind` | `./theme`, `./postcss-config` |
+| `@turbo/tsconfig` | `tooling/typescript` | None |
+| `@turbo/vitest-config` | `tooling/vitest` | `.` |
+````
 
 ## .ai/contracts/dependency-graph.generated.md
 
-```md
+````md
 # Workspace Dependency Graph Snapshot
 
 > Generated file. Do not edit by hand.
@@ -975,26 +975,26 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## Internal dependencies
 
-| Package                  | Path                  | Internal dependencies                                                                                                                                                                                                                            |
-| ------------------------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `@turbo/mobile`          | `apps/mobile`         | `@turbo/analytics`, `@turbo/api`, `@turbo/assets`, `@turbo/auth`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/validators`                                          |
-| `@turbo/web`             | `apps/web`            | `@turbo/analytics`, `@turbo/api`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/ui`, `@turbo/validators` |
-| `@turbo/ai`              | `packages/ai`         | `@turbo/analytics`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`                                                                                                                                         |
-| `@turbo/analytics`       | `packages/analytics`  | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/api`             | `packages/api`        | `@turbo/ai`, `@turbo/analytics`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/jobs`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`, `@turbo/validators`                                             |
-| `@turbo/assets`          | `packages/assets`     | None                                                                                                                                                                                                                                             |
-| `@turbo/auth`            | `packages/auth`       | `@turbo/db`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                 |
-| `@turbo/db`              | `packages/db`         | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/jobs`            | `packages/jobs`       | `@turbo/ai`, `@turbo/analytics`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`                                                                                                               |
-| `@turbo/mail`            | `packages/mail`       | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/shared`          | `packages/shared`     | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/supabase`        | `packages/supabase`   | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/ui`              | `packages/ui`         | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/validators`      | `packages/validators` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/eslint-config`   | `tooling/eslint`      | `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                                                      |
-| `@turbo/github`          | `tooling/github`      | None                                                                                                                                                                                                                                             |
-| `@turbo/prettier-config` | `tooling/prettier`    | `@turbo/tsconfig`                                                                                                                                                                                                                                |
-| `@turbo/tailwind-config` | `tooling/tailwind`    | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                              |
-| `@turbo/tsconfig`        | `tooling/typescript`  | None                                                                                                                                                                                                                                             |
-| `@turbo/vitest-config`   | `tooling/vitest`      | `@turbo/prettier-config`, `@turbo/tsconfig`                                                                                                                                                                                                      |
-```
+| Package | Path | Internal dependencies |
+| --- | --- | --- |
+| `@turbo/mobile` | `apps/mobile` | `@turbo/analytics`, `@turbo/api`, `@turbo/assets`, `@turbo/auth`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/validators` |
+| `@turbo/web` | `apps/web` | `@turbo/analytics`, `@turbo/api`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/ui`, `@turbo/validators` |
+| `@turbo/ai` | `packages/ai` | `@turbo/analytics`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
+| `@turbo/analytics` | `packages/analytics` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/api` | `packages/api` | `@turbo/ai`, `@turbo/analytics`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/jobs`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`, `@turbo/validators` |
+| `@turbo/assets` | `packages/assets` | None |
+| `@turbo/auth` | `packages/auth` | `@turbo/db`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/db` | `packages/db` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/jobs` | `packages/jobs` | `@turbo/ai`, `@turbo/analytics`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
+| `@turbo/mail` | `packages/mail` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/shared` | `packages/shared` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/supabase` | `packages/supabase` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/ui` | `packages/ui` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/validators` | `packages/validators` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/eslint-config` | `tooling/eslint` | `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/github` | `tooling/github` | None |
+| `@turbo/prettier-config` | `tooling/prettier` | `@turbo/tsconfig` |
+| `@turbo/tailwind-config` | `tooling/tailwind` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/tsconfig` | `tooling/typescript` | None |
+| `@turbo/vitest-config` | `tooling/vitest` | `@turbo/prettier-config`, `@turbo/tsconfig` |
+````

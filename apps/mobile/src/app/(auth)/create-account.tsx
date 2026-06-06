@@ -54,9 +54,7 @@ export default function CreateAccountScreen() {
     }
 
     // Navigate to verify-email with email param
-    router.push(
-      `/(auth)/verify-email?email=${encodeURIComponent(data.email)}`,
-    );
+    router.push(`/(auth)/verify-email?email=${encodeURIComponent(data.email)}`);
   };
 
   return (

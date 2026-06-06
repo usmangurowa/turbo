@@ -13,7 +13,7 @@ export const timingMiddleware = createMiddleware<AppContext>(
     // Artificial delay in dev (100-500ms) to catch unwanted waterfalls
     if (process.env.NODE_ENV === "development") {
       const waitMs = Math.floor(Math.random() * 400) + 100;
-      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      await new Promise<void>((resolve) => setTimeout(resolve, waitMs));
     }
 
     await next();

@@ -4,8 +4,10 @@ import { Button as ReactEmailButton } from "@react-email/components";
 type ButtonVariant = "primary" | "secondary" | "destructive" | "outline";
 type ButtonSize = "sm" | "md" | "lg";
 
-export interface EmailButtonProps
-  extends Omit<ComponentProps<typeof ReactEmailButton>, "className"> {
+export interface EmailButtonProps extends Omit<
+  ComponentProps<typeof ReactEmailButton>,
+  "className"
+> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;

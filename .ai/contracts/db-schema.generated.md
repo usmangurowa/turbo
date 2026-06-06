@@ -10,19 +10,19 @@
 
 ## Tables
 
-| Export         | DB table       | Source                           |
-| -------------- | -------------- | -------------------------------- |
-| `user`         | `user`         | `packages/db/src/auth-schema.ts` |
-| `session`      | `session`      | `packages/db/src/auth-schema.ts` |
-| `account`      | `account`      | `packages/db/src/auth-schema.ts` |
+| Export | DB table | Source |
+| --- | --- | --- |
+| `user` | `user` | `packages/db/src/auth-schema.ts` |
+| `session` | `session` | `packages/db/src/auth-schema.ts` |
+| `account` | `account` | `packages/db/src/auth-schema.ts` |
 | `verification` | `verification` | `packages/db/src/auth-schema.ts` |
-| `apikey`       | `apikey`       | `packages/db/src/auth-schema.ts` |
+| `apikey` | `apikey` | `packages/db/src/auth-schema.ts` |
 
 ## Relations
 
-| Export             | Table export | Source                           |
-| ------------------ | ------------ | -------------------------------- |
-| `userRelations`    | `user`       | `packages/db/src/auth-schema.ts` |
-| `sessionRelations` | `session`    | `packages/db/src/auth-schema.ts` |
-| `accountRelations` | `account`    | `packages/db/src/auth-schema.ts` |
-| `apikeyRelations`  | `apikey`     | `packages/db/src/auth-schema.ts` |
+| Export | Table export | Source |
+| --- | --- | --- |
+| `userRelations` | `user` | `packages/db/src/auth-schema.ts` |
+| `sessionRelations` | `session` | `packages/db/src/auth-schema.ts` |
+| `accountRelations` | `account` | `packages/db/src/auth-schema.ts` |
+| `apikeyRelations` | `apikey` | `packages/db/src/auth-schema.ts` |
