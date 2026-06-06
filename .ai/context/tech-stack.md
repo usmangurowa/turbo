@@ -59,7 +59,7 @@ tooling/
 | ------------------ | ---------------------------------------------- |
 | Component library  | shadcn/ui (Radix primitives + CVA variants)    |
 | CSS framework      | Tailwind CSS 4.3.0                             |
-| Mobile styling     | Uniwind 1.0 (Tailwind for RN)                  |
+| Mobile styling     | Uniwind 1.8.x (Tailwind for RN)                |
 | Icons              | HugeIcons (React + React Native)               |
 | Animation (web)    | Motion (Framer Motion) 12.x                    |
 | Animation (mobile) | react-native-reanimated 4.3.1 + worklets 0.8.3 |

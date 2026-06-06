@@ -100,6 +100,7 @@ function Carousel({
     queueMicrotask(() => onSelect(api));
 
     return () => {
+      api.off("reInit", onSelect);
       api.off("select", onSelect);
     };
   }, [api, onSelect]);

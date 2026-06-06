@@ -131,7 +131,7 @@ function ChartTooltipContent({
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
-    if (hideLabel || !payload.length) {
+    if (hideLabel || !payload?.length) {
       return null;
     }
 
@@ -174,7 +174,7 @@ function ChartTooltipContent({
     labelKey,
   ]);
 
-  if (!active || !payload.length) {
+  if (!active || !payload?.length) {
     return null;
   }
 
@@ -362,9 +362,7 @@ function getPayloadConfigFromPayload(
     key in payloadPayload &&
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ];
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
   }
 
   return configLabelKey in config ? config[configLabelKey] : config[key];

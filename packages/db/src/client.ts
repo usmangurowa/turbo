@@ -10,12 +10,22 @@ if (!connectionString && !skipEnvValidation) {
   throw new Error("Missing POSTGRES_URL");
 }
 
-const client = postgres(
-  connectionString ?? "postgres://postgres:postgres@localhost:5432/postgres",
-  {
-    prepare: false,
-  },
-);
+const globalForDb = globalThis as typeof globalThis & {
+  __turboDbClient?: ReturnType<typeof postgres>;
+};
+
+const client =
+  globalForDb.__turboDbClient ??
+  postgres(
+    connectionString ?? "postgres://postgres:postgres@localhost:5432/postgres",
+    {
+      prepare: false,
+    },
+  );
+
+if (process.env.NODE_ENV !== "production") {
+  globalForDb.__turboDbClient = client;
+}
 
 export const db = drizzle({
   client,

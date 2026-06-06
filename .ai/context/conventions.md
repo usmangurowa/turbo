@@ -79,7 +79,9 @@ Example: `packages/db/src/auth-schema.ts`
 ## Operational Commands
 
 - Run `pnpm auth:generate` after Better Auth schema/config changes that affect generated auth schema output.
-- Run `pnpm db:push` after Drizzle schema changes that should be applied to the development database.
+- Run `pnpm db:generate -- --name <migration_name>` after Drizzle schema changes that need durable migrations.
+- Run `pnpm db:migrate` to apply pending Drizzle migrations.
+- Use `pnpm db:push:local` only for disposable local databases.
 - Use `pnpm db:studio` for local schema/data inspection during development.
 - Prefer workspace/root scripts when available over ad-hoc package commands.
 
