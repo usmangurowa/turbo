@@ -11,13 +11,16 @@ const optionalString = z
 export const env = createEnv({
   extends: [authEnv()],
   server: {
-    PORT: z.coerce.number().int().min(1).max(65535).default(3001),
+    SERVER_PORT: z.coerce.number().int().min(1).max(65535).default(3001),
     SERVER_URL: z.url().default("http://localhost:3001"),
     APP_URL: z.url().default("http://localhost:3000"),
     POSTGRES_URL: z.url(),
     RESEND_API_KEY: optionalString,
   },
-  runtimeEnv: process.env,
+  runtimeEnv: {
+    ...process.env,
+    SERVER_PORT: process.env.SERVER_PORT ?? process.env.PORT,
+  },
   skipValidation:
     !!process.env.CI ||
     !!process.env.SKIP_ENV_VALIDATION ||

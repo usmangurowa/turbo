@@ -19,8 +19,10 @@ server process without moving business API logic out of `packages/api`.
 - [ ] `apps/server` exists as package `@turbo/server` and starts a Node/Hono server.
 - [ ] `apps/server` imports `createApp` from `@turbo/api`; no API route logic is duplicated or moved.
 - [ ] The existing Next.js `/api` mount remains supported.
-- [ ] `SERVER_URL` and `APP_URL` are documented and included in environment contracts.
-- [ ] A focused server test verifies `/health` without starting a long-lived listener.
+- [ ] The standalone server exposes the shared API under `/api` and keeps `/health` as a root runtime health check.
+- [ ] Better Auth handlers are mounted under `/api/auth/*` for the standalone runtime.
+- [ ] `SERVER_PORT`, `SERVER_URL`, and `APP_URL` are documented and included in environment contracts.
+- [ ] Focused server tests verify `/health`, `/api/health`, and `/api/auth/*` without starting a long-lived listener.
 - [ ] AI context, roadmap, and generated contracts reflect the new app.
 
 ## Expected Files
@@ -39,7 +41,7 @@ server process without moving business API logic out of `packages/api`.
 | --- | --- | --- |
 | API routes | no | Existing `@turbo/api` route surface is hosted by a new runtime. |
 | DB schema | no | No schema or migration change. |
-| Env vars | yes | Adds `SERVER_URL` and `APP_URL`. |
+| Env vars | yes | Adds `SERVER_PORT`, `SERVER_URL`, and `APP_URL`; platform `PORT` remains pass-through fallback only. |
 | Package exports | yes | Adds `@turbo/auth/trusted-origins` and `@turbo/server`. |
 | UI tokens | no | No UI change. |
 | Agent memory | yes | Architecture, tech stack, roadmap, and contracts must be updated. |
@@ -50,10 +52,10 @@ server process without moving business API logic out of `packages/api`.
 1. Create apps/server with standard package scripts and shared tooling config.
 2. Add server env validation with @t3-oss/env-core.
 3. Add server-local auth configured with SERVER_URL and existing mail OTP sender.
-4. Add app factory that wraps @turbo/api createApp with server CORS config.
+4. Add app factory that wraps @turbo/api createApp under /api with server CORS config.
 5. Add Node listener entrypoint using @hono/node-server.
 6. Add trusted-origin helper and reuse it from web/server mount points.
-7. Add focused test for /health.
+7. Add focused tests for /health, /api/health, and /api/auth/*.
 8. Refresh generated contracts and update AI memory/docs.
 ```
 
@@ -71,8 +73,8 @@ server process without moving business API logic out of `packages/api`.
 ## Rollback Plan
 
 Remove `apps/server`, remove the root `dev:server` script, remove
-`SERVER_URL`/`APP_URL` from env docs and Turbo globals, revert the trusted-origin
-helper/export if no longer used, then refresh AI contracts.
+`SERVER_PORT`/`SERVER_URL`/`APP_URL` from env docs and Turbo globals, revert the
+trusted-origin helper/export if no longer used, then refresh AI contracts.
 
 ## Notes
 

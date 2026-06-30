@@ -1,7 +1,7 @@
 import { initAuth } from "@turbo/auth";
 import { sendOTPEmail } from "@turbo/mail/client";
 
-import { env } from "./env";
+import { env } from "./env.js";
 
 export const auth = initAuth({
   baseUrl: env.SERVER_URL,

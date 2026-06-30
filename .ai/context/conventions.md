@@ -75,6 +75,7 @@ Example: `packages/db/src/auth-schema.ts`
 - `.env.example` as template — copy to `.env` for local development
 - Public vars prefixed with `NEXT_PUBLIC_` (web) or `EXPO_PUBLIC_` (mobile)
 - Validated with environment modules (e.g., `apps/web/src/env.ts`)
+- The standalone server uses `SERVER_PORT` for local port configuration; generic `PORT` is reserved as a platform fallback and should not be set in `.env.example`.
 
 ## Operational Commands
 

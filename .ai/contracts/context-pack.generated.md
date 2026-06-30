@@ -137,10 +137,12 @@ Web or mobile UI
 ```
 
 The web app mounts the Hono API in `apps/web/src/app/api/[[...route]]/route.ts`.
-The standalone server hosts the same API app from `apps/server`. Business logic
-belongs in `packages/api/src/router/`, not in app-local API route handlers or
-runtime entrypoints. The API app is created in `packages/api/src/index.ts` and
-exports `AppType` for typed clients.
+The standalone server hosts the same API app from `apps/server` under `/api` and
+keeps a root `/health` runtime check. Better Auth handlers are mounted under
+`/api/auth/*` by each runtime. Business logic belongs in
+`packages/api/src/router/`, not in app-local API route handlers or runtime
+entrypoints. The API app is created in `packages/api/src/index.ts` and exports
+`AppType` for typed clients.
 
 ## Frontend Data Flow
 
@@ -548,6 +550,7 @@ Example: `packages/db/src/auth-schema.ts`
 - `.env.example` as template — copy to `.env` for local development
 - Public vars prefixed with `NEXT_PUBLIC_` (web) or `EXPO_PUBLIC_` (mobile)
 - Validated with environment modules (e.g., `apps/web/src/env.ts`)
+- The standalone server uses `SERVER_PORT` for local port configuration; generic `PORT` is reserved as a platform fallback and should not be set in `.env.example`.
 
 ## Operational Commands
 
@@ -849,12 +852,12 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `OPENROUTER_API_KEY`
-- `PORT`
 - `POSTGRES_URL`
 - `POSTHOG_API_KEY`
 - `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
+- `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
 - `TRIGGER_PROJECT_ID`
@@ -890,12 +893,12 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `OPENROUTER_API_KEY`
-- `PORT`
 - `POSTGRES_URL`
 - `POSTHOG_API_KEY`
 - `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
+- `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
 - `TRIGGER_PROJECT_ID`
@@ -905,7 +908,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 | File | Variables |
 | --- | --- |
-| apps/server/src/env.ts | `APP_URL`, `CI`, `PORT`, `POSTGRES_URL`, `RESEND_API_KEY`, `SERVER_URL`, `SKIP_ENV_VALIDATION` |
+| apps/server/src/env.ts | `APP_URL`, `CI`, `PORT`, `POSTGRES_URL`, `RESEND_API_KEY`, `SERVER_PORT`, `SERVER_URL`, `SKIP_ENV_VALIDATION` |
 | apps/web/src/env.ts | `CI`, `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_PORT`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NODE_ENV`, `POSTGRES_URL`, `SKIP_ENV_VALIDATION` |
 | packages/auth/env.ts | `AUTH_SECRET`, `CI`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NODE_ENV`, `SKIP_ENV_VALIDATION`, `SUPABASE_JWT_SECRET` |
 

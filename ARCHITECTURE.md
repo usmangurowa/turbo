@@ -29,10 +29,12 @@ Web or mobile UI
 ```
 
 The web app mounts the Hono API in `apps/web/src/app/api/[[...route]]/route.ts`.
-The standalone server hosts the same API app from `apps/server`. Business logic
-belongs in `packages/api/src/router/`, not in app-local API route handlers or
-runtime entrypoints. The API app is created in `packages/api/src/index.ts` and
-exports `AppType` for typed clients.
+The standalone server hosts the same API app from `apps/server` under `/api` and
+keeps a root `/health` runtime check. Better Auth handlers are mounted under
+`/api/auth/*` by each runtime. Business logic belongs in
+`packages/api/src/router/`, not in app-local API route handlers or runtime
+entrypoints. The API app is created in `packages/api/src/index.ts` and exports
+`AppType` for typed clients.
 
 ## Frontend Data Flow
 
