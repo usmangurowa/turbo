@@ -1,0 +1,41 @@
+{
+  "name": "@turbo/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "pnpm with-env tsx watch src/index.ts",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "start": "pnpm with-env tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "@t3-oss/env-core": "^0.13.11",
+    "@turbo/api": "workspace:*",
+    "@turbo/auth": "workspace:*",
+    "@turbo/mail": "workspace:^",
+    "hono": "^4.12.23",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@turbo/eslint-config": "workspace:*",
+    "@turbo/prettier-config": "workspace:*",
+    "@turbo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "^4.22.4",
+    "typescript": "catalog:",
+    "vitest": "4.1.8"
+  },
+  "prettier": "@turbo/prettier-config"
+}

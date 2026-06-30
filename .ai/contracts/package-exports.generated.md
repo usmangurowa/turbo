@@ -11,7 +11,7 @@
 | `@turbo/analytics` | `packages/analytics` | `.`, `./server`, `./events` |
 | `@turbo/api` | `packages/api` | `.` |
 | `@turbo/assets` | `packages/assets` | `./fonts/*` |
-| `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env` |
+| `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env`, `./trusted-origins` |
 | `@turbo/db` | `packages/db` | `.`, `./client`, `./schema` |
 | `@turbo/jobs` | `packages/jobs` | `.`, `./tasks/*`, `./domain/*` |
 | `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |

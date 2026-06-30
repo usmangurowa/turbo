@@ -115,6 +115,7 @@ lives in `tooling/`.
 ## Mental Model
 
 - `apps/web` is the Next.js App Router application and public web runtime.
+- `apps/server` is the standalone Node/Hono runtime for the shared API app.
 - `apps/mobile` is the Expo Router mobile application.
 - `packages/api` owns business API routes through Hono routers.
 - `packages/auth` owns Better Auth runtime configuration and auth generation.
@@ -136,9 +137,10 @@ Web or mobile UI
 ```
 
 The web app mounts the Hono API in `apps/web/src/app/api/[[...route]]/route.ts`.
-Business logic belongs in `packages/api/src/router/`, not in app-local API route
-handlers. The API app is created in `packages/api/src/index.ts` and exports
-`AppType` for typed clients.
+The standalone server hosts the same API app from `apps/server`. Business logic
+belongs in `packages/api/src/router/`, not in app-local API route handlers or
+runtime entrypoints. The API app is created in `packages/api/src/index.ts` and
+exports `AppType` for typed clients.
 
 ## Frontend Data Flow
 
@@ -153,6 +155,8 @@ handlers. The API app is created in `packages/api/src/index.ts` and exports
 ## Backend Boundaries
 
 - Hono routers live in `packages/api/src/router/` and use `Hono<AppContext>`.
+- Runtime entrypoints such as `apps/web` and `apps/server` may host the shared
+  API app, but must not own business API logic.
 - Protected routes apply `authMiddleware` or another explicit auth guard.
 - Shared request/response validation lives in `packages/validators` when reused
   across packages or apps.
@@ -216,6 +220,7 @@ architecture, contracts, or conventions.
 | 2026-05-17 | Task-oriented agent skills      | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                 | Common tasks route through explicit procedures.                                               |
 | 2026-05-17 | Generated AI contract snapshots | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                            | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing. |
 | 2026-05-17 | Spec-first workflow             | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md` | Non-trivial work has an explicit planning and validation template.                            |
+| 2026-06-30 | Standalone server runtime       | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.          |
 
 ## Architectural Change Log
 
@@ -236,6 +241,8 @@ architecture, contracts, or conventions.
 
 - Do not move business API logic into `apps/web/src/app/api`; app API files only
   mount or adapt shared API handlers.
+- Do not move business API logic into `apps/server`; it is a runtime host for
+  `@turbo/api`.
 - Do not bypass the typed Hono client for application API calls.
 - Do not introduce database schema changes without updating Drizzle exports and
   generated contract snapshots.
@@ -368,6 +375,7 @@ points that should reference `.ai/` instead of duplicating long-form rules.
 ```text
 apps/
   web/          → Next.js web application
+  server/       → Standalone Node/Hono API runtime
   mobile/       → Expo React Native mobile app
 packages/
   ai/           → AI SDK integration (Vercel AI SDK)
@@ -399,7 +407,7 @@ tooling/
 | Web framework    | Next.js     | 16.2.7                                    |
 | Mobile framework | Expo SDK    | 56 (`react-native` ~0.85.3)               |
 | React            | React       | 19.2.3 via `catalog:react19`              |
-| API framework    | Hono        | ^4.12.23                                  |
+| API framework    | Hono        | ^4.12.23 (`@hono/node-server` for server) |
 | ORM              | Drizzle ORM | drizzle-orm ^0.45.2; drizzle-kit ^0.31.10 |
 | Database         | PostgreSQL  | via Supabase                              |
 | Database driver  | postgres.js | ^3.4.9 (`prepare: false` for pooled URLs) |
@@ -431,6 +439,7 @@ tooling/
 | Service         | Tool                                          |
 | --------------- | --------------------------------------------- |
 | Hosting         | Vercel (web), EAS (mobile)                    |
+| API runtime     | Standalone Node/Hono app (`apps/server`)      |
 | Database        | Supabase (Postgres)                           |
 | Email           | Resend                                        |
 | Background jobs | Trigger.dev                                   |
@@ -812,6 +821,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## turbo.json globalEnv
 
+- `APP_URL`
 - `AUTH_REDIRECT_PROXY_URL`
 - `AUTH_SECRET`
 - `EAS_PROJECT_ID`
@@ -845,12 +855,14 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
+- `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
 - `TRIGGER_PROJECT_ID`
 - `TRIGGER_SECRET_KEY`
 
 ## .env.example variables
 
+- `APP_URL`
 - `AUTH_REDIRECT_PROXY_URL`
 - `AUTH_SECRET`
 - `EAS_PROJECT_ID`
@@ -884,6 +896,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
+- `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
 - `TRIGGER_PROJECT_ID`
 - `TRIGGER_SECRET_KEY`
@@ -892,6 +905,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 | File | Variables |
 | --- | --- |
+| apps/server/src/env.ts | `APP_URL`, `CI`, `PORT`, `POSTGRES_URL`, `RESEND_API_KEY`, `SERVER_URL`, `SKIP_ENV_VALIDATION` |
 | apps/web/src/env.ts | `CI`, `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_PORT`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `NODE_ENV`, `POSTGRES_URL`, `SKIP_ENV_VALIDATION` |
 | packages/auth/env.ts | `AUTH_SECRET`, `CI`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `NODE_ENV`, `SKIP_ENV_VALIDATION`, `SUPABASE_JWT_SECRET` |
 
@@ -926,7 +940,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 | `@turbo/analytics` | `packages/analytics` | `.`, `./server`, `./events` |
 | `@turbo/api` | `packages/api` | `.` |
 | `@turbo/assets` | `packages/assets` | `./fonts/*` |
-| `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env` |
+| `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env`, `./trusted-origins` |
 | `@turbo/db` | `packages/db` | `.`, `./client`, `./schema` |
 | `@turbo/jobs` | `packages/jobs` | `.`, `./tasks/*`, `./domain/*` |
 | `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |

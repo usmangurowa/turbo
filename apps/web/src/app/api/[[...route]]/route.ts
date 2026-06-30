@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
 import { createApp } from "@turbo/api";
+import { resolveTrustedOrigins } from "@turbo/auth/trusted-origins";
 
 // Create a parent app with basePath /api
 const app = new Hono().basePath("/api");
@@ -13,7 +14,7 @@ const app = new Hono().basePath("/api");
 const apiApp = createApp(auth, {
   security: {
     // Allow requests from the web app and mobile app (expo)
-    allowedOrigins: [env.NEXT_PUBLIC_APP_URL, "expo://"],
+    allowedOrigins: resolveTrustedOrigins(env.NEXT_PUBLIC_APP_URL, "expo://"),
     // Rate limiting: 100 requests per minute
     rateLimit: 100,
     rateLimitWindow: 60 * 1000,

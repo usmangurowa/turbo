@@ -6,7 +6,8 @@
     ".": "./src/index.ts",
     "./middleware": "./src/middleware.ts",
     "./client": "./src/client.ts",
-    "./env": "./env.ts"
+    "./env": "./env.ts",
+    "./trusted-origins": "./src/trusted-origins.ts"
   },
   "license": "MIT",
   "scripts": {

@@ -7,6 +7,7 @@ lives in `tooling/`.
 ## Mental Model
 
 - `apps/web` is the Next.js App Router application and public web runtime.
+- `apps/server` is the standalone Node/Hono runtime for the shared API app.
 - `apps/mobile` is the Expo Router mobile application.
 - `packages/api` owns business API routes through Hono routers.
 - `packages/auth` owns Better Auth runtime configuration and auth generation.
@@ -28,9 +29,10 @@ Web or mobile UI
 ```
 
 The web app mounts the Hono API in `apps/web/src/app/api/[[...route]]/route.ts`.
-Business logic belongs in `packages/api/src/router/`, not in app-local API route
-handlers. The API app is created in `packages/api/src/index.ts` and exports
-`AppType` for typed clients.
+The standalone server hosts the same API app from `apps/server`. Business logic
+belongs in `packages/api/src/router/`, not in app-local API route handlers or
+runtime entrypoints. The API app is created in `packages/api/src/index.ts` and
+exports `AppType` for typed clients.
 
 ## Frontend Data Flow
 
@@ -45,6 +47,8 @@ handlers. The API app is created in `packages/api/src/index.ts` and exports
 ## Backend Boundaries
 
 - Hono routers live in `packages/api/src/router/` and use `Hono<AppContext>`.
+- Runtime entrypoints such as `apps/web` and `apps/server` may host the shared
+  API app, but must not own business API logic.
 - Protected routes apply `authMiddleware` or another explicit auth guard.
 - Shared request/response validation lives in `packages/validators` when reused
   across packages or apps.

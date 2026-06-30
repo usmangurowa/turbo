@@ -27,6 +27,7 @@ architecture, contracts, or conventions.
 | 2026-05-17 | Task-oriented agent skills      | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                 | Common tasks route through explicit procedures.                                               |
 | 2026-05-17 | Generated AI contract snapshots | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                            | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing. |
 | 2026-05-17 | Spec-first workflow             | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md` | Non-trivial work has an explicit planning and validation template.                            |
+| 2026-06-30 | Standalone server runtime       | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.          |
 
 ## Architectural Change Log
 
@@ -47,6 +48,8 @@ architecture, contracts, or conventions.
 
 - Do not move business API logic into `apps/web/src/app/api`; app API files only
   mount or adapt shared API handlers.
+- Do not move business API logic into `apps/server`; it is a runtime host for
+  `@turbo/api`.
 - Do not bypass the typed Hono client for application API calls.
 - Do not introduce database schema changes without updating Drizzle exports and
   generated contract snapshots.

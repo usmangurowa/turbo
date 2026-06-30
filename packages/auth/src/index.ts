@@ -8,6 +8,8 @@ import { oAuthProxy } from "better-auth/plugins/oauth-proxy";
 
 import { db } from "@turbo/db/client";
 
+import { BASE_TRUSTED_ORIGINS, resolveTrustedOrigins } from "./trusted-origins";
+
 interface SocialProviderConfig {
   clientId: string;
   clientSecret: string;
@@ -145,14 +147,11 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
       ...(options.extraPlugins ?? []),
     ],
     socialProviders,
-    trustedOrigins: [
-      "expo://",
-      "http://localhost:3000",
-      "https://turbo.app",
-      "https://www.turbo.app",
+    trustedOrigins: resolveTrustedOrigins(
+      ...BASE_TRUSTED_ORIGINS,
       options.baseUrl,
       options.productionUrl,
-    ],
+    ),
     onAPIError: {
       onError(error, ctx) {
         console.error("BETTER AUTH API ERROR", error, ctx);

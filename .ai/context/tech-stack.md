@@ -15,6 +15,7 @@
 ```text
 apps/
   web/          → Next.js web application
+  server/       → Standalone Node/Hono API runtime
   mobile/       → Expo React Native mobile app
 packages/
   ai/           → AI SDK integration (Vercel AI SDK)
@@ -46,7 +47,7 @@ tooling/
 | Web framework    | Next.js     | 16.2.7                                    |
 | Mobile framework | Expo SDK    | 56 (`react-native` ~0.85.3)               |
 | React            | React       | 19.2.3 via `catalog:react19`              |
-| API framework    | Hono        | ^4.12.23                                  |
+| API framework    | Hono        | ^4.12.23 (`@hono/node-server` for server) |
 | ORM              | Drizzle ORM | drizzle-orm ^0.45.2; drizzle-kit ^0.31.10 |
 | Database         | PostgreSQL  | via Supabase                              |
 | Database driver  | postgres.js | ^3.4.9 (`prepare: false` for pooled URLs) |
@@ -78,6 +79,7 @@ tooling/
 | Service         | Tool                                          |
 | --------------- | --------------------------------------------- |
 | Hosting         | Vercel (web), EAS (mobile)                    |
+| API runtime     | Standalone Node/Hono app (`apps/server`)      |
 | Database        | Supabase (Postgres)                           |
 | Email           | Resend                                        |
 | Background jobs | Trigger.dev                                   |
