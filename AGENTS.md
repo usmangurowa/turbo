@@ -38,6 +38,7 @@ Before executing a task, find and read the matching skill file:
 | Create an API endpoint | `.ai/skills/create-api-endpoint.md` |
 | Database change        | `.ai/skills/database-change.md`     |
 | Create a page/screen   | `.ai/skills/create-page.md`         |
+| Create a form          | `.ai/skills/create-form.md`         |
 | Write tests            | `.ai/skills/write-tests.md`         |
 | Write a commit message | `.ai/skills/commit-message.md`      |
 | Write a PR description | `.ai/skills/pr-description.md`      |
@@ -80,6 +81,7 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 - **Tests**: Vitest in `__tests__/<name>.test.ts`
 - **Commits**: `type(scope): description` (conventional commits)
 - **Formatting**: Prettier with import sorting + Tailwind class sorting
+- **Forms**: `react-hook-form` + `shadcn/ui` (never `useState` for forms)
 - **Specs**: Non-trivial work uses `.ai/specs/active/<slug>.spec.md` before implementation
 
 ## Deep References

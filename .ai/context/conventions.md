@@ -36,6 +36,13 @@
 
 Example: `packages/ui/src/components/button.tsx`
 
+## Form Patterns
+
+- **ALWAYS** use `react-hook-form` with `@hookform/resolvers/zod` for forms.
+- **NEVER** use `useState` for managing form state or individual form fields.
+- **ALWAYS** use `shadcn/ui` form components (`Form`, `FormField`, `FormControl`, `FormItem`, `FormMessage`).
+- **NEVER** use raw HTML `<input>`, `<select>`, etc., when a `shadcn/ui` component exists.
+
 ## API Patterns (Hono)
 
 - Routers are separate files under `packages/api/src/router/`

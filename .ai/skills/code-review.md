@@ -42,9 +42,11 @@ Review against patterns in `packages/ui/src/components/button.tsx` (components) 
 - [ ] Error handling is present
 - [ ] New patterns are documented in `.ai/`
 - [ ] Tests added for new functionality
+- [ ] Forms use `react-hook-form` and `shadcn/ui` instead of `useState` and raw HTML inputs
 
 ## Anti-patterns (do NOT do)
 
 - Do not approve PRs that introduce undocumented patterns
 - Do not suggest patterns that contradict existing conventions
 - Do not ignore type safety issues
+- Do not accept "lazy AI patterns" (e.g. using `useState` for forms instead of the standard `react-hook-form` and `shadcn/ui` boilerplate)
