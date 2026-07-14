@@ -17,6 +17,7 @@ For non-trivial work or changes touching more than three implementation files, r
 | "add an endpoint"        | `.ai/skills/create-api-endpoint.md` |
 | "change database schema" | `.ai/skills/database-change.md`     |
 | "create a page"          | `.ai/skills/create-page.md`         |
+| "review the UI"          | `.ai/skills/anti-slop-ui.md`        |
 | "write tests"            | `.ai/skills/write-tests.md`         |
 | "review this"            | `.ai/skills/code-review.md`         |
 | "fix this error"         | `.ai/skills/debug-failure.md`       |

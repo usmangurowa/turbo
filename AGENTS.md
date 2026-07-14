@@ -39,6 +39,7 @@ Before executing a task, find and read the matching skill file:
 | Database change        | `.ai/skills/database-change.md`     |
 | Create a page/screen   | `.ai/skills/create-page.md`         |
 | Create a form          | `.ai/skills/create-form.md`         |
+| Review or polish UI    | `.ai/skills/anti-slop-ui.md`        |
 | Write tests            | `.ai/skills/write-tests.md`         |
 | Write a commit message | `.ai/skills/commit-message.md`      |
 | Write a PR description | `.ai/skills/pr-description.md`      |

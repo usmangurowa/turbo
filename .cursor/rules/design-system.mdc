@@ -7,6 +7,7 @@ alwaysApply: false
 # Design System Rules
 
 Read `.ai/context/design-system.md` and `.ai/patterns/ui-composition.md` before broad UI work.
+For broad polish, landing pages, or premium-feel UI review, also read `.ai/skills/anti-slop-ui.md`.
 
 ## Key reminders
 

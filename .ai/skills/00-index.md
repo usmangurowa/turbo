@@ -13,6 +13,7 @@
 | Database Change     | [database-change.md](./database-change.md)         | "update schema", "change database", "add table/column" |
 | Create Page         | [create-page.md](./create-page.md)                 | "create a page", "add a route"                         |
 | Create Form         | [create-form.md](./create-form.md)                 | "create a form", "add a form", "handle user input"     |
+| Anti-Slop UI        | [anti-slop-ui.md](./anti-slop-ui.md)               | "review the UI", "polish this page", "avoid AI slop"   |
 | Code Review         | [code-review.md](./code-review.md)                 | "review this code", "check my PR"                      |
 | Debug Failure       | [debug-failure.md](./debug-failure.md)             | "fix this error", "debug CI failure"                   |
 | Write Tests         | [write-tests.md](./write-tests.md)                 | "write tests", "add test coverage"                     |
