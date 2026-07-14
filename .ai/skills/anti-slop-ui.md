@@ -8,6 +8,7 @@ This skill is a repo-local adaptation of anti-slop UI principles. It is a qualit
 
 ## Prerequisite context to load
 
+- `.ai/references/pols-anti-slop-design-law.md` — full external design law for broad UI work
 - `.ai/context/design-system.md` — repository visual baseline and token rules
 - `.ai/patterns/ui-composition.md` — composition and layout boundaries
 - `.ai/context/conventions.md` — shared coding conventions
@@ -80,13 +81,14 @@ Avoid defaulting to these patterns unless the user explicitly asks for them and 
 
 ## Canonical references
 
+- `.ai/references/pols-anti-slop-design-law.md`
 - `.ai/context/design-system.md`
 - `.ai/patterns/ui-composition.md`
 - `packages/ui/src/components/button.tsx`
 
 ## Anti-patterns (do NOT do)
 
-- Do not paste third-party design guidance verbatim into repository instructions
+- Do not copy the vendored external reference into root or tool-specific instructions; link to it
 - Do not treat this skill as a mandate to redesign neutral product UI into marketing UI
 - Do not change shared palette, typography, or motion language without approval
 - Do not remove all visual personality just to avoid common patterns

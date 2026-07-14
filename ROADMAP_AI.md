@@ -29,6 +29,7 @@ architecture, contracts, or conventions.
 | 2026-05-17 | Spec-first workflow             | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md`                                 | Non-trivial work has an explicit planning and validation template.                                                                                   |
 | 2026-06-30 | Standalone server runtime       | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                                                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.                                                                 |
 | 2026-07-14 | Anti-slop UI skill              | `.ai/skills/anti-slop-ui.md`, `.ai/skills/00-index.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/design-system.mdc` | UI review and page-polish tasks now have a repo-local quality bar for avoiding generic AI UI patterns while preserving the neutral product baseline. |
+| 2026-07-15 | Full anti-slop reference        | `.ai/references/pols-anti-slop-design-law.md`, `.ai/skills/anti-slop-ui.md`                                                               | The full external design law is vendored separately and linked from the concise repo-local UI workflow.                                              |
 
 ## Architectural Change Log
 

@@ -4,14 +4,15 @@ This directory is the **source of truth** for all AI coding agents working in th
 
 ## Structure
 
-| Path         | Purpose                                                                       |
-| ------------ | ----------------------------------------------------------------------------- |
-| `context/`   | Repository-level context: tech stack, conventions, glossary, roadmap          |
-| `skills/`    | Step-by-step procedures for common tasks (create component, write test, etc.) |
-| `patterns/`  | Documented patterns: data fetching, error handling, state management          |
-| `decisions/` | Architecture Decision Records (ADRs)                                          |
-| `contracts/` | Generated snapshots of API, DB, env, package exports, and dependency graph    |
-| `specs/`     | Spec-first plans for non-trivial work                                         |
+| Path          | Purpose                                                                       |
+| ------------- | ----------------------------------------------------------------------------- |
+| `context/`    | Repository-level context: tech stack, conventions, glossary, roadmap          |
+| `skills/`     | Step-by-step procedures for common tasks (create component, write test, etc.) |
+| `patterns/`   | Documented patterns: data fetching, error handling, state management          |
+| `decisions/`  | Architecture Decision Records (ADRs)                                          |
+| `contracts/`  | Generated snapshots of API, DB, env, package exports, and dependency graph    |
+| `references/` | Vendored external references used by repo-local skills                        |
+| `specs/`      | Spec-first plans for non-trivial work                                         |
 
 ## How agents consume this
 
