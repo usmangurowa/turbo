@@ -46,6 +46,8 @@ Before executing a task, find and read the matching skill file:
 | Create an API endpoint | `.ai/skills/create-api-endpoint.md` |
 | Database change        | `.ai/skills/database-change.md`     |
 | Create a page/screen   | `.ai/skills/create-page.md`         |
+| Create a form          | `.ai/skills/create-form.md`         |
+| Review or polish UI    | `.ai/skills/anti-slop-ui.md`        |
 | Write tests            | `.ai/skills/write-tests.md`         |
 | Write a commit message | `.ai/skills/commit-message.md`      |
 | Write a PR description | `.ai/skills/pr-description.md`      |
@@ -88,6 +90,7 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 - **Tests**: Vitest in `__tests__/<name>.test.ts`
 - **Commits**: `type(scope): description` (conventional commits)
 - **Formatting**: Prettier with import sorting + Tailwind class sorting
+- **Forms**: `react-hook-form` + `shadcn/ui` (never `useState` for forms)
 - **Specs**: Non-trivial work uses `.ai/specs/active/<slug>.spec.md` before implementation
 
 ## Deep References
@@ -207,22 +210,24 @@ architecture, contracts, or conventions.
 
 ## Active Sprint
 
-| ID     | Status   | Task                                                 | Files                                                                              | Validation           |
-| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------- |
-| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`  |
-| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict` |
-| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`  |
+| ID     | Status   | Task                                                 | Files                                                                              | Validation                |
+| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------- |
+| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`       |
+| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict`      |
+| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`       |
 | AI-004 | complete | Enforce fresh AI contract snapshots in CI            | `.github/workflows/ci.yml`, `package.json`                                         | `pnpm ai:contracts:check` |
 
 ## Implemented Features
 
-| Date       | Feature                         | Files                                                                                                     | Notes                                                                                         |
-| ---------- | ------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| 2026-05-17 | Agent-native memory foundation  | `AGENTS.md`, `.ai/`, `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`                    | `.ai/` is the source of truth for agent context.                                              |
-| 2026-05-17 | Task-oriented agent skills      | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                 | Common tasks route through explicit procedures.                                               |
-| 2026-05-17 | Generated AI contract snapshots | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                            | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing. |
-| 2026-05-17 | Spec-first workflow             | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md` | Non-trivial work has an explicit planning and validation template.                            |
-| 2026-06-30 | Standalone server runtime       | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.          |
+| Date       | Feature                         | Files                                                                                                                                     | Notes                                                                                                                                                |
+| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-05-17 | Agent-native memory foundation  | `AGENTS.md`, `.ai/`, `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`                                                    | `.ai/` is the source of truth for agent context.                                                                                                     |
+| 2026-05-17 | Task-oriented agent skills      | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                                                 | Common tasks route through explicit procedures.                                                                                                      |
+| 2026-05-17 | Generated AI contract snapshots | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                                                            | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing.                                                        |
+| 2026-05-17 | Spec-first workflow             | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md`                                 | Non-trivial work has an explicit planning and validation template.                                                                                   |
+| 2026-06-30 | Standalone server runtime       | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                                                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.                                                                 |
+| 2026-07-14 | Anti-slop UI skill              | `.ai/skills/anti-slop-ui.md`, `.ai/skills/00-index.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/design-system.mdc` | UI review and page-polish tasks now have a repo-local quality bar for avoiding generic AI UI patterns while preserving the neutral product baseline. |
+| 2026-07-15 | Full anti-slop reference        | `.ai/references/pols-anti-slop-design-law.md`, `.ai/skills/anti-slop-ui.md`                                                               | The full external design law is vendored separately and linked from the concise repo-local UI workflow.                                              |
 
 ## Architectural Change Log
 
@@ -510,6 +515,13 @@ Turbo remote caching via Vercel.
 - Export individual named components (not default)
 
 Example: `packages/ui/src/components/button.tsx`
+
+## Form Patterns
+
+- **ALWAYS** use `react-hook-form` with `@hookform/resolvers/zod` for forms.
+- **NEVER** use `useState` for managing form state or individual form fields.
+- **ALWAYS** use `shadcn/ui` form components (`Form`, `FormField`, `FormControl`, `FormItem`, `FormMessage`).
+- **NEVER** use raw HTML `<input>`, `<select>`, etc., when a `shadcn/ui` component exists.
 
 ## API Patterns (Hono)
 
