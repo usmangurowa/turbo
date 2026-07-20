@@ -115,9 +115,11 @@ This repository ships reusable agent skills in `.agents/skills/` (symlinked into
 | `remotion-best-practices` | Any work involving Remotion video composition. |
 | `reddit-automation` | Automating Reddit workflows (posting, scraping, engagement). |
 | `find-skills` | The user asks "how do I do X" or wants to discover/install new agent skills. |
+| `writing-style` | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy. |
 
 Skill workflow rules:
 
+- `writing-style` is always-on: apply its prose rules to every README, doc, PR description, commit message, and report without being asked.
 - Skills marked "use when" are auto-applicable: if the task matches, follow the skill — do not wait to be asked.
 - `brainstorming` and `tdd` are default workflows for feature work: brainstorm before designing, TDD while implementing, unless the user explicitly opts out.
 - When a skill conflicts with repo conventions documented elsewhere in this file, repo conventions win.
