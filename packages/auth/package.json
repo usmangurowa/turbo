@@ -15,6 +15,7 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --config script/auth-cli.ts --output ../db/src/auth-schema.ts",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "@better-auth/expo": "catalog:",
     "@t3-oss/env-core": "^0.13.11",
     "@turbo/db": "workspace:*",
+    "@turbo/mail": "workspace:*",
     "better-auth": "catalog:",
     "drizzle-orm": "^0.45.2",
     "zod": "catalog:"
@@ -34,7 +36,8 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "4.1.10"
   },
   "prettier": "@turbo/prettier-config"
 }

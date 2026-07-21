@@ -1,6 +1,7 @@
 {
   "extends": "@turbo/tsconfig/base.json",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]

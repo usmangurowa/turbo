@@ -7,7 +7,9 @@ import { emailOTP } from "better-auth/plugins/email-otp";
 import { oAuthProxy } from "better-auth/plugins/oauth-proxy";
 
 import { db } from "@turbo/db/client";
+import { sendOTPEmail } from "@turbo/mail/client";
 
+import { authEnv } from "../env";
 import { BASE_TRUSTED_ORIGINS, resolveTrustedOrigins } from "./trusted-origins";
 
 interface SocialProviderConfig {
@@ -161,3 +163,40 @@ export const initAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
 
 export type Auth = ReturnType<typeof initAuth>;
 export type Session = Auth["$Infer"]["Session"];
+
+interface CreateAppAuthOptions<TExtraPlugins extends BetterAuthPlugin[] = []> {
+  baseUrl: string;
+  productionUrl: string;
+  extraPlugins?: TExtraPlugins;
+}
+
+/**
+ * App-facing auth factory. Owns everything that is identical across apps:
+ * env-derived secrets, the GitHub social provider conditional, and the
+ * OTP email bridge. Apps pass only their base URLs and Next-specific plugins.
+ */
+export const createAppAuth = <TExtraPlugins extends BetterAuthPlugin[] = []>(
+  options: CreateAppAuthOptions<TExtraPlugins>,
+) => {
+  const env = authEnv();
+  return initAuth({
+    baseUrl: options.baseUrl,
+    productionUrl: options.productionUrl,
+    secret: env.AUTH_SECRET ?? "development-secret-change-in-production",
+    supabaseJwtSecret:
+      env.SUPABASE_JWT_SECRET ?? "development-secret-change-in-production",
+    socialProviders: {
+      github:
+        env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
+          ? {
+              clientId: env.GITHUB_CLIENT_ID,
+              clientSecret: env.GITHUB_CLIENT_SECRET,
+            }
+          : undefined,
+    },
+    extraPlugins: options.extraPlugins,
+    sendOTPEmail: async ({ email, otp, type }) => {
+      await sendOTPEmail({ to: email, otp, type });
+    },
+  });
+};

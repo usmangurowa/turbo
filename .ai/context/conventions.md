@@ -54,6 +54,14 @@ Example: `packages/ui/src/components/button.tsx`
 
 Example: `packages/api/src/router/api-key.ts`
 
+## Auth Patterns (Better Auth)
+
+- Apps create auth via `createAppAuth()` from `@turbo/auth`; only base URLs and framework plugins are app-specific.
+- `createAppAuth()` owns all shared wiring: env-derived secrets, the GitHub social provider conditional, and the OTP email bridge.
+- Next.js apps pass `extraPlugins: [nextCookies()]`; the standalone server passes no extra plugins.
+- Never call `initAuth()` directly from an app — it is the low-level primitive; app code always goes through `createAppAuth()`.
+- New social providers or plugins are added once in `packages/auth/src/index.ts`.
+
 ## Database Patterns (Drizzle)
 
 - Schemas in `packages/db/src/` as `*-schema.ts`
