@@ -113,3 +113,10 @@ Example: `packages/db/src/auth-schema.ts`
 - **TypeScript strict mode** across all packages
 - Import sorting via `@ianvs/prettier-plugin-sort-imports`
 - Tailwind class sorting via `prettier-plugin-tailwindcss`
+
+## Analytics Patterns
+
+- Analytics sample rates and privacy options live in `@turbo/analytics` (`SENTRY_CONFIG`, `posthogWebOptions`). Apps call the framework-specific `init()` with these shared values.
+- Never hardcode sample rates (e.g., `tracesSampleRate: 0.1`) in app files — import from `@turbo/analytics` instead.
+- React Native `Sentry.init` consumes `SENTRY_CONFIG.tracesSampleRate` only (the web `replays*` fields are not supported by the React Native SDK).
+- `posthogWebOptions` is for web (posthog-js) only; mobile wires PostHog via `PostHogProvider` directly.

@@ -10,13 +10,14 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { PostHogProvider } from "posthog-react-native";
 import { useCSSVariable } from "uniwind";
 
+import { SENTRY_CONFIG } from "@turbo/analytics";
 import { POSTHOG_HOST } from "@turbo/shared/constants";
 
 // Initialize Sentry for error tracking
 if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-    tracesSampleRate: 0.1,
+    tracesSampleRate: SENTRY_CONFIG.tracesSampleRate,
   });
 }
 
