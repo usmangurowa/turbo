@@ -36,11 +36,14 @@ This repository ships reusable agent skills in `.agents/skills/` (symlinked into
 | `remotion-best-practices` | Any work involving Remotion video composition. |
 | `reddit-automation` | Automating Reddit workflows (posting, scraping, engagement). |
 | `find-skills` | The user asks "how do I do X" or wants to discover/install new agent skills. |
+| `codebase-first` | ALWAYS-ON for any code change: the codebase decides, never invent — follow documented rules and existing patterns, ask when neither exists. |
+| `shadcn` | Any shadcn/ui work: adding, composing, styling, or debugging components via the shadcn CLI and registry. |
 | `writing-style` | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy. |
 
 Skill workflow rules:
 
 - `writing-style` is always-on: apply its prose rules to every README, doc, PR description, commit message, and report without being asked.
+- `codebase-first` is always-on for code: before writing any code, follow its checklist — documented rules and existing patterns decide everything; never invent, ask when neither exists.
 - Skills marked "use when" are auto-applicable: if the task matches, follow the skill — do not wait to be asked.
 - `brainstorming` and `tdd` are default workflows for feature work: brainstorm before designing, TDD while implementing, unless the user explicitly opts out.
 - When a skill conflicts with repo conventions documented elsewhere in this file, repo conventions win.
