@@ -24,12 +24,12 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.98",
-    "@ai-sdk/groq": "3.0.39",
-    "@openrouter/ai-sdk-provider": "^2.10.0",
+    "@ai-sdk/google": "^4.0.21",
+    "@ai-sdk/groq": "^4.0.13",
+    "@openrouter/ai-sdk-provider": "^3.0.0",
     "@turbo/analytics": "workspace:*",
     "@turbo/shared": "workspace:*",
-    "ai": "^6.0.233"
+    "ai": "^7.0.34"
   },
   "devDependencies": {
     "@turbo/eslint-config": "workspace:*",
@@ -39,7 +39,7 @@
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:",
-    "vitest": "4.1.8"
+    "vitest": "4.1.10"
   },
   "peerDependencies": {
     "zod": "catalog:"

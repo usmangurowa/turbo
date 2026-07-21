@@ -16,10 +16,7 @@ interface SocialProviderConfig {
 }
 
 type OTPType =
-  | "sign-in"
-  | "email-verification"
-  | "forget-password"
-  | "change-email";
+  "sign-in" | "email-verification" | "forget-password" | "change-email";
 
 interface SendOTPEmailParams {
   email: string;

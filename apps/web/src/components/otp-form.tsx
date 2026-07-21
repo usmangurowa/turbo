@@ -40,8 +40,7 @@ export const OTPForm = ({
   const searchParams = useSearchParams();
   const email = searchParams.get("email") ?? "";
   const type = (searchParams.get("type") ?? "email-verification") as
-    | "email-verification"
-    | "forget-password";
+    "email-verification" | "forget-password";
   const [resendCooldown, setResendCooldown] = useState(0);
 
   const {

@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { Button as ReactEmailButton } from "@react-email/components";
+import { Button as ReactEmailButton } from "react-email";
 
 type ButtonVariant = "primary" | "secondary" | "destructive" | "outline";
 type ButtonSize = "sm" | "md" | "lg";

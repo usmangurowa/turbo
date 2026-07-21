@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { render } from "@react-email/components";
+import { render } from "react-email";
 import { Resend } from "resend";
 
 import type { OTPEmailProps } from "./templates/otp";

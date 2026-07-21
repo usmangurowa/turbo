@@ -45,9 +45,9 @@ tooling/
 | ---------------- | ----------- | ----------------------------------------- |
 | Language         | TypeScript  | catalog (`^6.0.3`)                        |
 | Web framework    | Next.js     | 16.2.11                                   |
-| Mobile framework | Expo SDK    | 56 (`react-native` ~0.85.3)               |
+| Mobile framework | Expo SDK    | 57 (`react-native` ~0.86.0)               |
 | React            | React       | 19.2.8 via `catalog:react19`              |
-| API framework    | Hono        | ^4.12.23 (`@hono/node-server` for server) |
+| API framework    | Hono        | ^4.12.31 (`@hono/node-server` ^2.0.11)    |
 | ORM              | Drizzle ORM | drizzle-orm ^0.45.2; drizzle-kit ^0.31.10 |
 | Database         | PostgreSQL  | via Supabase                              |
 | Database driver  | postgres.js | ^3.4.9 (`prepare: false` for pooled URLs) |
@@ -60,10 +60,10 @@ tooling/
 | ------------------ | ---------------------------------------------- |
 | Component library  | shadcn/ui (Radix primitives + CVA variants)    |
 | CSS framework      | Tailwind CSS 4.3.3                             |
-| Mobile styling     | Uniwind 1.8.x (Tailwind for RN)                |
+| Mobile styling     | Uniwind 1.10.x (Tailwind for RN)               |
 | Icons              | HugeIcons (React + React Native)               |
 | Animation (web)    | Motion (Framer Motion) 12.x                    |
-| Animation (mobile) | react-native-reanimated 4.3.1 + worklets 0.8.3 |
+| Animation (mobile) | react-native-reanimated 4.5.x + worklets 0.10.x |
 
 ## State & Data
 
@@ -85,15 +85,15 @@ tooling/
 | Background jobs | Trigger.dev                                   |
 | Analytics       | PostHog                                       |
 | Error tracking  | Sentry (@sentry/nextjs, @sentry/react-native) |
-| AI providers    | Gemini, OpenRouter, Groq (via Vercel AI SDK)  |
+| AI providers    | Gemini, OpenRouter, Groq (Vercel AI SDK v7)   |
 
 ## Testing & Quality
 
 | Tool              | Purpose                                          |
 | ----------------- | ------------------------------------------------ |
 | Vitest            | Unit/integration testing (4.1.x)                 |
-| ESLint 9          | Linting (flat config)                            |
-| Prettier 3.8      | Code formatting with import sort + tailwind sort |
+| ESLint 10         | Linting (flat config)                            |
+| Prettier 3.9      | Code formatting with import sort + tailwind sort |
 | TypeScript strict | Type checking across all packages                |
 
 ## CI/CD
