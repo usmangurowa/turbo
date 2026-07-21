@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { hc } from "hono/client";
 
-import type { AppContext, AuthWithApi } from "./context";
+import type { AppContext, AuthWithApi, Db } from "./context";
 import type { SecurityConfig } from "./middleware/security";
 import { contextMiddleware } from "./middleware/context";
 import {
@@ -25,10 +25,12 @@ export interface CreateAppOptions {
 /**
  * Create the main Hono app with context, security, and routes
  * @param auth - Auth instance from @turbo/auth
+ * @param db - Database instance from @turbo/db
  * @param options - Optional configuration for the app
  */
 export const createApp = (
   auth: AuthWithApi,
+  db: Db,
   options: CreateAppOptions = {},
 ) => {
   const { security = {} } = options;
@@ -39,7 +41,7 @@ export const createApp = (
     .use("*", corsMiddleware(security))
     .use("*", rateLimitMiddleware(security))
     // App middleware
-    .use("*", contextMiddleware(auth))
+    .use("*", contextMiddleware(auth, db))
     .use("*", timingMiddleware)
     // Routes
     .route("/auth", authRouter)

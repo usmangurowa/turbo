@@ -2,6 +2,7 @@ import { Hono } from "hono";
 
 import type { Auth } from "@turbo/auth";
 import { createApp } from "@turbo/api";
+import { db } from "@turbo/db/client";
 
 type ServerAuth = Parameters<typeof createApp>[0] & Pick<Auth, "handler">;
 
@@ -19,7 +20,7 @@ export const createServerApp = (
     rateLimitWindow = 60 * 1000,
   }: CreateServerAppOptions,
 ) => {
-  const apiApp = createApp(auth, {
+  const apiApp = createApp(auth, db, {
     security: {
       allowedOrigins,
       rateLimit,

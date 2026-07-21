@@ -53,6 +53,7 @@ Example: `packages/ui/src/components/button.tsx`
 - Security middleware stack: secure headers → CORS → rate limiting
 - **Web API auth is cookie-based; never attach `Authorization` headers from session data.** Cookies ride along automatically on same-origin fetches. There is exactly one `hc<AppType>` construction in the web app — `apps/web/src/lib/api.ts`; `useApi()` returns that instance.
 - **Mobile uses exactly one Better Auth client: `@/auth/client`.** `apps/mobile/src/utils/api.tsx` reads cookies from that client. Do not create additional `createAuthClient` instances anywhere in the mobile app.
+- **API composition: `createApp(auth, db)` — apps own the real db/auth instances; `packages/api` never imports `@turbo/db/client` at runtime.** Middleware and routers receive `db` through `c.get("db")`; never import concrete clients directly inside `packages/api`.
 
 Example: `packages/api/src/router/api-key.ts`
 

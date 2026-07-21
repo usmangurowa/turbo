@@ -20,6 +20,7 @@
     "@t3-oss/env-core": "^0.13.11",
     "@turbo/api": "workspace:*",
     "@turbo/auth": "workspace:*",
+    "@turbo/db": "workspace:*",
     "@turbo/mail": "workspace:^",
     "hono": "^4.12.31",
     "react": "catalog:react19",

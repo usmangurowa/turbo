@@ -1,13 +1,11 @@
 import { createMiddleware } from "hono/factory";
 
-import { db } from "@turbo/db/client";
-
-import type { AppContext, AuthWithApi } from "../context";
+import type { AppContext, AuthWithApi, Db } from "../context";
 
 /**
  * Context middleware that sets up auth, session, and database for all routes
  */
-export const contextMiddleware = (auth: AuthWithApi) =>
+export const contextMiddleware = (auth: AuthWithApi, db: Db) =>
   createMiddleware<AppContext>(async (c, next) => {
     const authApi = auth.api;
     const session = await authApi.getSession({

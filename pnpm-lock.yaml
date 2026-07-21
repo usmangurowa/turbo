@@ -387,6 +387,9 @@ importers:
       '@turbo/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@turbo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@turbo/mail':
         specifier: workspace:^
         version: link:../../packages/mail

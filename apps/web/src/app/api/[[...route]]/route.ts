@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
 import { createApp } from "@turbo/api";
+import { db } from "@turbo/db/client";
 import { resolveTrustedOrigins } from "@turbo/auth/trusted-origins";
 
 // Create a parent app with basePath /api
@@ -11,7 +12,7 @@ const app = new Hono().basePath("/api");
 
 // Mount the API routes with security configuration
 // Note: Better Auth routes are handled by /api/auth/[...all]/route.ts
-const apiApp = createApp(auth, {
+const apiApp = createApp(auth, db, {
   security: {
     // Allow requests from the web app and mobile app (expo)
     allowedOrigins: resolveTrustedOrigins(env.NEXT_PUBLIC_APP_URL, "expo://"),
