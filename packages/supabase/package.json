@@ -31,6 +31,6 @@
   },
   "prettier": "@turbo/prettier-config",
   "dependencies": {
-    "@supabase/supabase-js": "^2.107.0"
+    "@supabase/supabase-js": "^2.110.8"
   }
 }

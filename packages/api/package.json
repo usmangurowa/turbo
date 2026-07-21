@@ -31,7 +31,7 @@
     "@turbo/shared": "workspace:*",
     "@turbo/validators": "workspace:*",
     "date-fns": "^4.4.0",
-    "hono": "^4.12.23",
+    "hono": "^4.12.31",
     "hono-rate-limiter": "^0.5.3",
     "zod": "catalog:"
   },
