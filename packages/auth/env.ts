@@ -1,6 +1,8 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod/v4";
 
+import { shouldSkipEnvValidation } from "@turbo/shared/env";
+
 /** Accepts a non-empty string OR an empty string (treated as unset) */
 const optionalString = z
   .string()
@@ -8,12 +10,7 @@ const optionalString = z
   .optional();
 
 export function authEnv() {
-  // Skip strict validation during build - runtime validation will catch missing vars
-  const skipStrict =
-    !!process.env.CI ||
-    !!process.env.SKIP_ENV_VALIDATION ||
-    process.env.npm_lifecycle_event === "lint" ||
-    process.env.npm_lifecycle_event === "build";
+  const skipStrict = shouldSkipEnvValidation();
 
   return createEnv({
     server: {

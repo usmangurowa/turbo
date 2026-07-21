@@ -22,6 +22,7 @@
     "@turbo/auth": "workspace:*",
     "@turbo/db": "workspace:*",
     "@turbo/mail": "workspace:^",
+    "@turbo/shared": "workspace:*",
     "hono": "^4.12.31",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",

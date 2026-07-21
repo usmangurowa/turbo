@@ -3,6 +3,7 @@ import { vercel } from "@t3-oss/env-nextjs/presets-zod";
 import { z } from "zod/v4";
 
 import { authEnv } from "@turbo/auth/env";
+import { shouldSkipEnvValidation } from "@turbo/shared/env";
 
 /** Accepts a valid value OR an empty string (treated as unset) */
 const optionalUrl = z
@@ -52,9 +53,5 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
-  skipValidation:
-    !!process.env.CI ||
-    !!process.env.SKIP_ENV_VALIDATION ||
-    process.env.npm_lifecycle_event === "lint" ||
-    process.env.npm_lifecycle_event === "build",
+  skipValidation: shouldSkipEnvValidation(),
 });

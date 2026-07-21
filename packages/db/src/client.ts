@@ -1,12 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
+import { shouldSkipEnvValidation } from "@turbo/shared/env";
+
 import * as schema from "./schema";
 
 const connectionString = process.env.POSTGRES_URL;
-const skipEnvValidation = !!process.env.SKIP_ENV_VALIDATION;
 
-if (!connectionString && !skipEnvValidation) {
+if (!connectionString && !shouldSkipEnvValidation()) {
   throw new Error("Missing POSTGRES_URL");
 }
 

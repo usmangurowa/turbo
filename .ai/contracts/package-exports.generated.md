@@ -15,7 +15,7 @@
 | `@turbo/db` | `packages/db` | `.`, `./client`, `./schema` |
 | `@turbo/jobs` | `packages/jobs` | `.`, `./tasks/*`, `./domain/*` |
 | `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |
-| `@turbo/shared` | `packages/shared` | `.`, `./constants` |
+| `@turbo/shared` | `packages/shared` | `.`, `./constants`, `./env` |
 | `@turbo/supabase` | `packages/supabase` | `.`, `./client` |
 | `@turbo/ui` | `packages/ui` | `.`, `./*`, `./hooks/*` |
 | `@turbo/validators` | `packages/validators` | `.` |

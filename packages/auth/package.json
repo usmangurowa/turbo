@@ -24,6 +24,7 @@
     "@t3-oss/env-core": "^0.13.11",
     "@turbo/db": "workspace:*",
     "@turbo/mail": "workspace:*",
+    "@turbo/shared": "workspace:*",
     "better-auth": "catalog:",
     "drizzle-orm": "^0.45.2",
     "zod": "catalog:"
