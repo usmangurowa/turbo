@@ -4,6 +4,7 @@
 
 | Skill               | File                                               | Trigger                                                |
 | ------------------- | -------------------------------------------------- | ------------------------------------------------------ |
+| Project Setup       | [setup-project.md](./setup-project.md)             | "set up this project", "first-time setup", "rebrand"   |
 | Commit Message      | [commit-message.md](./commit-message.md)           | Writing a commit message                               |
 | PR Description      | [pr-description.md](./pr-description.md)           | Writing a pull request description                     |
 | Create Component    | [create-component.md](./create-component.md)       | "create a component", "add a UI element"               |

@@ -12,6 +12,7 @@ For non-trivial work or changes touching more than three implementation files, r
 
 | When the user says...    | Read this skill                     |
 | ------------------------ | ----------------------------------- |
+| "set up this project"    | `.ai/skills/setup-project.md`       |
 | "create a component"     | `.ai/skills/create-component.md`    |
 | "create a package"       | `.ai/skills/create-package.md`      |
 | "add an endpoint"        | `.ai/skills/create-api-endpoint.md` |

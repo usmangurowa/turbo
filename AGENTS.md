@@ -32,6 +32,7 @@ Before executing a task, find and read the matching skill file:
 
 | Task                   | Skill File                          |
 | ---------------------- | ----------------------------------- |
+| First-time setup       | `.ai/skills/setup-project.md`       |
 | Create a component     | `.ai/skills/create-component.md`    |
 | Create a package       | `.ai/skills/create-package.md`      |
 | Create an app          | `.ai/skills/create-app.md`          |
