@@ -1,9 +1,9 @@
 /**
- * @turbo/jobs - Background job processing with Trigger.dev
+ * @turbo/jobs — background job processing with Trigger.dev.
  *
- * This package contains background task stubs for the Turbo template.
- * Tasks are defined in the ./tasks directory.
+ * Scaffolding only: no tasks are implemented yet. When adding the first
+ * task, create src/tasks/, export it from here, and restore the
+ * "./tasks/*" subpath export in package.json.
  */
 
-// Re-export task definitions
 export {};

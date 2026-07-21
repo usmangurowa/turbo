@@ -602,12 +602,6 @@ importers:
       '@openrouter/ai-sdk-provider':
         specifier: ^3.0.0
         version: 3.0.0(ai@7.0.34(zod@4.4.3))(zod@4.4.3)
-      '@turbo/analytics':
-        specifier: workspace:*
-        version: link:../analytics
-      '@turbo/shared':
-        specifier: workspace:*
-        version: link:../shared
       ai:
         specifier: ^7.0.34
         version: 7.0.34(zod@4.4.3)
@@ -685,9 +679,6 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.9.0
         version: 0.9.0(hono@4.12.31)(zod@4.4.3)
-      '@turbo/ai':
-        specifier: workspace:*
-        version: link:../ai
       '@turbo/analytics':
         specifier: workspace:^
         version: link:../analytics
@@ -697,9 +688,6 @@ importers:
       '@turbo/db':
         specifier: workspace:*
         version: link:../db
-      '@turbo/jobs':
-        specifier: workspace:*
-        version: link:../jobs
       '@turbo/mail':
         specifier: workspace:^
         version: link:../mail
@@ -861,18 +849,6 @@ importers:
       '@trigger.dev/sdk':
         specifier: ^4.5.6
         version: 4.5.6(ai@7.0.34(zod@4.4.3))(react@19.2.8)(zod@4.4.3)
-      '@turbo/ai':
-        specifier: workspace:*
-        version: link:../ai
-      '@turbo/analytics':
-        specifier: workspace:*
-        version: link:../analytics
-      '@turbo/db':
-        specifier: workspace:*
-        version: link:../db
-      '@turbo/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@turbo/eslint-config':
         specifier: workspace:*
