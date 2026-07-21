@@ -1,6 +1,8 @@
 import * as Sentry from "@sentry/nextjs";
 import posthog from "posthog-js";
 
+import { POSTHOG_HOST } from "@turbo/shared/constants";
+
 // instrumentation-client.ts runs very early, so we access env vars directly
 // eslint-disable-next-line no-restricted-properties
 const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
@@ -21,8 +23,6 @@ export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
 
 // eslint-disable-next-line no-restricted-properties
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-// eslint-disable-next-line no-restricted-properties
-const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST;
 
 if (POSTHOG_KEY) {
   posthog.init(POSTHOG_KEY, {

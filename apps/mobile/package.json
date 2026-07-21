@@ -60,6 +60,7 @@
     "@turbo/api": "workspace:*",
     "@turbo/assets": "workspace:^",
     "@turbo/auth": "workspace:^",
+    "@turbo/shared": "workspace:*",
     "@turbo/supabase": "workspace:^",
     "@turbo/validators": "workspace:^",
     "better-auth": "catalog:",

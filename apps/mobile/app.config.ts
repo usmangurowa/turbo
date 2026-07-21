@@ -1,11 +1,22 @@
 import type { ConfigContext, ExpoConfig } from "expo/config";
 
+// App identity constants. Not secrets — edit them here directly.
+// APP_NAME and PACKAGE_NAME accept env overrides because eas.json sets
+// per-profile variants (dev/preview/production).
+const APP_NAME = process.env.EXPO_PUBLIC_APP_NAME ?? "Turbo";
+const PACKAGE_NAME = process.env.EXPO_PUBLIC_PACKAGE_NAME ?? "com.turbo.app";
+const APP_SLUG = "turbo";
+const APP_SCHEME = "turbo";
+const OWNER = "usmangurowa";
+// Get your project ID from https://expo.dev/accounts/[owner]/projects/[project]
+const EAS_PROJECT_ID = "your-eas-project-id";
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: process.env.EXPO_PUBLIC_APP_NAME || "Turbo",
-  slug: process.env.EXPO_PUBLIC_APP_SLUG || "turbo",
-  owner: process.env.EXPO_OWNER || "usmangurowa",
-  scheme: process.env.EXPO_PUBLIC_APP_SCHEME || "turbo",
+  name: APP_NAME,
+  slug: APP_SLUG,
+  owner: OWNER,
+  scheme: APP_SCHEME,
   version: "1.0.0",
   orientation: "portrait",
   userInterfaceStyle: "automatic",
@@ -13,7 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 
   ios: {
     supportsTablet: true,
-    bundleIdentifier: process.env.EXPO_PUBLIC_PACKAGE_NAME || "com.turbo.app",
+    bundleIdentifier: PACKAGE_NAME,
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -24,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
 
   android: {
-    package: process.env.EXPO_PUBLIC_PACKAGE_NAME || "com.turbo.app",
+    package: PACKAGE_NAME,
     adaptiveIcon: {
       foregroundImage: "./src/assets/icon-light.png",
       monochromeImage: "./src/assets/icon-dark.png",
@@ -77,7 +88,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-updates",
       {
-        username: process.env.EXPO_OWNER || "usmangurowa",
+        username: OWNER,
       },
     ],
     [
@@ -96,20 +107,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ],
 
   updates: {
-    url: `https://u.expo.dev/${process.env.EAS_PROJECT_ID}`,
+    url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
   },
 
   extra: {
     eas: {
-      projectId: process.env.EAS_PROJECT_ID,
+      projectId: EAS_PROJECT_ID,
       enableFastRefresh: true,
     },
     EXPO_PUBLIC_SUPABASE_URL: process.env.EXPO_PUBLIC_SUPABASE_URL,
     EXPO_PUBLIC_SUPABASE_ANON_KEY: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
-    EXPO_PUBLIC_APP_NAME: process.env.EXPO_PUBLIC_APP_NAME,
-    EXPO_PUBLIC_APP_SLUG: process.env.EXPO_PUBLIC_APP_SLUG,
-    EXPO_PUBLIC_APP_SCHEME: process.env.EXPO_PUBLIC_APP_SCHEME,
-    EXPO_PUBLIC_PACKAGE_NAME: process.env.EXPO_PUBLIC_PACKAGE_NAME,
+    EXPO_PUBLIC_APP_NAME: APP_NAME,
+    EXPO_PUBLIC_APP_SLUG: APP_SLUG,
+    EXPO_PUBLIC_APP_SCHEME: APP_SCHEME,
+    EXPO_PUBLIC_PACKAGE_NAME: PACKAGE_NAME,
     EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
   },
 });

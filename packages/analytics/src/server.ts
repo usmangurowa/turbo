@@ -24,6 +24,8 @@
 import * as Sentry from "@sentry/node";
 import { PostHog } from "posthog-node";
 
+import { POSTHOG_HOST } from "@turbo/shared/constants";
+
 import type { AnalyticsEvent } from "./events";
 
 // Sentry state
@@ -83,7 +85,7 @@ export const getPostHogClient = (config?: PostHogConfig): PostHog | null => {
   if (posthogClient) return posthogClient;
 
   const apiKey = config?.apiKey ?? process.env.POSTHOG_API_KEY;
-  const host = config?.host ?? process.env.POSTHOG_HOST;
+  const host = config?.host ?? POSTHOG_HOST;
 
   if (!apiKey) {
     if (process.env.NODE_ENV === "development") {

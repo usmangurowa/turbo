@@ -40,6 +40,7 @@ Before executing a task, find and read the matching skill file:
 
 | Task                   | Skill File                          |
 | ---------------------- | ----------------------------------- |
+| First-time setup       | `.ai/skills/setup-project.md`       |
 | Create a component     | `.ai/skills/create-component.md`    |
 | Create a package       | `.ai/skills/create-package.md`      |
 | Create an app          | `.ai/skills/create-app.md`          |
@@ -104,6 +105,50 @@ For detailed technology guides, see `.agents/skills/`:
 - Drizzle ORM → `.agents/skills/drizzle/`
 - Trigger.dev → `.agents/skills/trigger-dev-tasks/`
 - Turborepo → `.agents/skills/turborepo/`
+
+---
+
+## Agent Skills
+
+This repository ships reusable agent skills in `.agents/skills/` (symlinked into `.claude/skills/` and `.github/skills/`). Each skill is a folder with a `SKILL.md` describing when and how to apply it. **At the start of any task, check whether one of these skills matches the work and read its `SKILL.md` before proceeding.**
+
+| Skill | Use when |
+| ----- | -------- |
+| `brainstorming` | Before any creative work — new features, components, or behavior changes. Explore intent, requirements, and design before implementation. |
+| `write-a-prd` | Turning a client brief or request into a structured PRD in `issues/`. |
+| `grill-me` | A relentless interview to sharpen a plan or design before building. |
+| `tdd` | Building features or fixing bugs test-first with a red-green-refactor loop. |
+| `improve-codebase-architecture` | Finding refactoring opportunities and deepening shallow modules to improve testability. |
+| `to-tickets` | Breaking a plan, spec, or conversation into tracer-bullet tickets with blocking edges. |
+| `teach` | Teaching the user a new skill or concept within this workspace. |
+| `remotion-best-practices` | Any work involving Remotion video composition. |
+| `reddit-automation` | Automating Reddit workflows (posting, scraping, engagement). |
+| `find-skills` | The user asks "how do I do X" or wants to discover/install new agent skills. |
+| `writing-style` | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy. |
+
+Skill workflow rules:
+
+- `writing-style` is always-on: apply its prose rules to every README, doc, PR description, commit message, and report without being asked.
+- Skills marked "use when" are auto-applicable: if the task matches, follow the skill — do not wait to be asked.
+- `brainstorming` and `tdd` are default workflows for feature work: brainstorm before designing, TDD while implementing, unless the user explicitly opts out.
+- When a skill conflicts with repo conventions documented elsewhere in this file, repo conventions win.
+
+---
+
+## Marketing Skills
+
+This repository also ships the full [coreyhaines31/marketingskills](https://skills.sh/coreyhaines31/marketingskills) pack in `.agents/skills/` (symlinked into `.claude/skills/` and `.github/skills/`). Use these whenever the task is marketing-related rather than engineering-related.
+
+Start here:
+
+- `product-marketing-context` — run this FIRST for any marketing work: it reads the codebase/product and produces the positioning, ICP, and messaging context the other skills consume.
+
+Then pick the matching skill, e.g.: `copywriting`, `copy-editing`, `social`, `ad-creative`, `ads`, `emails`, `cold-email`, `launch`, `landing-pages` (via `cro`), `seo-audit`, `ai-seo`, `programmatic-seo`, `schema`, `content-strategy`, `marketing-ideas`, `marketing-psychology`, `image`, `video`, `analytics`, `ab-testing`, `pricing`, `paywalls`, `onboarding`, `referrals`, `churn-prevention`, `competitor-profiling`, `competitors`, `customer-research`, `positioning`, `messaging`, and more — each skill's `SKILL.md` frontmatter describes exactly when to use it.
+
+Rules:
+
+- For flyers/graphics use `image`; for promo videos use `video`; for social posts use `social`; for ad copy use `ad-creative`.
+- Always ground marketing output in `product-marketing-context` results so copy reflects what the product actually does.
 ````
 
 ## ARCHITECTURE.md
@@ -562,6 +607,7 @@ Example: `packages/db/src/auth-schema.ts`
 - `.env.example` as template — copy to `.env` for local development
 - Public vars prefixed with `NEXT_PUBLIC_` (web) or `EXPO_PUBLIC_` (mobile)
 - Validated with environment modules (e.g., `apps/web/src/env.ts`)
+- Non-secret constants (PostHog host, Expo app identity/EAS project ID, provider API URLs) are hardcoded in the codebase (`apps/mobile/app.config.ts`, `eas.json`), not stored in `.env`
 - The standalone server uses `SERVER_PORT` for local port configuration; generic `PORT` is reserved as a platform fallback and should not be set in `.env.example`.
 
 ## Operational Commands
@@ -569,6 +615,7 @@ Example: `packages/db/src/auth-schema.ts`
 - Run `pnpm auth:generate` after Better Auth schema/config changes that affect generated auth schema output.
 - Run `pnpm db:generate -- --name <migration_name>` after Drizzle schema changes that need durable migrations.
 - Run `pnpm db:migrate` to apply pending Drizzle migrations.
+- Production migrations run via migrate-on-boot: `pnpm start:server` chains `db:migrate && start:prod`; the standalone server is the only migration owner.
 - Use `pnpm db:push:local` only for disposable local databases.
 - Use `pnpm db:studio` for local schema/data inspection during development.
 - Prefer workspace/root scripts when available over ad-hoc package commands.
@@ -837,28 +884,18 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 ## turbo.json globalEnv
 
 - `APP_URL`
-- `AUTH_REDIRECT_PROXY_URL`
 - `AUTH_SECRET`
-- `EAS_PROJECT_ID`
-- `EXPO_OWNER`
 - `EXPO_PUBLIC_API_URL`
-- `EXPO_PUBLIC_APP_NAME`
-- `EXPO_PUBLIC_APP_SCHEME`
-- `EXPO_PUBLIC_APP_SLUG`
-- `EXPO_PUBLIC_PACKAGE_NAME`
-- `EXPO_PUBLIC_POSTHOG_HOST`
 - `EXPO_PUBLIC_POSTHOG_KEY`
 - `EXPO_PUBLIC_SENTRY_DSN`
 - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 - `EXPO_PUBLIC_SUPABASE_URL`
-- `GEMINI_API_KEY`
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`
 - `GOOGLE_GENERATIVE_AI_API_KEY`
 - `GROQ_API_KEY`
 - `NEXT_PUBLIC_APP_URL`
 - `NEXT_PUBLIC_PORT`
-- `NEXT_PUBLIC_POSTHOG_HOST`
 - `NEXT_PUBLIC_POSTHOG_KEY`
 - `NEXT_PUBLIC_SENTRY_DSN`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -866,40 +903,27 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `OPENROUTER_API_KEY`
 - `POSTGRES_URL`
 - `POSTHOG_API_KEY`
-- `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
-- `TRIGGER_PROJECT_ID`
-- `TRIGGER_SECRET_KEY`
 
 ## .env.example variables
 
 - `APP_URL`
-- `AUTH_REDIRECT_PROXY_URL`
 - `AUTH_SECRET`
-- `EAS_PROJECT_ID`
-- `EXPO_OWNER`
 - `EXPO_PUBLIC_API_URL`
-- `EXPO_PUBLIC_APP_NAME`
-- `EXPO_PUBLIC_APP_SCHEME`
-- `EXPO_PUBLIC_APP_SLUG`
-- `EXPO_PUBLIC_PACKAGE_NAME`
-- `EXPO_PUBLIC_POSTHOG_HOST`
 - `EXPO_PUBLIC_POSTHOG_KEY`
 - `EXPO_PUBLIC_SENTRY_DSN`
 - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 - `EXPO_PUBLIC_SUPABASE_URL`
-- `GEMINI_API_KEY`
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`
 - `GOOGLE_GENERATIVE_AI_API_KEY`
 - `GROQ_API_KEY`
 - `NEXT_PUBLIC_APP_URL`
 - `NEXT_PUBLIC_PORT`
-- `NEXT_PUBLIC_POSTHOG_HOST`
 - `NEXT_PUBLIC_POSTHOG_KEY`
 - `NEXT_PUBLIC_SENTRY_DSN`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -907,14 +931,11 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `OPENROUTER_API_KEY`
 - `POSTGRES_URL`
 - `POSTHOG_API_KEY`
-- `POSTHOG_HOST`
 - `RESEND_API_KEY`
 - `SENTRY_DSN`
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
-- `TRIGGER_PROJECT_ID`
-- `TRIGGER_SECRET_KEY`
 
 ## Env validation modules
 
@@ -1006,10 +1027,10 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 | Package | Path | Internal dependencies |
 | --- | --- | --- |
-| `@turbo/mobile` | `apps/mobile` | `@turbo/analytics`, `@turbo/api`, `@turbo/assets`, `@turbo/auth`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/validators` |
+| `@turbo/mobile` | `apps/mobile` | `@turbo/analytics`, `@turbo/api`, `@turbo/assets`, `@turbo/auth`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/validators` |
 | `@turbo/web` | `apps/web` | `@turbo/analytics`, `@turbo/api`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/supabase`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/ui`, `@turbo/validators` |
 | `@turbo/ai` | `packages/ai` | `@turbo/analytics`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
-| `@turbo/analytics` | `packages/analytics` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/analytics` | `packages/analytics` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
 | `@turbo/api` | `packages/api` | `@turbo/ai`, `@turbo/analytics`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/jobs`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`, `@turbo/validators` |
 | `@turbo/assets` | `packages/assets` | None |
 | `@turbo/auth` | `packages/auth` | `@turbo/db`, `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |

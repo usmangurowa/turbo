@@ -10,6 +10,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { PostHogProvider } from "posthog-react-native";
 import { useCSSVariable } from "uniwind";
 
+import { POSTHOG_HOST } from "@turbo/shared/constants";
+
 // Initialize Sentry for error tracking
 if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
   Sentry.init({
@@ -19,7 +21,7 @@ if (process.env.EXPO_PUBLIC_SENTRY_DSN) {
 }
 
 const posthogKey = process.env.EXPO_PUBLIC_POSTHOG_KEY;
-const posthogHost = process.env.EXPO_PUBLIC_POSTHOG_HOST;
+const posthogHost = POSTHOG_HOST;
 
 const Layout = () => {
   const bg = useCSSVariable("--background") as string;

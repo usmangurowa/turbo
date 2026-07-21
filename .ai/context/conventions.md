@@ -82,6 +82,7 @@ Example: `packages/db/src/auth-schema.ts`
 - `.env.example` as template — copy to `.env` for local development
 - Public vars prefixed with `NEXT_PUBLIC_` (web) or `EXPO_PUBLIC_` (mobile)
 - Validated with environment modules (e.g., `apps/web/src/env.ts`)
+- Non-secret constants (PostHog host, Expo app identity/EAS project ID, provider API URLs) are hardcoded in the codebase (`apps/mobile/app.config.ts`, `eas.json`), not stored in `.env`
 - The standalone server uses `SERVER_PORT` for local port configuration; generic `PORT` is reserved as a platform fallback and should not be set in `.env.example`.
 
 ## Operational Commands
@@ -89,6 +90,7 @@ Example: `packages/db/src/auth-schema.ts`
 - Run `pnpm auth:generate` after Better Auth schema/config changes that affect generated auth schema output.
 - Run `pnpm db:generate -- --name <migration_name>` after Drizzle schema changes that need durable migrations.
 - Run `pnpm db:migrate` to apply pending Drizzle migrations.
+- Production migrations run via migrate-on-boot: `pnpm start:server` chains `db:migrate && start:prod`; the standalone server is the only migration owner.
 - Use `pnpm db:push:local` only for disposable local databases.
 - Use `pnpm db:studio` for local schema/data inspection during development.
 - Prefer workspace/root scripts when available over ad-hoc package commands.
