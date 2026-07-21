@@ -51,6 +51,8 @@ Example: `packages/ui/src/components/button.tsx`
 - Context variables typed via `AppContext` interface
 - Typed RPC client exported for frontend consumption (`hcWithType`)
 - Security middleware stack: secure headers → CORS → rate limiting
+- **Web API auth is cookie-based; never attach `Authorization` headers from session data.** Cookies ride along automatically on same-origin fetches. There is exactly one `hc<AppType>` construction in the web app — `apps/web/src/lib/api.ts`; `useApi()` returns that instance.
+- **Mobile uses exactly one Better Auth client: `@/auth/client`.** `apps/mobile/src/utils/api.tsx` reads cookies from that client. Do not create additional `createAuthClient` instances anywhere in the mobile app.
 
 Example: `packages/api/src/router/api-key.ts`
 

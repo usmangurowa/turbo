@@ -3,8 +3,7 @@ import { hc } from "hono/client";
 
 import type { AppType } from "@turbo/api";
 
-import { authClient } from "./auth";
-import { getBaseUrl } from "./base-url";
+import { authClient, getAuthBaseUrl } from "@/auth/client";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +18,7 @@ export const queryClient = new QueryClient({
  * Includes cookie authentication via authClient
  */
 const createApiClient = () => {
-  const client = hc<AppType>(getBaseUrl() + "/api", {
+  const client = hc<AppType>(getAuthBaseUrl() + "/api", {
     headers: (): Record<string, string> => {
       const cookies = authClient.getCookie();
       if (cookies) {
