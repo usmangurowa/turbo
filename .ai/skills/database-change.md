@@ -24,8 +24,11 @@
 2. Apply the schema change using established Drizzle patterns (`pgTable`, indexes, relations, timestamps).
 3. If the change is auth-related, update `packages/auth/src/index.ts` as needed and run:
    - `pnpm auth:generate`
-4. Apply DB changes to dev database:
-   - `pnpm db:push`
+4. Apply DB changes:
+   - Generate a durable migration: `pnpm db:generate -- --name <migration_name>`
+   - Apply locally: `pnpm db:migrate`
+   - `pnpm db:push:local` is allowed only for disposable local databases
+   - In production, migrations apply automatically on server boot via `pnpm start:server` (`db:migrate && start:prod`); never run migrations against production manually unless recovering from a failure
 5. Validate exports remain correct via `packages/db/src/schema.ts` and package exports in `packages/db/package.json`.
 6. Run checks:
    - `pnpm -F @turbo/db typecheck`
@@ -40,7 +43,7 @@
 
 - [ ] Schema change applied in the correct `packages/db/src/*` file
 - [ ] Auth-driven schema updates regenerated with `pnpm auth:generate` (if applicable)
-- [ ] Dev DB updated with `pnpm db:push`
+- [ ] Migration generated with `pnpm db:generate` and applied locally with `pnpm db:migrate`
 - [ ] DB package typecheck/lint pass
 - [ ] No broken exports from `@turbo/db/schema`
 
@@ -48,5 +51,6 @@
 
 - Do not edit generated auth schema manually when regeneration is the source of truth
 - Do not apply auth schema changes without running `pnpm auth:generate`
-- Do not skip `pnpm db:push` after schema updates intended for local DB
+- Do not skip `pnpm db:generate` + `pnpm db:migrate` after schema updates — migration files must ship in the same PR as the schema change
+- Do not write destructive migrations (drops/renames) in the same release as the code change; use expand/contract across two releases
 - Do not introduce schema changes without indexes/relations where required by usage

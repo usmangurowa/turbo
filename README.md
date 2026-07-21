@@ -278,23 +278,25 @@ Add your local IP (e.g., `192.168.x.y:PORT`) to your OAuth provider's allowed ca
 
 ### Production Database Migrations
 
-Production migrations are handled by the GitHub Actions workflow at `.github/workflows/db-migrate-production.yml`.
+Production migrations are owned by the standalone server's start command (migrate-on-boot). The root script chains them:
 
-- The workflow runs automatically on pushes to `main` when a committed migration under `packages/db/drizzle/` changes.
-- The workflow can also be run manually from the Actions tab.
-- The job uses the protected GitHub Environment named `production` and runs `pnpm db:migrate` against the production database.
+```bash
+pnpm start:server
+# runs: TURBO_DB_SKIP_DOTENV=1 pnpm db:migrate && pnpm -F @turbo/server start:prod
+```
 
-If GitHub Actions is running your production migrations, store the production database URL as a GitHub Environment secret named `PRODUCTION_POSTGRES_URL`.
+How it works on each deploy:
 
-- GitHub repository secrets work, but a GitHub Environment secret is safer because it lets you add production approvals and branch restrictions.
-- You do not need that GitHub secret if another platform runs the migration for you and already provides `POSTGRES_URL` there.
+1. The platform (e.g., Coolify) builds and starts a new container with `pnpm start:server`.
+2. `pnpm db:migrate` applies only migrations the database hasn't seen (tracked in the Drizzle journal).
+3. If migrations succeed, the server boots and the health check passes.
+4. If migrations fail, the server never starts, the health check fails, and the previous version keeps serving.
 
-Recommended setup:
+Requirements:
 
-1. Create a GitHub Environment named `production`.
-2. Add `PRODUCTION_POSTGRES_URL` as an Environment secret on that environment.
-3. Optionally add required reviewers so production migrations need approval.
-4. Keep app deploys backward-compatible with the migration sequence.
+- Set `POSTGRES_URL` in the deployment environment. `TURBO_DB_SKIP_DOTENV=1` is baked into the script so migrate reads the injected environment instead of a local `.env` file.
+- Keep exactly one migration owner: only the server's start command runs `db:migrate`. Other apps (web, mobile) never migrate.
+- Keep migrations backward-compatible (expand/contract): add columns and tables first, drop or rename in a later release, since old code briefly runs against the new schema during the deploy window.
 
 ### Auth Proxy
 
