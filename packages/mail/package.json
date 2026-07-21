@@ -24,6 +24,7 @@
     "email:dev": "email dev --dir src/templates --port 3010",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
@@ -40,7 +41,8 @@
     "prettier": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "4.1.10"
   },
   "peerDependencies": {
     "react": "catalog:react19"

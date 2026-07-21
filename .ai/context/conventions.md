@@ -121,3 +121,10 @@ Example: `packages/db/src/auth-schema.ts`
 - Never hardcode sample rates (e.g., `tracesSampleRate: 0.1`) in app files — import from `@turbo/analytics` instead.
 - React Native `Sentry.init` consumes `SENTRY_CONFIG.tracesSampleRate` only (the web `replays*` fields are not supported by the React Native SDK).
 - `posthogWebOptions` is for web (posthog-js) only; mobile wires PostHog via `PostHogProvider` directly.
+
+## Mail Patterns
+
+- `@turbo/mail` exports templates and senders only; import react-email primitives from `react-email` directly inside mail templates — never re-export vendor components from `packages/mail/src/index.ts`.
+- Consumers call `sendOTPEmail`, `sendWelcomeEmail`, or `sendSupportEmail` from `@turbo/mail/client`; they do not import react-email primitives from `@turbo/mail`.
+- New email types: add a template in `src/templates/`, a `send<Name>Email` wrapper in `src/client.tsx`, and a subject-mapping test following `sendOTPEmail`.
+- Flag any new `export ... from "react-email"` added to `src/index.ts` in code review.

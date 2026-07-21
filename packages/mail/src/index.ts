@@ -15,20 +15,3 @@ export type { WelcomeEmailProps } from "./templates/welcome";
 export { OTPEmail } from "./templates/otp";
 export type { OTPEmailProps } from "./templates/otp";
 
-// Re-export useful react-email components for convenience
-export {
-  Body,
-  Column,
-  Container,
-  Head,
-  Heading,
-  Hr,
-  Html,
-  Img,
-  Link,
-  Preview,
-  Row,
-  Section,
-  Tailwind,
-  Text,
-} from "react-email";
