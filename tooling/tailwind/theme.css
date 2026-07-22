@@ -82,8 +82,9 @@
  * - Uniwind (mobile)
  *
  * Palette: neutral charcoal darks (#161616 family, zero chroma — no warm
- * cast), near-white light mode with #D8D9D4 greige surfaces, electric blue
- * #0659FF accent, white/#989A9D text. Radius base 12px (sm 8 / lg 12 / xl 16).
+ * cast), near-white light mode with pure-gray surfaces and a #292929/#5D5D5D
+ * ink hierarchy, electric blue #0659FF accent, white/#989A9D dark-mode text.
+ * Radius base 12px (sm 8 / lg 12 / xl 16).
  */
 @layer base {
   :root {
@@ -101,26 +102,26 @@
 
     @variant light {
       --background: oklch(0.9851 0 0); /* #FAFAFA near-white neutral */
-      --foreground: oklch(0.1776 0 0); /* #111111 */
+      --foreground: oklch(0.281 0 0); /* #292929 soft ink */
       --card: oklch(1 0 0);
-      --card-foreground: oklch(0.1776 0 0);
+      --card-foreground: oklch(0.281 0 0);
       --popover: oklch(1 0 0);
-      --popover-foreground: oklch(0.1776 0 0);
+      --popover-foreground: oklch(0.281 0 0);
       --primary: var(--primary-500);
       --primary-foreground: oklch(1 0 0);
-      --secondary: oklch(0.925 0.005 115); /* #D8D9D4-family greige */
-      --secondary-foreground: oklch(0.2264 0 0);
-      --muted: oklch(0.945 0.004 115);
-      --muted-foreground: oklch(0.51 0.004 258);
-      --accent: oklch(0.955 0.003 115);
-      --accent-foreground: oklch(0.1776 0 0);
+      --secondary: oklch(0.9431 0 0); /* #ECECEC pills/badges */
+      --secondary-foreground: oklch(0.281 0 0);
+      --muted: oklch(0.97 0 0); /* #F5F5F5 */
+      --muted-foreground: oklch(0.478 0 0); /* #5D5D5D */
+      --accent: oklch(0.958 0 0); /* #F1F1F1 hover rows */
+      --accent-foreground: oklch(0.281 0 0);
       --destructive: oklch(0.6256 0.1933 23.03);
       --success: oklch(0.6271 0.1699 149.21);
       --success-foreground: oklch(1 0 0);
       --warning: oklch(0.66 0.18 45);
       --warning-foreground: oklch(1 0 0);
-      --border: oklch(0.9 0.006 115);
-      --input: oklch(0.8831 0.0068 115.72); /* #D8D9D4 */
+      --border: oklch(0.922 0 0); /* #E5E5E5 */
+      --input: oklch(0.87 0 0); /* #D4D4D4 */
       --ring: var(--primary-500);
       --chart-1: oklch(0.5406 0.2549 262.56); /* blue */
       --chart-2: oklch(0.7 0.13 200); /* teal */
@@ -128,13 +129,15 @@
       --chart-4: oklch(0.7227 0.192 149.58); /* green */
       --chart-5: oklch(0.62 0.22 295); /* violet */
       --radius: 0.75rem;
-      --sidebar: oklch(0.972 0.0025 110);
-      --sidebar-foreground: oklch(0.1776 0 0);
+      --sidebar: oklch(0.9851 0 0); /* blends with app frame */
+      --sidebar-foreground: oklch(0.281 0 0);
       --sidebar-primary: var(--primary-500);
       --sidebar-primary-foreground: oklch(1 0 0);
-      --sidebar-accent: oklch(0.945 0.004 115);
-      --sidebar-accent-foreground: oklch(0.1776 0 0);
-      --sidebar-border: oklch(0.9 0.006 115);
+      --sidebar-accent: oklch(0.9431 0 0); /* #ECECEC active pill */
+      --sidebar-accent-foreground: oklch(
+        0.1776 0 0
+      ); /* near-black active label */
+      --sidebar-border: oklch(0.922 0 0);
       --sidebar-ring: var(--primary-500);
     }
 

@@ -16,11 +16,14 @@ requests a visual change.
 - **Dark mode**: neutral charcoal `#161616` (`oklch(0.2002 0 0)`) — zero
   chroma, never warm/stone. Layered surfaces: card `#1C1C1C`, popover
   `#242424`, secondary/badge `#2A2A2A`.
-- **Light mode**: near-white `#FAFAFA`; greige `#D8D9D4`-family tints are used
-  for secondary surfaces and input borders only, never the page background.
+- **Light mode**: near-white `#FAFAFA` with pure-gray surfaces (zero chroma —
+  the earlier `#D8D9D4` greige tint was dropped). Ink hierarchy: foreground
+  `#292929`, muted-foreground `#5D5D5D`, borders `#E5E5E5`. Sidebar blends
+  with the app frame; the active nav pill is `#ECECEC` (`--sidebar-accent`)
+  with a near-black label — subtle, never dark.
 - **Accent**: electric blue `#0659FF` (`oklch(0.5406 0.2549 262.56)`, token
   `--primary-500`) in both modes.
-- **Muted text**: `#989A9D` dark / neutral gray light.
+- **Muted text**: `#989A9D` dark / `#5D5D5D` light.
 - **Brand mark**: HugeIcons "AI collage template" outline icon (1.5px stroke),
   embedded inline in `apps/web/src/components/turbo-logo.tsx` because
   `AiCollageTemplateIcon` is Pro-only (not in `@hugeicons/core-free-icons`).
