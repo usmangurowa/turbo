@@ -23,8 +23,8 @@ import {
 import { Icon } from "@turbo/ui/components/icon";
 
 const members = [
-  { initials: "AY", className: "bg-primary/15 text-primary" },
-  { initials: "SC", className: "bg-chart-3/15 text-chart-3" },
+  { initials: "AY", className: "bg-primary text-primary-foreground" },
+  { initials: "SC", className: "bg-chart-3 text-white" },
 ];
 
 export const HeaderActions = () => {
@@ -52,7 +52,7 @@ export const HeaderActions = () => {
           </Avatar>
         ))}
         <Avatar className="ring-background size-7 ring-2">
-          <AvatarFallback className="bg-secondary text-muted-foreground text-[10px] font-medium">
+          <AvatarFallback className="bg-muted text-foreground text-[10px] font-medium">
             +1
           </AvatarFallback>
         </Avatar>
