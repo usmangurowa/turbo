@@ -248,7 +248,10 @@ const columns: ColumnDef<Task>[] = [
     accessorKey: "priority",
     header: () => <HeaderLabel icon={FlagIcon}>Priority</HeaderLabel>,
     cell: ({ row }) => (
-      <Badge variant="secondary" className="rounded-full font-medium">
+      <Badge
+        variant="secondary"
+        className="rounded-full text-[11px] font-normal"
+      >
         {priorityLabels[row.original.priority]}
       </Badge>
     ),
@@ -314,7 +317,10 @@ export const TasksTable = ({
             Track work across your team
           </p>
         </div>
-        <Badge variant="secondary" className="rounded-full font-medium">
+        <Badge
+          variant="secondary"
+          className="rounded-full text-[11px] font-normal"
+        >
           {rows.length} {rows.length === 1 ? "task" : "tasks"}
         </Badge>
       </div>
@@ -358,7 +364,7 @@ export const TasksTable = ({
                       {groupLabels[group]}
                       <Badge
                         variant="secondary"
-                        className="rounded-full px-1.5 text-[10px]"
+                        className="rounded-full px-1.5 text-[10px] font-normal"
                       >
                         {groupRows.length}
                       </Badge>

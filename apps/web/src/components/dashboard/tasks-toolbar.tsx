@@ -102,7 +102,7 @@ export const TasksToolbar = ({
 
       <Separator
         orientation="vertical"
-        className="data-[orientation=vertical]:h-4"
+        className="my-auto data-[orientation=vertical]:h-4"
       />
 
       <DropdownMenu>

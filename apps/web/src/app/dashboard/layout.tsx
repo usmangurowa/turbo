@@ -30,7 +30,7 @@ export default function DashboardLayout({
               <SidebarTrigger className="-ml-1" />
               <Separator
                 orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
+                className="my-auto mr-2 data-[orientation=vertical]:h-4"
               />
               <PageTitle />
               <div className="ml-auto flex items-center gap-2">
