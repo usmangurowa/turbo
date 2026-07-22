@@ -19,8 +19,9 @@ requests a visual change.
 - **Light mode**: near-white `#FAFAFA` with pure-gray surfaces (zero chroma —
   the earlier `#D8D9D4` greige tint was dropped). Ink hierarchy: foreground
   `#292929`, muted-foreground `#5D5D5D`, borders `#E5E5E5`. Sidebar blends
-  with the app frame; the active nav pill is `#ECECEC` (`--sidebar-accent`)
-  with a near-black label — subtle, never dark.
+  with the app frame; the active nav pill is `#F2F2F2` (`--sidebar-accent`,
+  same value as `--accent` — icon tiles and hover rows share it) with a
+  near-black label — subtle, never dark.
 - **Accent**: electric blue `#0659FF` (`oklch(0.5406 0.2549 262.56)`, token
   `--primary-500`) in both modes.
 - **Muted text**: `#989A9D` dark / `#5D5D5D` light.

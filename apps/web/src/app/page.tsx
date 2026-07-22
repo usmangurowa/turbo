@@ -183,7 +183,7 @@ export default function HomePage() {
                 key={feature.title}
                 className="bg-card flex flex-col gap-4 rounded-2xl border border-dashed p-6"
               >
-                <div className="bg-primary/10 flex size-10 items-center justify-center rounded-lg">
+                <div className="bg-accent flex size-10 items-center justify-center rounded-lg">
                   <Icon
                     icon={feature.icon}
                     className="text-primary size-5"
@@ -221,7 +221,7 @@ export default function HomePage() {
                 key={feature.title}
                 className="bg-card flex flex-col gap-4 rounded-2xl border p-6"
               >
-                <div className="bg-muted flex size-10 items-center justify-center rounded-lg">
+                <div className="bg-accent flex size-10 items-center justify-center rounded-lg">
                   <Icon
                     icon={feature.icon}
                     className="text-foreground size-5"

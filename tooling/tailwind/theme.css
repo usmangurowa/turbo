@@ -113,7 +113,7 @@
       --secondary-foreground: oklch(0.281 0 0);
       --muted: oklch(0.97 0 0); /* #F5F5F5 */
       --muted-foreground: oklch(0.478 0 0); /* #5D5D5D */
-      --accent: oklch(0.958 0 0); /* #F1F1F1 hover rows */
+      --accent: oklch(0.9642 0 0); /* #F2F2F2 hover rows, icon tiles */
       --accent-foreground: oklch(0.281 0 0);
       --destructive: oklch(0.6256 0.1933 23.03);
       --success: oklch(0.6271 0.1699 149.21);
@@ -133,7 +133,7 @@
       --sidebar-foreground: oklch(0.281 0 0);
       --sidebar-primary: var(--primary-500);
       --sidebar-primary-foreground: oklch(1 0 0);
-      --sidebar-accent: oklch(0.9431 0 0); /* #ECECEC active pill */
+      --sidebar-accent: oklch(0.9642 0 0); /* #F2F2F2 active pill */
       --sidebar-accent-foreground: oklch(
         0.1776 0 0
       ); /* near-black active label */
