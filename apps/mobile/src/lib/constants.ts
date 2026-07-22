@@ -5,5 +5,5 @@
 export const SUPPORT_EMAIL = "usesilo.app@gmail.com";
 
 export const getThumbUrl = (seed: string): string => {
-  return `https://api.dicebear.com/9.x/thumbs/svg?seed=${seed}&scale=80&backgroundColor=3976E8&shapeColor=ffffff`;
+  return `https://api.dicebear.com/9.x/thumbs/svg?seed=${seed}&scale=80&backgroundColor=0659FF&shapeColor=ffffff`;
 };

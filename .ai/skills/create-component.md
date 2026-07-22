@@ -31,9 +31,9 @@
    import type { VariantProps } from "class-variance-authority";
    import { cva } from "class-variance-authority";
    // For shared UI components in packages/ui/src/components
-   import { cn } from "..";
+   import { cn } from "../lib/utils";
    // For app-specific components in apps/web or apps/mobile, use:
-   // import { cn } from "@turbo/ui";
+   // import { cn } from "@turbo/ui/lib/utils";
 
    export const <name>Variants = cva("base-classes", {
      variants: { /* ... */ },

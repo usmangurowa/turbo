@@ -1,30 +1,25 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { getSession } from "@/auth/server";
-import { OnboardingForm } from "@/components/onboarding-form";
+import { OnboardingForm } from "@/components/auth/onboarding-form";
+
+export const metadata: Metadata = {
+  title: "Onboarding",
+  description: "Complete your profile",
+};
 
 export default async function OnboardingPage() {
   const session = await getSession();
 
-  // If not logged in, redirect to login
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  // If user has already completed onboarding (has username), go to dashboard
-  if (session.user.username) {
-    redirect("/dashboard");
-  }
-
-  // Pass user data to pre-fill the form (especially for OAuth users)
-  const nameParts = session.user.name.split(" ");
+  const [firstName = "", lastName = ""] = (session?.user.name ?? "").split(
+    " ",
+  );
 
   return (
     <OnboardingForm
       defaultValues={{
-        username: session.user.githubUsername ?? "",
-        firstName: nameParts[0] ?? "",
-        lastName: nameParts.slice(1).join(" "),
-        avatarUrl: session.user.image ?? "",
+        firstName,
+        lastName,
+        avatarUrl: session?.user.image ?? "",
       }}
     />
   );

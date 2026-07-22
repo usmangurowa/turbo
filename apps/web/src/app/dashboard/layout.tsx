@@ -1,32 +1,41 @@
-import { DashboardBreadcrumbs } from "@/components/dashboard-breadcrumbs";
-import { AppSidebar } from "@/components/dashboard-sidebar";
+import type { Metadata } from "next";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { PageTitle } from "@/components/dashboard/page-title";
 
-import { Separator } from "@turbo/ui/separator";
+import { Separator } from "@turbo/ui/components/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@turbo/ui/sidebar";
+} from "@turbo/ui/components/sidebar";
+import { ThemeToggle } from "@turbo/ui/components/theme";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Your workspace overview",
+};
 
 export default function DashboardLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <SidebarProvider className="h-dvh overflow-hidden">
+    <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="flex flex-col overflow-hidden">
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+      <SidebarInset>
+        <header className="bg-background/80 sticky top-0 z-40 flex h-14 shrink-0 items-center gap-2 border-b backdrop-blur-sm transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-14">
+          <div className="flex w-full items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="h-content mr-2" />
-            <DashboardBreadcrumbs />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <PageTitle />
+            <div className="ml-auto">
+              <ThemeToggle />
+            </div>
           </div>
         </header>
-        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-4 pt-0">
-          {children}
-        </div>
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );

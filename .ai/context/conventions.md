@@ -33,6 +33,15 @@
 - Props extend `React.ComponentProps<"element">` with `VariantProps`
 - Compound components pattern: `Card`, `CardHeader`, `CardContent`, `CardFooter`
 - Export individual named components (not default)
+- Import shared UI as `@turbo/ui/components/<name>`; `cn` from
+  `@turbo/ui/lib/utils`; hooks from `@turbo/ui/hooks/<name>` (no root
+  `@turbo/ui` barrel import)
+- Registry components are CLI-managed: add/update with `pnpm ui-add` in
+  `packages/ui`, don't hand-edit beyond documented patches
+- `Button` has no `loading` prop — render
+  `{pending && <Spinner data-icon="inline-start" />}` and set `disabled`
+- Toasts: `import { toast } from "sonner"` with `<Toaster />` mounted from
+  `@turbo/ui/components/sonner`
 
 Example: `packages/ui/src/components/button.tsx`
 
@@ -40,7 +49,7 @@ Example: `packages/ui/src/components/button.tsx`
 
 - **ALWAYS** use `react-hook-form` with `@hookform/resolvers/zod` for forms.
 - **NEVER** use `useState` for managing form state or individual form fields.
-- **ALWAYS** use `shadcn/ui` form components (`Form`, `FormField`, `FormControl`, `FormItem`, `FormMessage`).
+- **ALWAYS** use `shadcn/ui` form components (`Form`, `FormField`, `FormControl`, `FormItem`, `FormMessage`), with `Field`/`FieldGroup` primitives for layout.
 - **NEVER** use raw HTML `<input>`, `<select>`, etc., when a `shadcn/ui` component exists.
 
 ## API Patterns (Hono)

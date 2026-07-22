@@ -5,38 +5,29 @@ import {
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import { useCSSVariable, useUniwind } from "uniwind";
+import { useCSSVariable } from "uniwind";
 
 const TabsLayout = () => {
-  const { theme } = useUniwind();
-  const isDark = theme === "dark";
-
-  const [primary, background] = useCSSVariable([
+  const [primary, background, card, border, mutedForeground] = useCSSVariable([
     "--primary",
     "--background",
+    "--card",
+    "--border",
+    "--muted-foreground",
   ]) as string[];
-
-  // Colors based on theme
-  const colors = {
-    primary,
-    background,
-    text: isDark ? "#ffffff" : "#000000",
-    card: isDark ? "#1c1c1c" : "#ffffff",
-    border: isDark ? "#2e2e2e" : "#e5e5e5",
-  };
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.text,
+        tabBarActiveTintColor: primary,
+        tabBarInactiveTintColor: mutedForeground,
         tabBarStyle: {
-          backgroundColor: colors.card,
-          borderTopColor: colors.border,
+          backgroundColor: card,
+          borderTopColor: border,
         },
         sceneStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: background,
         },
       }}
     >

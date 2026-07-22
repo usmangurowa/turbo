@@ -1,32 +1,15 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { Progress as ProgressPrimitive } from "radix-ui";
 
-import { cn } from "..";
-
-interface ProgressProps extends React.ComponentProps<
-  typeof ProgressPrimitive.Root
-> {
-  /** Whether to animate from 0 to value on mount. Defaults to false. */
-  animate?: boolean;
-}
+import { cn } from "@turbo/ui/lib/utils";
 
 function Progress({
   className,
   value,
-  animate = false,
   ...props
-}: ProgressProps) {
-  const [mounted, setMounted] = React.useState(!animate);
-
-  React.useEffect(() => {
-    if (!animate) return;
-    // Delay to trigger the animation after mount
-    const timer = setTimeout(() => setMounted(true), 50);
-    return () => clearTimeout(timer);
-  }, [animate]);
-
+}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
@@ -38,13 +21,8 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className={cn(
-          "bg-primary size-full flex-1",
-          animate ? "transition-all duration-500 ease-out" : "transition-all",
-        )}
-        style={{
-          transform: `translateX(-${100 - (mounted ? (value ?? 0) : 0)}%)`,
-        }}
+        className="bg-primary size-full flex-1 transition-all"
+        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </ProgressPrimitive.Root>
   );

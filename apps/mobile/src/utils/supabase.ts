@@ -1,9 +1,9 @@
+import { authClient } from "@/auth/client";
+
 import {
   createAuthenticatedSupabaseClient,
   createSupabaseClient,
 } from "@turbo/supabase";
-
-import { authClient } from "@/auth/client";
 
 // Expo uses EXPO_PUBLIC_ prefix for public environment variables
 function getSupabaseConfig() {

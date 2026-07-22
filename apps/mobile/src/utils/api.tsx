@@ -1,9 +1,8 @@
+import { authClient, getAuthBaseUrl } from "@/auth/client";
 import { QueryClient } from "@tanstack/react-query";
 import { hc } from "hono/client";
 
 import type { AppType } from "@turbo/api";
-
-import { authClient, getAuthBaseUrl } from "@/auth/client";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

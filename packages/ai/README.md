@@ -10,8 +10,8 @@ AI provider wiring for the Turbo stack.
 ## Exports
 
 ```ts
-import { googleAI, groq, openRouter, modelConfig } from "@turbo/ai/client";
 import type { AIMessage, GeminiModelId } from "@turbo/ai";
+import { googleAI, groq, modelConfig, openRouter } from "@turbo/ai/client";
 ```
 
 ## What's planned
@@ -20,8 +20,8 @@ Agent orchestration, session summarisation, daily insights, and standup generati
 
 ## Environment variables
 
-| Variable | Used by |
-| --- | --- |
+| Variable                       | Used by                              |
+| ------------------------------ | ------------------------------------ |
 | `GOOGLE_GENERATIVE_AI_API_KEY` | `googleAI` (default Google provider) |
-| `OPENROUTER_API_KEY` | `openRouter` provider |
-| `GROQ_API_KEY` | `groq` provider |
+| `OPENROUTER_API_KEY`           | `openRouter` provider                |
+| `GROQ_API_KEY`                 | `groq` provider                      |

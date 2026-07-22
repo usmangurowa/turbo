@@ -3,57 +3,55 @@ import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
+import { Icon } from "@/components/ui/icon";
 import { StyledSafeAreaView } from "@/components/ui/safe-area-view";
 import { Text } from "@/components/ui/text";
+import { FlashIcon } from "@hugeicons/core-free-icons";
 
 const App = () => {
   return (
     <StyledSafeAreaView className="flex-1">
-      <View className="flex-1 items-center justify-center gap-4 px-8">
-        {/* Heading */}
-        <Text className="text-foreground text-4xl font-extrabold tracking-tight">
-          🚀 Welcome
-        </Text>
-        <Text className="text-foreground font-jakarta-extrabold text-4xl tracking-tight">
-          🚀 Welcome
-        </Text>
+      <View className="flex-1 justify-between px-6 py-8">
+        {/* Brand */}
+        <View className="flex-row items-center gap-2">
+          <View className="bg-primary size-8 items-center justify-center rounded-lg">
+            <Icon icon={FlashIcon} className="text-primary-foreground size-4" />
+          </View>
+          <Text className="font-inter-semibold text-base">Turbo</Text>
+        </View>
 
-        {/* Subheading */}
-        <Text className="text-muted-foreground text-center text-xl leading-relaxed">
-          Build beautiful apps with{" "}
-          <Text className="text-primary font-semibold">
-            Expo (Router) + Uniwind 🔥
+        {/* Hero */}
+        <View className="gap-4">
+          <View className="bg-secondary self-start rounded-full px-3 py-1.5">
+            <Text className="text-muted-foreground text-xs">
+              Template ready — clone and ship
+            </Text>
+          </View>
+          <Text className="font-inter-semibold text-4xl leading-tight tracking-tight">
+            Ship your next product on a foundation that scales
           </Text>
-        </Text>
-
-        {/* Card Example */}
-        <View className="bg-card mt-4 w-full rounded-lg p-4">
-          <Text className="text-card-foreground font-medium">Card Example</Text>
-          <Text className="text-muted-foreground mt-2 text-sm">
-            Using monorepo theme with bg-card and text-card-foreground
+          <Text className="text-muted-foreground font-inter text-base leading-relaxed">
+            One theme, one codebase — Expo and Next.js sharing the same design
+            system, auth, and API.
           </Text>
         </View>
 
-        {/* Color Buttons */}
-        <View className="mt-4 flex-row gap-2">
-          <View className="bg-primary rounded-lg px-4 py-2">
-            <Text className="text-primary-foreground">Primary</Text>
+        {/* Actions */}
+        <View className="gap-4">
+          <View className="gap-3">
+            <Link href="/(auth)/create-account" asChild>
+              <Button size="lg" className="w-full">
+                <Text>Get started</Text>
+              </Button>
+            </Link>
+            <Link href="/(auth)/login" asChild>
+              <Button size="lg" variant="outline" className="w-full">
+                <Text>Sign in</Text>
+              </Button>
+            </Link>
           </View>
-          <View className="bg-secondary rounded-lg px-4 py-2">
-            <Text className="text-secondary-foreground">Secondary</Text>
-          </View>
-          <View className="bg-destructive rounded-lg px-4 py-2">
-            <Text className="text-white">Destructive</Text>
-          </View>
+          <ThemeSwitcher />
         </View>
-        <Link href="/login" asChild>
-          <Button className="w-full">
-            <Text>Login</Text>
-          </Button>
-        </Link>
-
-        {/* Theme Switcher */}
-        <ThemeSwitcher />
 
         <StatusBar style="auto" />
       </View>

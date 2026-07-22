@@ -1,107 +1,72 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
+import { useEffect, useRef } from "react";
+import { useInView, useMotionValue, useSpring } from "motion/react";
 
-import { cn } from "..";
+import { cn } from "@turbo/ui/lib/utils";
 
-interface NumberTickerProps {
-  /** Target value to count to */
+interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   value: number;
-  /** Starting value (defaults to 0) */
   startValue?: number;
-  /** Duration of animation in milliseconds */
-  duration?: number;
-  /** Number of decimal places */
+  direction?: "up" | "down";
+  delay?: number;
   decimalPlaces?: number;
-  /** Optional CSS class */
-  className?: string;
-  /** Whether to start animation when element comes into view */
-  startOnView?: boolean;
-  /** Callback when animation completes */
-  onComplete?: () => void;
 }
 
-/**
- * NumberTicker - Animated counter that counts from startValue to value.
- *
- * @example
- * ```tsx
- * <NumberTicker value={1234} className="text-4xl font-bold" />
- * ```
- */
-export const NumberTicker = ({
+export function NumberTicker({
   value,
   startValue = 0,
-  duration = 1500,
-  decimalPlaces = 0,
+  direction = "up",
+  delay = 0,
   className,
-  startOnView = true,
-  onComplete,
-}: NumberTickerProps) => {
-  const [displayValue, setDisplayValue] = useState(startValue);
-  const [hasStarted, setHasStarted] = useState(!startOnView);
+  decimalPlaces = 0,
+  ...props
+}: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(direction === "down" ? value : startValue);
+  const springValue = useSpring(motionValue, {
+    damping: 60,
+    stiffness: 100,
+  });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
 
-  // Start animation when in view
   useEffect(() => {
-    if (!startOnView || hasStarted) return;
+    let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setHasStarted(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (isInView) {
+      timer = setTimeout(() => {
+        motionValue.set(direction === "down" ? startValue : value);
+      }, delay * 1000);
     }
 
-    return () => observer.disconnect();
-  }, [startOnView, hasStarted]);
-
-  // Run counting animation
-  useEffect(() => {
-    if (!hasStarted) return;
-
-    const startTime = Date.now();
-    const difference = value - startValue;
-    let animationId: number;
-
-    const tick = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Ease out cubic for smooth deceleration
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      const currentValue = startValue + difference * easeProgress;
-
-      setDisplayValue(currentValue);
-
-      if (progress < 1) {
-        animationId = requestAnimationFrame(tick);
-      } else {
-        setDisplayValue(value);
-        onComplete?.();
+    return () => {
+      if (timer !== null) {
+        clearTimeout(timer);
       }
     };
+  }, [motionValue, isInView, delay, value, direction, startValue]);
 
-    animationId = requestAnimationFrame(tick);
-
-    return () => cancelAnimationFrame(animationId);
-  }, [hasStarted, value, startValue, duration, onComplete]);
-
-  const formattedValue = displayValue.toFixed(decimalPlaces);
+  useEffect(
+    () =>
+      springValue.on("change", (latest) => {
+        if (ref.current) {
+          ref.current.textContent = Intl.NumberFormat("en-US", {
+            minimumFractionDigits: decimalPlaces,
+            maximumFractionDigits: decimalPlaces,
+          }).format(Number(latest.toFixed(decimalPlaces)));
+        }
+      }),
+    [springValue, decimalPlaces],
+  );
 
   return (
     <span
       ref={ref}
-      className={cn("tabular-nums", className)}
-      aria-label={value.toString()}
+      className={cn("inline-block text-current tabular-nums", className)}
+      {...props}
     >
-      {formattedValue}
+      {startValue}
     </span>
   );
-};
+}

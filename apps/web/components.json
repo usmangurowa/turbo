@@ -11,9 +11,9 @@
   },
   "iconLibrary": "hugeicons",
   "aliases": {
-    "utils": "@turbo/ui",
+    "utils": "@turbo/ui/lib/utils",
     "components": "@/components",
-    "ui": "@turbo/ui",
+    "ui": "@turbo/ui/components",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },

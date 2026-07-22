@@ -73,12 +73,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "expo-font",
       {
         fonts: [
-          "./src/assets/fonts/PlusJakartaSans-Light.ttf",
-          "./src/assets/fonts/PlusJakartaSans-Regular.ttf",
-          "./src/assets/fonts/PlusJakartaSans-Medium.ttf",
-          "./src/assets/fonts/PlusJakartaSans-SemiBold.ttf",
-          "./src/assets/fonts/PlusJakartaSans-Bold.ttf",
-          "./src/assets/fonts/PlusJakartaSans-ExtraBold.ttf",
+          "../../packages/assets/fonts/InterDisplay-Regular.ttf",
+          "../../packages/assets/fonts/InterDisplay-Medium.ttf",
+          "../../packages/assets/fonts/InterDisplay-SemiBold.ttf",
+          "../../packages/assets/fonts/InterDisplay-Bold.ttf",
         ],
       },
     ],

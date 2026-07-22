@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "unused.css",
+    "css": "../../tooling/tailwind/theme.css",
     "baseColor": "neutral",
     "cssVariables": true
   },
@@ -13,9 +13,11 @@
   "menuColor": "default",
   "menuAccent": "subtle",
   "aliases": {
-    "components": "src/",
-    "utils": "@turbo/ui",
-    "ui": "src/"
+    "components": "@turbo/ui/components",
+    "utils": "@turbo/ui/lib/utils",
+    "hooks": "@turbo/ui/hooks",
+    "lib": "@turbo/ui/lib",
+    "ui": "@turbo/ui/components"
   },
   "registries": {
     "@magicui": "https://magicui.design/r/{name}"

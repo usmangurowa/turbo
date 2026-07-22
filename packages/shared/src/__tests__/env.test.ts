@@ -22,9 +22,7 @@ describe("shouldSkipEnvValidation", () => {
   });
 
   it("returns true when npm_lifecycle_event is lint", () => {
-    expect(shouldSkipEnvValidation({ npm_lifecycle_event: "lint" })).toBe(
-      true,
-    );
+    expect(shouldSkipEnvValidation({ npm_lifecycle_event: "lint" })).toBe(true);
   });
 
   it("returns false when npm_lifecycle_event is test", () => {

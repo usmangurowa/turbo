@@ -5,7 +5,7 @@
     "jsx": "preserve",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@turbo/ui/*": ["./src/*"]
     }
   },
   "include": ["src"],

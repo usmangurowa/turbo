@@ -8,6 +8,13 @@
 - Add `"use client"` only when client interactivity or browser APIs are required.
 - Business API behavior does not belong in `apps/web/src/app/api`; app API files
   should mount or adapt shared handlers from packages.
+- Page auth guards are currently disabled for template browsing:
+  `apps/web/src/proxy.ts` is a pass-through (re-enable instructions are inline)
+  and `dashboard/layout.tsx` / `onboarding/page.tsx` no longer redirect.
+- Dashboard nav lives in `apps/web/src/components/dashboard/nav-config.ts` —
+  the single source consumed by the sidebar, ⌘K palette, header title, and the
+  `/dashboard/[section]` SSG placeholder route. Add nav items there, not in
+  components.
 
 ## API Routing
 

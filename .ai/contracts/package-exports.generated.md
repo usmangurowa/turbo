@@ -17,7 +17,7 @@
 | `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |
 | `@turbo/shared` | `packages/shared` | `.`, `./constants`, `./env` |
 | `@turbo/supabase` | `packages/supabase` | `.`, `./client` |
-| `@turbo/ui` | `packages/ui` | `.`, `./*`, `./hooks/*` |
+| `@turbo/ui` | `packages/ui` | `./components/*`, `./lib/*`, `./hooks/*` |
 | `@turbo/validators` | `packages/validators` | `.` |
 | `@turbo/eslint-config` | `tooling/eslint` | `./base`, `./nextjs`, `./react` |
 | `@turbo/github` | `tooling/github` | None |

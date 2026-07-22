@@ -31,7 +31,9 @@ describe("sendEmail (mock transport, no RESEND_API_KEY)", () => {
   it("renderEmail produces HTML containing the OTP", async () => {
     const { renderEmail } = await import("../client");
     const { OTPEmail } = await import("../templates/otp");
-    const html = await renderEmail(OTPEmail({ otp: "654321", type: "sign-in" }));
+    const html = await renderEmail(
+      OTPEmail({ otp: "654321", type: "sign-in" }),
+    );
     expect(html).toContain("654321");
   });
 });

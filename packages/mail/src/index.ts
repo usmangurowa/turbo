@@ -14,4 +14,3 @@ export type { WelcomeEmailProps } from "./templates/welcome";
 
 export { OTPEmail } from "./templates/otp";
 export type { OTPEmailProps } from "./templates/otp";
-

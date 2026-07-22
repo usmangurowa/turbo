@@ -56,21 +56,25 @@ tooling/
 
 ## UI & Styling
 
-| Tool               | Details                                        |
-| ------------------ | ---------------------------------------------- |
-| Component library  | shadcn/ui (Radix primitives + CVA variants)    |
-| CSS framework      | Tailwind CSS 4.3.3                             |
-| Mobile styling     | Uniwind 1.10.x (Tailwind for RN)               |
-| Icons              | HugeIcons (React + React Native)               |
-| Animation (web)    | Motion (Framer Motion) 12.x                    |
-| Animation (mobile) | react-native-reanimated 4.5.x + worklets 0.10.x |
+| Tool               | Details                                                                  |
+| ------------------ | ------------------------------------------------------------------------ |
+| Component library  | shadcn/ui `radix-maia` style (Radix + CVA), CLI-managed in `packages/ui` |
+| Variant shorthands | `shadcn` npm pkg (web devDep) — `shadcn/tailwind.css` custom variants    |
+| CSS framework      | Tailwind CSS 4.3.3                                                       |
+| Shared theme       | `tooling/tailwind/theme.css` (web + mobile single source)                |
+| Fonts              | Inter Display, vendored in `packages/assets/fonts`                       |
+| Theming (web)      | next-themes (class strategy, system default)                             |
+| Mobile styling     | Uniwind 1.10.x (Tailwind for RN)                                         |
+| Icons              | HugeIcons (React + React Native)                                         |
+| Animation (web)    | Motion (Framer Motion) 12.x                                              |
+| Animation (mobile) | react-native-reanimated 4.5.x + worklets 0.10.x                          |
+| Toasts (web)       | sonner (via `@turbo/ui/components/sonner`)                               |
 
 ## State & Data
 
 | Concern      | Tool                                  |
 | ------------ | ------------------------------------- |
 | Server state | TanStack Query 5.x                    |
-| Client state | Zustand 5.x                           |
 | Forms        | react-hook-form + @hookform/resolvers |
 | Tables       | @tanstack/react-table                 |
 

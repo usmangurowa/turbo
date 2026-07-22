@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@turbo/ui";
+import { cn } from "@turbo/ui/lib/utils";
 
 const sizes = {
   sm: 20,
@@ -22,6 +22,8 @@ interface TurboLogoProps extends React.SVGProps<SVGSVGElement> {
 /**
  * Turbo logo component - renders as inline SVG for crisp scaling and styling.
  *
+ * Mark: HugeIcons "AI collage template" (outline, 1.5px stroke).
+ *
  * @example
  * ```tsx
  * <TurboLogo size="lg" className="text-primary" />
@@ -38,16 +40,20 @@ export const TurboLogo = ({
     <svg
       width={dimension}
       height={dimension}
-      viewBox="0 0 35 35"
+      viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
       {...props}
     >
-      <path
-        d="M7.72266 0H27.3323C31.8914 0 34.6927 3.33857 32.3308 5.9434L22.7732 16.4727L17.5549 22.196L13.5451 26.5618C12.5564 27.6625 13.7099 29.0566 15.6324 29.0566H19.3676C21.2901 29.0566 22.4436 27.6625 21.4549 26.5618L18.5986 23.4067L23.8168 17.6834L34.1434 29.0566C36.5054 31.6614 33.704 35 29.1449 35H5.85508C1.29599 35 -1.50539 31.6614 0.856555 29.0566L17.5549 10.7495L19.6422 8.43816C20.6309 7.33753 19.4774 5.9434 17.5549 5.9434C15.6324 5.9434 14.4789 7.33753 15.4676 8.43816L16.6211 9.68553L11.4029 15.4088L2.72414 5.9434C0.362196 3.30189 3.16357 0 7.72266 0Z"
-        fill="currentColor"
-      />
+      <path d="M21 10V13C21 16.7712 21 18.6569 19.8284 19.8284C18.6569 21 16.7712 21 13 21H11C7.22876 21 5.34315 21 4.17157 19.8284C3 18.6569 3 16.7712 3 13V11C3 7.22876 3 5.34315 4.17157 4.17157C5.34315 3 7.22876 3 11 3H14" />
+      <path d="M10 3L15 20.5" />
+      <path d="M3 13L12 11" />
+      <path d="M19.5 2.9375V4.5M19.5 4.5V6.0625M19.5 4.5H18.25M19.5 4.5H20.75M22 4.5L20.9156 4.13852C20.4179 3.97263 20.0274 3.58211 19.8615 3.08443L19.5 2L19.1385 3.08443C18.9726 3.58211 18.5821 3.97263 18.0844 4.13852L17 4.5L18.0844 4.86148C18.5821 5.02737 18.9726 5.41789 19.1385 5.91557L19.5 7L19.8615 5.91557C20.0274 5.41789 20.4179 5.02737 20.9156 4.86148L22 4.5Z" />
     </svg>
   );
 };

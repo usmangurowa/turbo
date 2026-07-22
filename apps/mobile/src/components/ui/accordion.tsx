@@ -98,7 +98,7 @@ function AccordionTrigger({
             className={cn(
               "flex-row items-start justify-between gap-4 rounded-md py-4 disabled:opacity-50",
               Platform.select({
-                web: "focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none [&[data-state=open]>svg]:rotate-180",
+                web: "focus-visible:border-ring focus-visible:ring-ring/30 flex flex-1 transition-all outline-none hover:underline focus-visible:ring-2 disabled:pointer-events-none [&[data-state=open]>svg]:rotate-180",
               }),
               className,
             )}

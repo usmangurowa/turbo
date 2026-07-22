@@ -4,8 +4,8 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
 import { createApp } from "@turbo/api";
-import { db } from "@turbo/db/client";
 import { resolveTrustedOrigins } from "@turbo/auth/trusted-origins";
+import { db } from "@turbo/db/client";
 
 // Create a parent app with basePath /api
 const app = new Hono().basePath("/api");

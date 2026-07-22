@@ -57,7 +57,7 @@ export default function LoginScreen() {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View className="gap-6">
           <Button size={"icon"} variant={"ghost"} onPress={() => router.back()}>
-            <Icon icon={ArrowLeft01Icon} className="text-white" />
+            <Icon icon={ArrowLeft01Icon} className="text-foreground" />
           </Button>
           <View className="items-center gap-2">
             <View className="size-12 items-center justify-center rounded-lg">
