@@ -49,11 +49,6 @@ export default async function DashboardSectionPage({
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold tracking-tight">{item.label}</h2>
-        <p className="text-muted-foreground text-sm">{item.description}</p>
-      </div>
-
       <div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed">
         <Empty>
           <EmptyHeader>

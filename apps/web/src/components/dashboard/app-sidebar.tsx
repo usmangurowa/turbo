@@ -30,7 +30,7 @@ import {
 } from "@turbo/ui/components/sidebar";
 
 import { NavUser } from "./nav-user";
-import { SearchCommand } from "./search-command";
+import { useSearchCommand } from "./search-context";
 
 const NavGroup = ({
   label,
@@ -66,72 +66,62 @@ const NavGroup = ({
 
 export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname();
-  const [searchOpen, setSearchOpen] = React.useState(false);
+  const { openSearch } = useSearchCommand();
 
   return (
-    <>
-      <Sidebar collapsible="icon" {...props}>
-        <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton size="lg" asChild>
-                <Link href="/dashboard">
-                  <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                    <TurboLogo size="sm" />
-                  </div>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Turbo</span>
-                    <span className="text-muted-foreground truncate text-xs">
-                      Workspace
-                    </span>
-                  </div>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                tooltip="Search"
-                onClick={() => setSearchOpen(true)}
-              >
-                <Icon icon={Search01Icon} />
-                <span className="flex-1 text-left">Search</span>
-                <KbdGroup className="group-data-[collapsible=icon]:hidden">
-                  <Kbd>⌘</Kbd>
-                  <Kbd>K</Kbd>
-                </KbdGroup>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarHeader>
-        <SidebarContent>
-          <NavGroup label="Platform" items={platformNav} pathname={pathname} />
-          <NavGroup label="AI" items={aiNav} pathname={pathname} />
-          <NavGroup
-            label="Analytics"
-            items={analyticsNav}
-            pathname={pathname}
-          />
-        </SidebarContent>
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                tooltip={settingsNavItem.label}
-                isActive={pathname === settingsNavItem.href}
-              >
-                <Link href={settingsNavItem.href}>
-                  <Icon icon={settingsNavItem.icon} />
-                  <span>{settingsNavItem.label}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-          <NavUser />
-        </SidebarFooter>
-        <SidebarRail />
-      </Sidebar>
-      <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
-    </>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <Link href="/dashboard">
+                <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <TurboLogo size="sm" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Turbo</span>
+                  <span className="text-muted-foreground truncate text-xs">
+                    Workspace
+                  </span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Search" onClick={openSearch}>
+              <Icon icon={Search01Icon} />
+              <span className="flex-1 text-left">Search</span>
+              <KbdGroup className="group-data-[collapsible=icon]:hidden">
+                <Kbd>⌘</Kbd>
+                <Kbd>K</Kbd>
+              </KbdGroup>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavGroup label="Platform" items={platformNav} pathname={pathname} />
+        <NavGroup label="AI" items={aiNav} pathname={pathname} />
+        <NavGroup label="Analytics" items={analyticsNav} pathname={pathname} />
+      </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip={settingsNavItem.label}
+              isActive={pathname === settingsNavItem.href}
+            >
+              <Link href={settingsNavItem.href}>
+                <Icon icon={settingsNavItem.icon} />
+                <span>{settingsNavItem.label}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <NavUser />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 };

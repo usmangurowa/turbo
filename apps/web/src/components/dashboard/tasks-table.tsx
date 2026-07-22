@@ -6,7 +6,6 @@ import * as React from "react";
 import {
   Calendar03Icon,
   FlagIcon,
-  Sorting01Icon,
   StatusIcon,
   Task01Icon,
   UserIcon,
@@ -23,7 +22,6 @@ import {
   AvatarImage,
 } from "@turbo/ui/components/avatar";
 import { Badge } from "@turbo/ui/components/badge";
-import { Button } from "@turbo/ui/components/button";
 import { Icon } from "@turbo/ui/components/icon";
 import {
   Table,
@@ -37,6 +35,9 @@ import { cn } from "@turbo/ui/lib/utils";
 
 type TaskStatus = "completed" | "in-progress" | "escalated";
 type TaskPriority = "low" | "medium" | "high" | "urgent";
+type TaskSortKey = "date" | "priority" | "status" | "assignee";
+
+export type { TaskPriority, TaskSortKey, TaskStatus };
 
 interface Task {
   id: string;
@@ -163,6 +164,26 @@ const priorityLabels: Record<TaskPriority, string> = {
   urgent: "Urgent",
 };
 
+const priorityRank: Record<TaskPriority, number> = {
+  urgent: 0,
+  high: 1,
+  medium: 2,
+  low: 3,
+};
+
+const statusRank: Record<TaskStatus, number> = {
+  escalated: 0,
+  "in-progress": 1,
+  completed: 2,
+};
+
+const comparators: Record<TaskSortKey, (a: Task, b: Task) => number> = {
+  date: (a, b) => b.date.localeCompare(a.date),
+  priority: (a, b) => priorityRank[a.priority] - priorityRank[b.priority],
+  status: (a, b) => statusRank[a.status] - statusRank[b.status],
+  assignee: (a, b) => a.assignee.name.localeCompare(b.assignee.name),
+};
+
 const HeaderLabel = ({
   icon,
   children,
@@ -255,9 +276,28 @@ const columns: ColumnDef<Task>[] = [
   },
 ];
 
-export const TasksTable = () => {
+interface TasksTableProps {
+  sortBy?: TaskSortKey;
+  statuses?: TaskStatus[];
+  priorities?: TaskPriority[];
+}
+
+export const TasksTable = ({
+  sortBy = "date",
+  statuses = [],
+  priorities = [],
+}: TasksTableProps) => {
+  const data = React.useMemo(() => {
+    const filtered = tasks.filter(
+      (task) =>
+        (statuses.length === 0 || statuses.includes(task.status)) &&
+        (priorities.length === 0 || priorities.includes(task.priority)),
+    );
+    return [...filtered].sort(comparators[sortBy]);
+  }, [sortBy, statuses, priorities]);
+
   const table = useReactTable({
-    data: tasks,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -274,13 +314,9 @@ export const TasksTable = () => {
             Track work across your team
           </p>
         </div>
-        <Button variant="secondary" size="sm" className="rounded-full">
-          <Icon icon={Sorting01Icon} />
-          <span className="text-muted-foreground">
-            Sorted by{" "}
-            <span className="text-foreground font-semibold">Date</span>
-          </span>
-        </Button>
+        <Badge variant="secondary" className="rounded-full font-medium">
+          {rows.length} {rows.length === 1 ? "task" : "tasks"}
+        </Badge>
       </div>
       <Table>
         <TableHeader>
@@ -300,6 +336,15 @@ export const TasksTable = () => {
           ))}
         </TableHeader>
         <TableBody>
+          {rows.length === 0 ? (
+            <TableRow className="hover:bg-transparent">
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                <span className="text-muted-foreground text-sm">
+                  No tasks match your filters.
+                </span>
+              </TableCell>
+            </TableRow>
+          ) : null}
           {groups.map((group) => {
             const groupRows = rows.filter(
               (row) => row.original.group === group,

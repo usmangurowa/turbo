@@ -44,6 +44,19 @@ requests a visual change.
   secondary background.
 - Sidebar: shadcn `sidebar-07` pattern (icon-collapsible), muted-caps group
   labels, ⌘K search entry, footer user dropdown.
+- Dashboard header: sticky bar with page chip (`bg-accent` rounded-full pill,
+  icon + nav label from `nav-config.ts`) + muted inline description, right
+  side avatar stack / search button / Export dropdown (`header-actions.tsx`).
+  Page titles come from the header chip — section pages must NOT repeat an h2.
+- Toolbar row (below header, Overview): "Sorted by **X**" secondary pill →
+  radio dropdown; "Filter" outline pill with count badge → checkbox dropdown
+  (`onSelect={(e) => e.preventDefault()}` keeps it open while toggling).
+  State lives in a client view component (`overview-view.tsx`) that feeds
+  props to `TasksTable`.
+- Search: one `SearchCommand` instance owned by `SearchProvider`
+  (`search-context.tsx`); sidebar + header both call
+  `useSearchCommand().openSearch()`. Never mount `SearchCommand` twice — its
+  internal ⌘K listener toggles, so two instances double-fire.
 - Integration cards: white squircle logo tile, dashed divider, ghost footer
   action.
 
