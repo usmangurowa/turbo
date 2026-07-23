@@ -33,6 +33,9 @@ jobs:
       - name: Verify AI contracts are up to date
         run: pnpm ai:contracts:check
 
+      - name: Verify skills bundles are in sync
+        run: pnpm skills:check
+
   lint:
     runs-on: ubuntu-latest
     steps:

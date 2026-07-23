@@ -31,6 +31,7 @@ architecture, contracts, or conventions.
 | 2026-07-14 | Anti-slop UI skill                        | `.ai/skills/anti-slop-ui.md`, `.ai/skills/00-index.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/design-system.mdc` | UI review and page-polish tasks now have a repo-local quality bar for avoiding generic AI UI patterns while preserving the neutral product baseline.                                                                                                                                                                                                                                                                                                                                            |
 | 2026-07-15 | Full anti-slop reference                  | `.ai/references/pols-anti-slop-design-law.md`, `.ai/skills/anti-slop-ui.md`                                                               | The full external design law is vendored separately and linked from the concise repo-local UI workflow.                                                                                                                                                                                                                                                                                                                                                                                         |
 | 2026-07-22 | Design system rebuild (web + ui + mobile) | `tooling/tailwind/theme.css`, `packages/ui/src/*`, `packages/assets/fonts/*`, `apps/web/src/*`, `apps/mobile/src/*`                       | Neutral `#161616` dark / `#FAFAFA` light palette, `#0659FF` accent, Inter Display, radius 0.75rem. `packages/ui` regenerated with shadcn CLI (`radix-maia`, 60 components, exports `./components/*` `./lib/*` `./hooks/*`). Web rebuilt: landing, 6 auth pages, dashboard (collapsible sidebar, ⌘K, dashed stat cards, grouped tasks table, integrations). Mobile aligned: Inter fonts, token-driven tab bar, segmented theme switcher. Spec: `.ai/specs/active/design-system-rebuild.spec.md`. |
+| 2026-07-23 | Skills bundle sync check                  | `scripts/ai/check-skills-sync.mjs`, `package.json`, `.github/workflows/ci.yml`                                                            | `pnpm skills:check` verifies every tool-specific skill mirror (`.claude`, `.github` full; `.cursor`, `.codex`, `.gemini` subsets) is valid symlinks into `.agents/skills/`, and CI fails on missing, dangling, or unknown entries.                                                                                                                                                                                                                                                              |
 
 ## Architectural Change Log
 
@@ -42,10 +43,9 @@ architecture, contracts, or conventions.
 
 ## Known TODOs
 
-| Priority | Task                                                         | Source                                                                                                   | Blocking? |
-| -------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | --------- |
-| high     | Keep generated contract snapshots current                    | `.ai/contracts/`, `scripts/ai/`                                                                          | no        |
-| medium   | Add a sync policy for duplicated tool-specific skill bundles | `.agents/`, `.github/skills/`, `.cursor/skills/`, `.claude/skills/`, `.codex/skills/`, `.gemini/skills/` | no        |
+| Priority | Task                                      | Source                          | Blocking? |
+| -------- | ----------------------------------------- | ------------------------------- | --------- |
+| high     | Keep generated contract snapshots current | `.ai/contracts/`, `scripts/ai/` | no        |
 
 ## Regression Guards
 

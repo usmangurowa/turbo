@@ -39,6 +39,7 @@
     "ai:graph": "node scripts/ai/package-graph.mjs",
     "ai:context": "pnpm ai:contracts && node scripts/ai/context-pack.mjs",
     "ai:verify": "pnpm ai:contracts && pnpm verify",
+    "skills:check": "node scripts/ai/check-skills-sync.mjs --strict",
     "ui-add": "turbo run ui-add",
     "android": "expo run:android",
     "ios": "expo run:ios"
