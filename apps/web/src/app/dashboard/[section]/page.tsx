@@ -21,10 +21,11 @@ const getSection = (slug: string) =>
   sectionNavItems.find((item) => item.slug === slug);
 
 export function generateStaticParams() {
-  // `settings` has a real static route at /dashboard/settings; keeping it
-  // here would make Next build a colliding placeholder page.
+  // `settings` and `assistant` have real static routes at /dashboard/settings
+  // and /dashboard/assistant; keeping them here would make Next build
+  // colliding placeholder pages.
   return sectionNavItems
-    .filter((item) => item.slug !== "settings")
+    .filter((item) => item.slug !== "settings" && item.slug !== "assistant")
     .map((item) => ({ section: item.slug }));
 }
 
