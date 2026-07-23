@@ -5,6 +5,7 @@
 
 ## Schema files
 
+- `packages/db/src/app-schema.ts`
 - `packages/db/src/auth-schema.ts`
 - `packages/db/src/schema.ts`
 
@@ -12,6 +13,7 @@
 
 | Export | DB table | Source |
 | --- | --- | --- |
+| `task` | `task` | `packages/db/src/app-schema.ts` |
 | `user` | `user` | `packages/db/src/auth-schema.ts` |
 | `session` | `session` | `packages/db/src/auth-schema.ts` |
 | `account` | `account` | `packages/db/src/auth-schema.ts` |
