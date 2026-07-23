@@ -48,8 +48,7 @@ export default function HomeScreen() {
   });
 
   // Fall back to sample data when the API returns no rows (zero-env template).
-  const taskList =
-    apiTasks && apiTasks.length > 0 ? apiTasks : sampleTasks;
+  const taskList = apiTasks && apiTasks.length > 0 ? apiTasks : sampleTasks;
 
   if (!data?.data) {
     return null;

@@ -1,14 +1,11 @@
 "use client";
 
+import type { InferResponseType } from "hono/client";
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 
-import type { InferResponseType } from "hono/client";
-
 /** A task row as returned by GET /api/tasks */
-export type ApiTask = InferResponseType<
-  typeof api.tasks.$get
->["tasks"][number];
+export type ApiTask = InferResponseType<typeof api.tasks.$get>["tasks"][number];
 
 /**
  * Fetch the most recent tasks through the typed Hono client.

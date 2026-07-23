@@ -39,27 +39,32 @@ const app = new Hono<AppContext>()
   /**
    * POST /tasks - Create a task for the authenticated user
    */
-  .post("/", authMiddleware, zValidator("json", createTaskSchema), async (c) => {
-    const session = c.get("session");
-    const body = c.req.valid("json");
+  .post(
+    "/",
+    authMiddleware,
+    zValidator("json", createTaskSchema),
+    async (c) => {
+      const session = c.get("session");
+      const body = c.req.valid("json");
 
-    if (!session?.user) {
-      return c.json({ error: "Unauthorized" }, 401);
-    }
+      if (!session?.user) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
 
-    const db = c.get("db");
-    const [created] = await db
-      .insert(task)
-      .values({
-        title: body.title,
-        status: body.status,
-        priority: body.priority,
-        dueDate: body.dueDate,
-        userId: session.user.id,
-      })
-      .returning();
+      const db = c.get("db");
+      const [created] = await db
+        .insert(task)
+        .values({
+          title: body.title,
+          status: body.status,
+          priority: body.priority,
+          dueDate: body.dueDate,
+          userId: session.user.id,
+        })
+        .returning();
 
-    return c.json({ task: created }, 201);
-  });
+      return c.json({ task: created }, 201);
+    },
+  );
 
 export default app;
