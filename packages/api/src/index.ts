@@ -10,6 +10,7 @@ import {
   secureHeadersMiddleware,
 } from "./middleware/security";
 import { timingMiddleware } from "./middleware/timing";
+import aiRouter from "./router/ai";
 import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
 import supportRouter from "./router/support";
@@ -49,6 +50,7 @@ export const createApp = (
     .route("/apikeys", apiKeyRouter)
     .route("/support", supportRouter)
     .route("/tasks", taskRouter)
+    .route("/ai", aiRouter)
     // Health check (not rate limited in security config)
     .get("/health", (c) => c.text("OK"));
 
