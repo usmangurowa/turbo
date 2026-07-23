@@ -21,7 +21,11 @@ const getSection = (slug: string) =>
   sectionNavItems.find((item) => item.slug === slug);
 
 export function generateStaticParams() {
-  return sectionNavItems.map((item) => ({ section: item.slug }));
+  // `settings` has a real static route at /dashboard/settings; keeping it
+  // here would make Next build a colliding placeholder page.
+  return sectionNavItems
+    .filter((item) => item.slug !== "settings")
+    .map((item) => ({ section: item.slug }));
 }
 
 export async function generateMetadata({
