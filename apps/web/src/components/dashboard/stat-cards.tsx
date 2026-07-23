@@ -1,5 +1,8 @@
 "use client";
 
+import type { ApiTask } from "@/hooks/use-tasks";
+import * as React from "react";
+import { useTasks } from "@/hooks/use-tasks";
 import { TradeDownIcon, TradeUpIcon } from "@hugeicons/core-free-icons";
 
 import { Icon } from "@turbo/ui/components/icon";
@@ -14,7 +17,7 @@ interface Stat {
   trend: number;
 }
 
-const stats: Stat[] = [
+const sampleStats: Stat[] = [
   { label: "Active tasks", value: 128, caption: "+12 this week", trend: 10.4 },
   {
     label: "Resolved",
@@ -74,10 +77,33 @@ const StatCard = ({ stat }: { stat: Stat }) => {
   );
 };
 
-export const StatCards = () => (
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    {stats.map((stat) => (
-      <StatCard key={stat.label} stat={stat} />
-    ))}
-  </div>
-);
+export const StatCards = () => {
+  const { data: apiTasks } = useTasks();
+
+  const stats = React.useMemo(() => {
+    if (!apiTasks || apiTasks.length === 0) return sampleStats;
+    const count = (status: ApiTask["status"]) =>
+      apiTasks.filter((task) => task.status === status).length;
+    return sampleStats.map((stat) => {
+      switch (stat.label) {
+        case "Active tasks":
+          return { ...stat, value: count("pending") + count("in-progress") };
+        case "Resolved":
+          return { ...stat, value: count("completed") };
+        case "Escalations":
+          return { ...stat, value: count("escalated") };
+        // "Avg. response" is not derivable from task rows; keep the sample.
+        default:
+          return stat;
+      }
+    });
+  }, [apiTasks]);
+
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {stats.map((stat) => (
+        <StatCard key={stat.label} stat={stat} />
+      ))}
+    </div>
+  );
+};

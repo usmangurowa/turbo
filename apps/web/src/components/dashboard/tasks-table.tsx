@@ -2,7 +2,9 @@
 
 import type { IconSvgElement } from "@hugeicons/react";
 import type { ColumnDef } from "@tanstack/react-table";
+import type { ApiTask } from "@/hooks/use-tasks";
 import * as React from "react";
+import { useTasks } from "@/hooks/use-tasks";
 import {
   Calendar03Icon,
   FlagIcon,
@@ -33,7 +35,7 @@ import {
 } from "@turbo/ui/components/table";
 import { cn } from "@turbo/ui/lib/utils";
 
-type TaskStatus = "completed" | "in-progress" | "escalated";
+type TaskStatus = "pending" | "completed" | "in-progress" | "escalated";
 type TaskPriority = "low" | "medium" | "high" | "urgent";
 type TaskSortKey = "date" | "priority" | "status" | "assignee";
 
@@ -52,7 +54,7 @@ interface Task {
   group: "today" | "this-week" | "earlier";
 }
 
-const tasks: Task[] = [
+const sampleTasks: Task[] = [
   {
     id: "TSK-341",
     title: "Review onboarding funnel drop-off",
@@ -145,6 +147,38 @@ const groupLabels: Record<Task["group"], string> = {
   earlier: "Earlier",
 };
 
+const tones = ["blue", "orange", "teal"] satisfies Task["tone"][];
+
+const groupForDate = (date: Date) => {
+  const now = new Date();
+  const sameDay =
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate();
+  if (sameDay) return "today" as const;
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(now.getDate() - 7);
+  if (date > sevenDaysAgo) return "this-week" as const;
+  return "earlier" as const;
+};
+
+/** Map an API task row to the UI task shape (presentation concerns stay here). */
+const mapApiTask = (apiTask: ApiTask, index: number): Task => {
+  const date = new Date(apiTask.dueDate ?? apiTask.createdAt);
+  return {
+    id: apiTask.id,
+    title: apiTask.title,
+    date: date.toISOString().slice(0, 10),
+    day: String(date.getDate()).padStart(2, "0"),
+    month: date.toLocaleString("en-US", { month: "short" }),
+    tone: tones[index % tones.length] ?? "blue",
+    status: apiTask.status,
+    priority: apiTask.priority,
+    assignee: { name: "Unassigned" },
+    group: groupForDate(date),
+  };
+};
+
 const dateTone: Record<Task["tone"], string> = {
   blue: "bg-primary/15 text-primary",
   orange: "bg-warning/15 text-warning",
@@ -152,6 +186,7 @@ const dateTone: Record<Task["tone"], string> = {
 };
 
 const statusConfig: Record<TaskStatus, { label: string; dot: string }> = {
+  pending: { label: "Pending", dot: "bg-muted-foreground" },
   completed: { label: "Completed", dot: "bg-success" },
   "in-progress": { label: "In Progress", dot: "bg-primary" },
   escalated: { label: "Escalated", dot: "bg-warning" },
@@ -174,7 +209,8 @@ const priorityRank: Record<TaskPriority, number> = {
 const statusRank: Record<TaskStatus, number> = {
   escalated: 0,
   "in-progress": 1,
-  completed: 2,
+  pending: 2,
+  completed: 3,
 };
 
 const comparators: Record<TaskSortKey, (a: Task, b: Task) => number> = {
@@ -290,14 +326,18 @@ export const TasksTable = ({
   statuses = [],
   priorities = [],
 }: TasksTableProps) => {
+  const { data: apiTasks } = useTasks();
+
   const data = React.useMemo(() => {
-    const filtered = tasks.filter(
+    const source =
+      apiTasks && apiTasks.length > 0 ? apiTasks.map(mapApiTask) : sampleTasks;
+    const filtered = source.filter(
       (task) =>
         (statuses.length === 0 || statuses.includes(task.status)) &&
         (priorities.length === 0 || priorities.includes(task.priority)),
     );
     return [...filtered].sort(comparators[sortBy]);
-  }, [sortBy, statuses, priorities]);
+  }, [apiTasks, sortBy, statuses, priorities]);
 
   const table = useReactTable({
     data,
