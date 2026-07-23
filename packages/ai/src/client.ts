@@ -153,3 +153,27 @@ export const geminiPro: LanguageModel = google("gemini-3-pro");
  */
 export const createGeminiModel = (modelId: GeminiModelId): LanguageModel =>
   google(modelId);
+
+/**
+ * Return the default model of the first configured provider, checked in
+ * order: Google → Groq → OpenRouter. A provider counts as configured when
+ * its API key environment variable is set to a non-empty value at call time,
+ * so the zero-env template resolves to `null` and callers can degrade
+ * gracefully (e.g. an API route returning 503) instead of crashing.
+ *
+ * @example
+ * ```ts
+ * import { getDefaultModel } from "@turbo/ai/client";
+ *
+ * const model = getDefaultModel();
+ * if (!model) {
+ *   // no provider configured — return a 503 or render a setup hint
+ * }
+ * ```
+ */
+export const getDefaultModel = (): LanguageModel | null => {
+  if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) return geminiFlash;
+  if (process.env.GROQ_API_KEY) return groqLlama;
+  if (process.env.OPENROUTER_API_KEY) return openRouterGemini;
+  return null;
+};
