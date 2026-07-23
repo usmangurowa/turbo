@@ -13,6 +13,7 @@ import { timingMiddleware } from "./middleware/timing";
 import apiKeyRouter from "./router/api-key";
 import authRouter from "./router/auth";
 import supportRouter from "./router/support";
+import taskRouter from "./router/task";
 
 /**
  * Options for creating the API app
@@ -47,6 +48,7 @@ export const createApp = (
     .route("/auth", authRouter)
     .route("/apikeys", apiKeyRouter)
     .route("/support", supportRouter)
+    .route("/tasks", taskRouter)
     // Health check (not rate limited in security config)
     .get("/health", (c) => c.text("OK"));
 
