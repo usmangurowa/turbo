@@ -81,7 +81,9 @@ requests a visual change.
 - Documented registry patch — soft focus rings: after regenerating any
   component, replace `ring-[3px]` → `ring-2` and `ring-ring/50` →
   `ring-ring/30` (web `packages/ui` and mobile `apps/mobile/src/components/ui`).
-  Never remove focus rings entirely (keyboard a11y).
+  Buttons go one notch softer: `focus-visible:border-ring/50` +
+  `focus-visible:ring-ring/20` (solid border-ring reads too loud on small
+  pills). Never remove focus rings entirely (keyboard a11y).
 - `CommandDialog` renders only Dialog chrome — consumers must nest a
   `<Command>` root inside it or cmdk crashes on mount.
 - `Tooltip` does not self-provide context; the app wraps everything in
