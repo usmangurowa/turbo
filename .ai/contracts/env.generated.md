@@ -30,6 +30,8 @@
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
+- `SUPPORT_INBOX_EMAIL`
+- `TRIGGER_SECRET_KEY`
 
 ## .env.example variables
 
@@ -58,6 +60,8 @@
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
+- `SUPPORT_INBOX_EMAIL`
+- `TRIGGER_SECRET_KEY`
 
 ## Env validation modules
 

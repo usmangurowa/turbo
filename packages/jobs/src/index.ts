@@ -1,9 +1,12 @@
 /**
- * @turbo/jobs — background job processing with Trigger.dev.
+ * @turbo/jobs — Trigger.dev task definitions.
  *
- * Scaffolding only: no tasks are implemented yet. When adding the first
- * task, create src/tasks/, export it from here, and restore the
- * "./tasks/*" subpath export in package.json.
+ * Tasks live in src/tasks/ (see trigger.config.ts `dirs`). Import a task's
+ * type from "@turbo/jobs/tasks/<name>" when triggering from other packages
+ * so job code never ends up in their runtime bundles.
  */
 
-export {};
+export {
+  sendSupportEmailTask,
+  type SendSupportEmailPayload,
+} from "./tasks/send-support-email";

@@ -13,7 +13,7 @@
 | GET | `/auth/session` | `packages/api/src/router/auth.ts` | no |
 | GET | `/health` | `packages/api/src/index.ts` | no |
 | POST | `/apikeys` | `packages/api/src/router/api-key.ts` | no |
-| POST | `/support` | `packages/api/src/router/support.ts` | no |
+| POST | `/support` | `packages/api/src/router/support.ts` | yes |
 
 ## Typed client source
 
