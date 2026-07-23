@@ -46,34 +46,35 @@ const validBody = {
 /** A mock model that streams "Hello, world!" as three text deltas. */
 const streamingMockModel = () =>
   new MockLanguageModelV4({
-    doStream: async () => ({
-      stream: simulateReadableStream({
-        chunks: [
-          { type: "text-start", id: "text-1" },
-          { type: "text-delta", id: "text-1", delta: "Hello" },
-          { type: "text-delta", id: "text-1", delta: ", " },
-          { type: "text-delta", id: "text-1", delta: "world!" },
-          { type: "text-end", id: "text-1" },
-          {
-            type: "finish",
-            finishReason: { unified: "stop", raw: undefined },
-            usage: {
-              inputTokens: {
-                total: 3,
-                noCache: 3,
-                cacheRead: undefined,
-                cacheWrite: undefined,
-              },
-              outputTokens: {
-                total: 10,
-                text: 10,
-                reasoning: undefined,
+    doStream: () =>
+      Promise.resolve({
+        stream: simulateReadableStream({
+          chunks: [
+            { type: "text-start", id: "text-1" },
+            { type: "text-delta", id: "text-1", delta: "Hello" },
+            { type: "text-delta", id: "text-1", delta: ", " },
+            { type: "text-delta", id: "text-1", delta: "world!" },
+            { type: "text-end", id: "text-1" },
+            {
+              type: "finish",
+              finishReason: { unified: "stop", raw: undefined },
+              usage: {
+                inputTokens: {
+                  total: 3,
+                  noCache: 3,
+                  cacheRead: undefined,
+                  cacheWrite: undefined,
+                },
+                outputTokens: {
+                  total: 10,
+                  text: 10,
+                  reasoning: undefined,
+                },
               },
             },
-          },
-        ],
+          ],
+        }),
       }),
-    }),
   });
 
 describe("POST /ai/chat", () => {
