@@ -110,3 +110,20 @@ tooling/
 - `test` → `pnpm test`
 
 Turbo remote caching via Vercel.
+
+## AI Tooling (MCP)
+
+| Surface     | Config                                                   |
+| ----------- | -------------------------------------------------------- |
+| Claude Code | `.mcp.json` (repo root)                                  |
+| Cursor      | `.cursor/mcp.json`                                       |
+| VS Code     | `.vscode/mcp.json`                                       |
+| Server      | Expo MCP — Streamable HTTP at `https://mcp.expo.dev/mcp` |
+
+Auth is OAuth (browser sign-in with an Expo account) — no tokens in the repo.
+
+Local capabilities (simulator screenshots, tap-by-testID, expo-router sitemap,
+DevTools) come from the `expo-mcp` dev dependency in `apps/mobile`. Start the
+dev server with them enabled via `pnpm --filter @turbo/mobile dev:mcp`
+(`EXPO_UNSTABLE_MCP_SERVER=1`). Reconnect the MCP client after starting or
+stopping the dev server so it refreshes capabilities.
