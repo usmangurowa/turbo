@@ -13,6 +13,7 @@
 | GET | `/auth/session` | `packages/api/src/router/auth.ts` | no |
 | GET | `/health` | `packages/api/src/index.ts` | no |
 | GET | `/tasks` | `packages/api/src/router/task.ts` | no |
+| POST | `/ai/chat` | `packages/api/src/router/ai.ts` | yes |
 | POST | `/apikeys` | `packages/api/src/router/api-key.ts` | yes |
 | POST | `/support` | `packages/api/src/router/support.ts` | yes |
 | POST | `/tasks` | `packages/api/src/router/task.ts` | yes |

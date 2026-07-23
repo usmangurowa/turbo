@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useSession } from "@/hooks/use-session";
 import { api } from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiChat02Icon, SentIcon } from "@hugeicons/core-free-icons";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -52,8 +52,8 @@ const SignedOutState = () => (
       </EmptyMedia>
       <EmptyTitle>Sign in to use the assistant</EmptyTitle>
       <EmptyDescription>
-        The assistant answers as your account, so conversations need a signed
-        in session.
+        The assistant answers as your account, so conversations need a signed in
+        session.
       </EmptyDescription>
     </EmptyHeader>
     <EmptyContent>
