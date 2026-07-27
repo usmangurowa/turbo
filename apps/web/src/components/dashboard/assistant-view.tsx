@@ -11,11 +11,21 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@turbo/ui/components/ai-elements/conversation";
+import { Loader } from "@turbo/ui/components/ai-elements/loader";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "@turbo/ui/components/ai-elements/message";
+import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@turbo/ui/components/alert";
-import { Bubble, BubbleContent } from "@turbo/ui/components/bubble";
 import { Button } from "@turbo/ui/components/button";
 import {
   Empty,
@@ -28,7 +38,6 @@ import {
 import { Field } from "@turbo/ui/components/field";
 import { Icon } from "@turbo/ui/components/icon";
 import { Input } from "@turbo/ui/components/input";
-import { Message, MessageContent } from "@turbo/ui/components/message";
 import { Skeleton } from "@turbo/ui/components/skeleton";
 import { Spinner } from "@turbo/ui/components/spinner";
 
@@ -64,7 +73,7 @@ const SignedOutState = () => (
   </Empty>
 );
 
-const ConversationEmptyState = () => (
+const AssistantEmptyState = () => (
   <Empty className="flex-1">
     <EmptyHeader>
       <EmptyMedia variant="icon">
@@ -195,33 +204,28 @@ export const AssistantView = () => {
       data-slot="assistant-view"
       className="bg-card flex flex-1 flex-col overflow-hidden rounded-2xl border"
     >
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-6">
-        {messages.length === 0 ? (
-          <ConversationEmptyState />
-        ) : (
-          messages.map((message) => (
-            <Message
-              key={message.id}
-              align={message.role === "user" ? "end" : "start"}
-            >
-              <MessageContent>
-                <Bubble
-                  variant={message.role === "user" ? "default" : "muted"}
-                  align={message.role === "user" ? "end" : "start"}
-                >
-                  <BubbleContent>
-                    {message.content === "" && isStreaming ? (
-                      <Spinner className="size-4" />
-                    ) : (
-                      message.content
-                    )}
-                  </BubbleContent>
-                </Bubble>
-              </MessageContent>
-            </Message>
-          ))
-        )}
-      </div>
+      <Conversation className="flex-1">
+        <ConversationContent className="gap-4 p-6">
+          {messages.length === 0 ? (
+            <AssistantEmptyState />
+          ) : (
+            messages.map((message) => (
+              <Message key={message.id} from={message.role}>
+                <MessageContent>
+                  {message.content === "" && isStreaming ? (
+                    <Loader />
+                  ) : message.role === "assistant" ? (
+                    <MessageResponse>{message.content}</MessageResponse>
+                  ) : (
+                    message.content
+                  )}
+                </MessageContent>
+              </Message>
+            ))
+          )}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
       {providerHint ? (
         <div className="px-6 pb-2">
           <Alert>
