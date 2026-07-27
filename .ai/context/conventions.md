@@ -46,8 +46,10 @@
   `web-preview.tsx` default sandbox drops `allow-same-origin` (override via
   the `sandbox` prop for trusted content); `code-block.tsx` imports
   `shiki/bundle/web` instead of the full `shiki` bundle (CLI re-installs
-  restore the full-bundle import — re-apply); re-apply patches after CLI
-  reinstalls. Patches are guarded by
+  restore the full-bundle import — re-apply); `packages/ui/src/css-modules.d.ts`
+  provides an ambient `*.css` declaration, so re-vendored components with CSS
+  side-effect imports (e.g. `canvas.tsx`) need no suppression; re-apply patches
+  after CLI reinstalls. Patches are guarded by
   `packages/ui/src/__tests__/ai-elements-patches.test.ts` — after any CLI
   re-install, run `pnpm --filter @turbo/ui test` and re-apply failing
   patches. Style-rule relaxations for this folder live in

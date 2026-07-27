@@ -2,8 +2,6 @@ import type { ReactFlowProps } from "@xyflow/react";
 import type { ReactNode } from "react";
 import { Background, ReactFlow } from "@xyflow/react";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- CSS side-effect import has no type declarations
-// @ts-ignore
 import "@xyflow/react/dist/style.css";
 
 type CanvasProps = ReactFlowProps & {
