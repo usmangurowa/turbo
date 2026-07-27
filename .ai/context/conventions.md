@@ -38,6 +38,16 @@
   `@turbo/ui` barrel import)
 - Registry components are CLI-managed: add/update with `pnpm ui-add` in
   `packages/ui`, don't hand-edit beyond documented patches
+- AI chat components live in `packages/ui/src/components/ai-elements/`
+  (Vercel AI Elements registry, `https://registry.ai-sdk.dev`); import as
+  `@turbo/ui/components/ai-elements/<name>`. Patched for AI SDK v7 usage
+  fields (`outputTokenDetails.reasoningTokens`,
+  `inputTokenDetails.cacheReadTokens` in `context.tsx`) and strict tsconfig;
+  re-apply patches after CLI reinstalls. Style-rule relaxations for this
+  folder live in `packages/ui/eslint.config.ts`.
+- `packages/ui/src/components/message.tsx` (layout primitive, data-slot) and
+  `ai-elements/message.tsx` (AI SDK chat message) are different components —
+  both are kept
 - `Button` has no `loading` prop — render
   `{pending && <Spinner data-icon="inline-start" />}` and set `disabled`
 - Toasts: `import { toast } from "sonner"` with `<Toaster />` mounted from

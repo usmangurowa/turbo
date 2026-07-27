@@ -27,4 +27,23 @@ export default defineConfig(
       "react-hooks/set-state-in-effect": "off",
     },
   },
+  {
+    // Vendored AI Elements registry files (https://elements.ai-sdk.dev),
+    // reinstalled via the shadcn CLI: relax style rules that conflict with
+    // upstream authoring conventions.
+    files: ["src/components/ai-elements/**"],
+    rules: {
+      "@typescript-eslint/array-type": "off",
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/no-duplicate-type-constituents": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/prefer-function-type": "off",
+      "@typescript-eslint/prefer-optional-chain": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react-hooks/refs": "off",
+      "react-hooks/static-components": "off",
+    },
+  },
 );

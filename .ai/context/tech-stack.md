@@ -4,11 +4,12 @@
 
 ## Monorepo Tooling
 
-| Tool      | Version                                | Purpose                                     |
-| --------- | -------------------------------------- | ------------------------------------------- |
-| Turborepo | ^2.10.5                                | Task orchestration, caching, build pipeline |
-| pnpm      | ^10.19.0                               | Package manager with workspace support      |
-| Node.js   | 22.21.0 (`.nvmrc`), engines `^22.14.0` | Runtime                                     |
+| Tool      | Version                                | Purpose                                                                                                      |
+| --------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Turborepo | ^2.10.5                                | Task orchestration, caching, build pipeline                                                                  |
+| pnpm      | ^10.19.0                               | Package manager with workspace support                                                                       |
+| Node.js   | 22.21.0 (`.nvmrc`), engines `^22.14.0` | Runtime                                                                                                      |
+| Infisical | `@infisical/cli` ^0.43.113             | Opt-in secrets injection (`pnpm dev:infisical`, `pnpm with-secrets`); `.env` remains the zero-setup fallback |
 
 ### Workspace layout
 
@@ -59,6 +60,7 @@ tooling/
 | Tool               | Details                                                                  |
 | ------------------ | ------------------------------------------------------------------------ |
 | Component library  | shadcn/ui `radix-maia` style (Radix + CVA), CLI-managed in `packages/ui` |
+| AI chat UI         | Vercel AI Elements, vendored in `packages/ui` `components/ai-elements/`  |
 | Variant shorthands | `shadcn` npm pkg (web devDep) — `shadcn/tailwind.css` custom variants    |
 | CSS framework      | Tailwind CSS 4.3.3                                                       |
 | Shared theme       | `tooling/tailwind/theme.css` (web + mobile single source)                |

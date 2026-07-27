@@ -1,0 +1,73 @@
+"use client";
+
+import type { LucideProps } from "lucide-react";
+import type { ComponentProps, HTMLAttributes } from "react";
+import { BookmarkIcon } from "lucide-react";
+
+import { Button } from "@turbo/ui/components/button";
+import { Separator } from "@turbo/ui/components/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@turbo/ui/components/tooltip";
+import { cn } from "@turbo/ui/lib/utils";
+
+export type CheckpointProps = HTMLAttributes<HTMLDivElement>;
+
+export const Checkpoint = ({
+  className,
+  children,
+  ...props
+}: CheckpointProps) => (
+  <div
+    className={cn(
+      "text-muted-foreground flex items-center gap-0.5 overflow-hidden",
+      className,
+    )}
+    {...props}
+  >
+    {children}
+    <Separator />
+  </div>
+);
+
+export type CheckpointIconProps = LucideProps;
+
+export const CheckpointIcon = ({
+  className,
+  children,
+  ...props
+}: CheckpointIconProps) =>
+  children ?? (
+    <BookmarkIcon className={cn("size-4 shrink-0", className)} {...props} />
+  );
+
+export type CheckpointTriggerProps = ComponentProps<typeof Button> & {
+  tooltip?: string;
+};
+
+export const CheckpointTrigger = ({
+  children,
+  className,
+  variant = "ghost",
+  size = "sm",
+  tooltip,
+  ...props
+}: CheckpointTriggerProps) =>
+  tooltip ? (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button size={size} type="button" variant={variant} {...props}>
+          {children}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent align="start" side="bottom">
+        {tooltip}
+      </TooltipContent>
+    </Tooltip>
+  ) : (
+    <Button size={size} type="button" variant={variant} {...props}>
+      {children}
+    </Button>
+  );
