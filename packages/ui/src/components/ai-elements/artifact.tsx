@@ -1,7 +1,6 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
-import type { ComponentProps, HTMLAttributes } from "react";
+import type { ComponentProps, ComponentType, HTMLAttributes } from "react";
 import { XIcon } from "lucide-react";
 
 import { Button } from "@turbo/ui/components/button";
@@ -94,7 +93,7 @@ export const ArtifactActions = ({
 export type ArtifactActionProps = ComponentProps<typeof Button> & {
   tooltip?: string;
   label?: string;
-  icon?: LucideIcon;
+  icon?: ComponentType<{ className?: string }>;
 };
 
 export const ArtifactAction = ({

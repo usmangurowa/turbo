@@ -42,6 +42,12 @@ describe("ai-elements vendored patches", () => {
     expect(source).not.toContain("allow-same-origin");
   });
 
+  it("ai-elements exported icon props are not typed as lucide", () => {
+    for (const file of ["artifact.tsx", "chain-of-thought.tsx"]) {
+      expect(read(file)).not.toContain("icon?: LucideIcon");
+    }
+  });
+
   it("code-block.tsx imports the shiki web bundle, not the full bundle", () => {
     const source = read("code-block.tsx");
     expect(source).toContain('from "shiki/bundle/web"');

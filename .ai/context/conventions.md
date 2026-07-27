@@ -54,6 +54,12 @@
   re-install, run `pnpm --filter @turbo/ui test` and re-apply failing
   patches. Style-rule relaxations for this folder live in
   `packages/ui/eslint.config.ts`.
+- Icons: `lucide-react` is an internal implementation detail of the vendored
+  `ai-elements/` components only — it must not leak into the package's public
+  API (exported `icon` props use `ComponentType<{ className?: string }>`,
+  `CheckpointIconProps` is `ComponentProps<"svg">`) and apps must never import
+  `lucide-react`. App code and new components use HugeIcons via
+  `@turbo/ui/components/icon`.
 - `packages/ui/src/components/message.tsx` (layout primitive, data-slot) and
   `ai-elements/message.tsx` (AI SDK chat message) are different components —
   both are kept

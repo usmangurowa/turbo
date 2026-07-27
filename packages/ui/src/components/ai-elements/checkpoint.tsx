@@ -1,6 +1,5 @@
 "use client";
 
-import type { LucideProps } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 import { BookmarkIcon } from "lucide-react";
 
@@ -32,7 +31,7 @@ export const Checkpoint = ({
   </div>
 );
 
-export type CheckpointIconProps = LucideProps;
+export type CheckpointIconProps = ComponentProps<"svg">;
 
 export const CheckpointIcon = ({
   className,

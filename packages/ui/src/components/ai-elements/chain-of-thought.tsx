@@ -1,7 +1,6 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, ComponentType, ReactNode } from "react";
 import { createContext, memo, useContext, useMemo } from "react";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { BrainIcon, ChevronDownIcon, DotIcon } from "lucide-react";
@@ -106,7 +105,7 @@ export const ChainOfThoughtHeader = memo(
 );
 
 export type ChainOfThoughtStepProps = ComponentProps<"div"> & {
-  icon?: LucideIcon;
+  icon?: ComponentType<{ className?: string }>;
   label: ReactNode;
   description?: ReactNode;
   status?: "complete" | "active" | "pending";
