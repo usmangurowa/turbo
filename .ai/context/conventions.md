@@ -44,7 +44,9 @@
   fields (`outputTokenDetails.reasoningTokens`,
   `inputTokenDetails.cacheReadTokens` in `context.tsx`) and strict tsconfig;
   `web-preview.tsx` default sandbox drops `allow-same-origin` (override via
-  the `sandbox` prop for trusted content); re-apply patches after CLI
+  the `sandbox` prop for trusted content); `code-block.tsx` imports
+  `shiki/bundle/web` instead of the full `shiki` bundle (CLI re-installs
+  restore the full-bundle import — re-apply); re-apply patches after CLI
   reinstalls. Patches are guarded by
   `packages/ui/src/__tests__/ai-elements-patches.test.ts` — after any CLI
   re-install, run `pnpm --filter @turbo/ui test` and re-apply failing

@@ -41,4 +41,10 @@ describe("ai-elements vendored patches", () => {
     );
     expect(source).not.toContain("allow-same-origin");
   });
+
+  it("code-block.tsx imports the shiki web bundle, not the full bundle", () => {
+    const source = read("code-block.tsx");
+    expect(source).toContain('from "shiki/bundle/web"');
+    expect(source).not.toMatch(/import \{[^}]*codeToHtml[^}]*\} from "shiki";/);
+  });
 });

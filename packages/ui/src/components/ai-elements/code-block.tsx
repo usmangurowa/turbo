@@ -1,10 +1,11 @@
 "use client";
 
 import type { ComponentProps, HTMLAttributes } from "react";
-import type { BundledLanguage, ShikiTransformer } from "shiki";
+import type { ShikiTransformer } from "shiki";
+import type { BundledLanguage } from "shiki/bundle/web";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import { codeToHtml } from "shiki";
+import { codeToHtml } from "shiki/bundle/web";
 
 import { Button } from "@turbo/ui/components/button";
 import { cn } from "@turbo/ui/lib/utils";
