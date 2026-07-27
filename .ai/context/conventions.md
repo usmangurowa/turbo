@@ -43,7 +43,9 @@
   `@turbo/ui/components/ai-elements/<name>`. Patched for AI SDK v7 usage
   fields (`outputTokenDetails.reasoningTokens`,
   `inputTokenDetails.cacheReadTokens` in `context.tsx`) and strict tsconfig;
-  re-apply patches after CLI reinstalls. Patches are guarded by
+  `web-preview.tsx` default sandbox drops `allow-same-origin` (override via
+  the `sandbox` prop for trusted content); re-apply patches after CLI
+  reinstalls. Patches are guarded by
   `packages/ui/src/__tests__/ai-elements-patches.test.ts` — after any CLI
   re-install, run `pnpm --filter @turbo/ui test` and re-apply failing
   patches. Style-rule relaxations for this folder live in

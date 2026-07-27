@@ -33,4 +33,12 @@ describe("ai-elements vendored patches", () => {
       expect(read(file)).not.toContain("state only available in AI SDK v6");
     }
   });
+
+  it("web-preview.tsx default sandbox omits allow-same-origin", () => {
+    const source = read("web-preview.tsx");
+    expect(source).toContain(
+      'sandbox="allow-scripts allow-forms allow-popups allow-presentation"',
+    );
+    expect(source).not.toContain("allow-same-origin");
+  });
 });

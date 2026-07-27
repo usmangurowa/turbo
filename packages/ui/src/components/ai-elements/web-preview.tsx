@@ -180,9 +180,12 @@ export const WebPreviewBody = ({
 
   return (
     <div className="flex-1">
+      {/* Default sandbox omits the same-origin allowance: combining it with
+          allow-scripts lets framed content escape the sandbox. Callers can
+          override via the `sandbox` prop since {...props} spreads after it. */}
       <iframe
         className={cn("size-full", className)}
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
+        sandbox="allow-scripts allow-forms allow-popups allow-presentation"
         src={(src ?? url) || undefined}
         title="Preview"
         {...props}
