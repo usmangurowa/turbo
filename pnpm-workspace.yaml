@@ -34,6 +34,7 @@ linkWorkspacePackages: true
 nodeLinker: hoisted
 
 onlyBuiltDependencies:
+  - '@infisical/cli'
   - '@tailwindcss/oxide'
   - esbuild
 

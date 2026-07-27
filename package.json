@@ -20,6 +20,8 @@
     "dev:web": "turbo watch dev -F @turbo/web...",
     "dev:mobile": "turbo watch dev -F @turbo/mobile...",
     "dev:server": "turbo watch dev -F @turbo/server...",
+    "dev:infisical": "infisical run --watch -- turbo watch dev --continue",
+    "with-secrets": "infisical run --",
     "start:server": "TURBO_DB_SKIP_DOTENV=1 pnpm db:migrate && pnpm -F @turbo/server start:prod",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
@@ -45,6 +47,7 @@
     "ios": "expo run:ios"
   },
   "devDependencies": {
+    "@infisical/cli": "^0.43.113",
     "@turbo/gen": "^2.10.5",
     "@turbo/prettier-config": "workspace:*",
     "baseline-browser-mapping": "^2.11.0",

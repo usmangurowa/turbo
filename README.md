@@ -82,6 +82,22 @@ pnpm i
 cp .env.example .env
 ```
 
+**Optional — Infisical secrets manager.** Instead of maintaining a local `.env`, you can inject secrets at runtime from [Infisical](https://infisical.com). The CLI ships as a dev dependency; connect once, then use the `:infisical` script variants:
+
+```bash
+# One-time: authenticate and link the repo to your Infisical project
+pnpm exec infisical login
+pnpm exec infisical init   # writes .infisical.json — commit it (contains no secrets)
+
+# Run dev with secrets injected (auto-reloads when secrets change)
+pnpm dev:infisical
+
+# Wrap any other command
+pnpm with-secrets pnpm db:migrate
+```
+
+Both sources compose: variables injected by Infisical take precedence, and anything missing still falls back to `.env` via each app's `with-env` script. CI can do the same with a [machine identity](https://infisical.com/docs/documentation/platform/identities/machine-identities) and `infisical run --token`.
+
 ### 2. Database Setup (Drizzle ORM)
 
 The database schema is defined in `packages/db/src/schema.ts`, and durable SQL migrations are generated into `packages/db/drizzle/`.
