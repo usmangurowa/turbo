@@ -1,0 +1,283 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - generic [ref=f2e5]:
+      - list [ref=f2e7]:
+        - listitem [ref=f2e8]:
+          - link "Turbo Workspace" [ref=f2e9] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=f2e16]:
+              - generic [ref=f2e17]: Turbo
+              - generic [ref=f2e18]: Workspace
+        - listitem [ref=f2e19]:
+          - button "Search ⌘ K" [ref=f2e20]:
+            - generic [ref=f2e24]: Search
+            - generic [ref=f2e25]:
+              - generic: ⌘
+              - generic: K
+      - generic [ref=f2e26]:
+        - generic [ref=f2e27]:
+          - generic [ref=f2e28]: Platform
+          - list [ref=f2e30]:
+            - listitem [ref=f2e31]:
+              - link "Overview" [ref=f2e32] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f2e39]:
+              - link "Tasks" [ref=f2e40] [cursor=pointer]:
+                - /url: /dashboard/tasks
+            - listitem [ref=f2e46]:
+              - link "Inbox" [ref=f2e47] [cursor=pointer]:
+                - /url: /dashboard/inbox
+            - listitem [ref=f2e52]:
+              - link "Customers" [ref=f2e53] [cursor=pointer]:
+                - /url: /dashboard/customers
+        - generic [ref=f2e62]:
+          - generic [ref=f2e63]: AI
+          - list [ref=f2e65]:
+            - listitem [ref=f2e66]:
+              - link "Assistant" [ref=f2e67] [cursor=pointer]:
+                - /url: /dashboard/assistant
+            - listitem [ref=f2e72]:
+              - link "Prompt Library" [ref=f2e73] [cursor=pointer]:
+                - /url: /dashboard/prompts
+        - generic [ref=f2e78]:
+          - generic [ref=f2e79]: Analytics
+          - list [ref=f2e81]:
+            - listitem [ref=f2e82]:
+              - link "Trends" [ref=f2e83] [cursor=pointer]:
+                - /url: /dashboard/trends
+            - listitem [ref=f2e88]:
+              - link "Reports" [ref=f2e89] [cursor=pointer]:
+                - /url: /dashboard/reports
+      - generic [ref=f2e94]:
+        - list [ref=f2e95]:
+          - listitem [ref=f2e96]:
+            - link "Settings" [ref=f2e97] [cursor=pointer]:
+              - /url: /dashboard/settings
+        - list [ref=f2e102]:
+          - listitem [ref=f2e103]:
+            - button [disabled]
+      - button "Toggle Sidebar" [ref=f2e104]
+    - main [ref=f2e105]:
+      - generic [ref=f2e107]:
+        - button "Toggle Sidebar" [ref=f2e108]
+        - generic [ref=f2e110]:
+          - generic [ref=f2e111]: Overview
+          - paragraph [ref=f2e117]: Your workspace at a glance.
+        - generic [ref=f2e118]:
+          - generic [ref=f2e119]:
+            - generic [ref=f2e120]:
+              - generic [ref=f2e121]: AY
+              - generic [ref=f2e123]: SC
+              - generic [ref=f2e125]: "+1"
+            - button "Search" [ref=f2e127]
+            - button "Export" [ref=f2e128]
+          - button "Toggle theme" [ref=f2e129]
+      - generic [ref=f2e131]:
+        - generic [ref=f2e133]:
+          - button "Sorted by Date" [ref=f2e134]
+          - button "Filter" [ref=f2e136]
+        - generic [ref=f2e137]:
+          - generic [ref=f2e138]:
+            - generic [ref=f2e139]:
+              - generic [ref=f2e140]:
+                - generic [ref=f2e141]: Active tasks
+                - generic [ref=f2e142]: 10.4%
+              - generic [ref=f2e146]: "0"
+              - paragraph [ref=f2e148]: +12 this week
+            - generic [ref=f2e149]:
+              - generic [ref=f2e150]:
+                - generic [ref=f2e151]: Resolved
+                - generic [ref=f2e152]: 6.2%
+              - generic [ref=f2e156]: "0"
+              - paragraph [ref=f2e158]: 94% resolution rate
+            - generic [ref=f2e159]:
+              - generic [ref=f2e160]:
+                - generic [ref=f2e161]: Avg. response
+                - generic [ref=f2e162]: 16.1%
+              - generic [ref=f2e166]:
+                - generic [ref=f2e167]: "0"
+                - generic [ref=f2e168]: m
+              - paragraph [ref=f2e169]: 8m faster than last week
+            - generic [ref=f2e170]:
+              - generic [ref=f2e171]:
+                - generic [ref=f2e172]: Escalations
+                - generic [ref=f2e173]: 25%
+              - generic [ref=f2e177]: "0"
+              - paragraph [ref=f2e179]: 3 urgent open
+          - generic [ref=f2e180]:
+            - generic [ref=f2e181]:
+              - generic [ref=f2e182]:
+                - heading "Tasks" [level=2] [ref=f2e183]
+                - paragraph [ref=f2e184]: Track work across your team
+              - generic [ref=f2e185]: 7 tasks
+            - table [ref=f2e187]:
+              - rowgroup [ref=f2e188]:
+                - row [ref=f2e189]:
+                  - columnheader [ref=f2e190]
+                  - columnheader [ref=f2e196]
+                  - columnheader [ref=f2e202]
+                  - columnheader [ref=f2e206]
+                  - columnheader [ref=f2e210]
+              - rowgroup [ref=f2e215]:
+                - row [ref=f2e216]:
+                  - cell "Today 2" [ref=f2e217]:
+                    - generic [ref=f2e218]:
+                      - text: Today
+                      - generic [ref=f2e219]: "2"
+                - row [ref=f2e220]:
+                  - cell "Jan 14" [ref=f2e221]:
+                    - generic [ref=f2e223]:
+                      - generic [ref=f2e224]: Jan
+                      - generic [ref=f2e225]: "14"
+                  - cell "Review onboarding funnel drop-off TSK-341" [ref=f2e226]:
+                    - generic [ref=f2e227]:
+                      - generic [ref=f2e228]: Review onboarding funnel drop-off
+                      - generic [ref=f2e229]: TSK-341
+                  - cell [ref=f2e230]
+                  - cell "Urgent" [ref=f2e233]
+                  - cell "AY Amina Yusuf" [ref=f2e235]:
+                    - generic [ref=f2e236]:
+                      - generic [ref=f2e237]: AY
+                      - generic [ref=f2e239]: Amina Yusuf
+                - row [ref=f2e240]:
+                  - cell "Jan 14" [ref=f2e241]:
+                    - generic [ref=f2e243]:
+                      - generic [ref=f2e244]: Jan
+                      - generic [ref=f2e245]: "14"
+                  - cell "Ship dark mode contrast fixes TSK-338" [ref=f2e246]:
+                    - generic [ref=f2e247]:
+                      - generic [ref=f2e248]: Ship dark mode contrast fixes
+                      - generic [ref=f2e249]: TSK-338
+                  - cell [ref=f2e250]
+                  - cell "High" [ref=f2e253]
+                  - cell "DA Dele Adeyemi" [ref=f2e255]:
+                    - generic [ref=f2e256]:
+                      - generic [ref=f2e257]: DA
+                      - generic [ref=f2e259]: Dele Adeyemi
+                - row [ref=f2e260]:
+                  - cell "This Week 3" [ref=f2e261]:
+                    - generic [ref=f2e262]:
+                      - text: This Week
+                      - generic [ref=f2e263]: "3"
+                - row [ref=f2e264]:
+                  - cell "Jan 13" [ref=f2e265]:
+                    - generic [ref=f2e267]:
+                      - generic [ref=f2e268]: Jan
+                      - generic [ref=f2e269]: "13"
+                  - cell "Escalate billing webhook retries TSK-334" [ref=f2e270]:
+                    - generic [ref=f2e271]:
+                      - generic [ref=f2e272]: Escalate billing webhook retries
+                      - generic [ref=f2e273]: TSK-334
+                  - cell [ref=f2e274]
+                  - cell "Urgent" [ref=f2e277]
+                  - cell "SC Sarah Chen" [ref=f2e279]:
+                    - generic [ref=f2e280]:
+                      - generic [ref=f2e281]: SC
+                      - generic [ref=f2e283]: Sarah Chen
+                - row [ref=f2e284]:
+                  - cell "Jan 12" [ref=f2e285]:
+                    - generic [ref=f2e287]:
+                      - generic [ref=f2e288]: Jan
+                      - generic [ref=f2e289]: "12"
+                  - cell "Draft Q1 analytics report TSK-330" [ref=f2e290]:
+                    - generic [ref=f2e291]:
+                      - generic [ref=f2e292]: Draft Q1 analytics report
+                      - generic [ref=f2e293]: TSK-330
+                  - cell [ref=f2e294]
+                  - cell "Medium" [ref=f2e297]
+                  - cell "MB Marcus Bell" [ref=f2e299]:
+                    - generic [ref=f2e300]:
+                      - generic [ref=f2e301]: MB
+                      - generic [ref=f2e303]: Marcus Bell
+                - row [ref=f2e304]:
+                  - cell "Jan 11" [ref=f2e305]:
+                    - generic [ref=f2e307]:
+                      - generic [ref=f2e308]: Jan
+                      - generic [ref=f2e309]: "11"
+                  - cell "Refine AI assistant prompts TSK-327" [ref=f2e310]:
+                    - generic [ref=f2e311]:
+                      - generic [ref=f2e312]: Refine AI assistant prompts
+                      - generic [ref=f2e313]: TSK-327
+                  - cell [ref=f2e314]
+                  - cell "Low" [ref=f2e317]
+                  - cell "AY Amina Yusuf" [ref=f2e319]:
+                    - generic [ref=f2e320]:
+                      - generic [ref=f2e321]: AY
+                      - generic [ref=f2e323]: Amina Yusuf
+                - row [ref=f2e324]:
+                  - cell "Earlier 2" [ref=f2e325]:
+                    - generic [ref=f2e326]:
+                      - text: Earlier
+                      - generic [ref=f2e327]: "2"
+                - row [ref=f2e328]:
+                  - cell "Jan 08" [ref=f2e329]:
+                    - generic [ref=f2e331]:
+                      - generic [ref=f2e332]: Jan
+                      - generic [ref=f2e333]: "08"
+                  - cell "Migrate legacy customer exports TSK-319" [ref=f2e334]:
+                    - generic [ref=f2e335]:
+                      - generic [ref=f2e336]: Migrate legacy customer exports
+                      - generic [ref=f2e337]: TSK-319
+                  - cell [ref=f2e338]
+                  - cell "Medium" [ref=f2e341]
+                  - cell "DA Dele Adeyemi" [ref=f2e343]:
+                    - generic [ref=f2e344]:
+                      - generic [ref=f2e345]: DA
+                      - generic [ref=f2e347]: Dele Adeyemi
+                - row [ref=f2e348]:
+                  - cell "Jan 06" [ref=f2e349]:
+                    - generic [ref=f2e351]:
+                      - generic [ref=f2e352]: Jan
+                      - generic [ref=f2e353]: "06"
+                  - cell "Audit workspace permissions TSK-311" [ref=f2e354]:
+                    - generic [ref=f2e355]:
+                      - generic [ref=f2e356]: Audit workspace permissions
+                      - generic [ref=f2e357]: TSK-311
+                  - cell [ref=f2e358]
+                  - cell "Low" [ref=f2e361]
+                  - cell "SC Sarah Chen" [ref=f2e363]:
+                    - generic [ref=f2e364]:
+                      - generic [ref=f2e365]: SC
+                      - generic [ref=f2e367]: Sarah Chen
+          - generic [ref=f2e368]:
+            - generic [ref=f2e370]:
+              - heading "Integrations" [level=2] [ref=f2e371]
+              - paragraph [ref=f2e372]: Connect the tools your team already uses
+            - generic [ref=f2e373]:
+              - generic [ref=f2e374]:
+                - generic [ref=f2e375]:
+                  - switch [checked] [ref=f2e380]
+                  - checkbox [checked]
+                - generic [ref=f2e381]:
+                  - heading "GitHub" [level=3] [ref=f2e382]
+                  - paragraph [ref=f2e383]: Sync issues and pull requests into your tasks.
+                - button "Learn more" [ref=f2e385]
+              - generic [ref=f2e386]:
+                - generic [ref=f2e387]:
+                  - switch [checked] [ref=f2e398]
+                  - checkbox [checked]
+                - generic [ref=f2e399]:
+                  - heading "Slack" [level=3] [ref=f2e400]
+                  - paragraph [ref=f2e401]: Get task updates and alerts in your channels.
+                - button "Learn more" [ref=f2e403]
+              - generic [ref=f2e404]:
+                - generic [ref=f2e405]:
+                  - switch [ref=f2e413]
+                  - checkbox
+                - generic [ref=f2e414]:
+                  - heading "Figma" [level=3] [ref=f2e415]
+                  - paragraph [ref=f2e416]: Attach design files directly to tasks.
+                - button "Learn more" [ref=f2e418]
+              - generic [ref=f2e419]:
+                - generic [ref=f2e420]:
+                  - switch [ref=f2e427]
+                  - checkbox
+                - generic [ref=f2e428]:
+                  - heading "Discord" [level=3] [ref=f2e429]
+                  - paragraph [ref=f2e430]: Route community reports into your inbox.
+                - button "Learn more" [ref=f2e432]
+    - generic [ref=f2e433]:
+      - heading "Command Palette" [level=2] [ref=f2e434]
+      - paragraph [ref=f2e435]: Search for a command to run...
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f2e441] [cursor=pointer]

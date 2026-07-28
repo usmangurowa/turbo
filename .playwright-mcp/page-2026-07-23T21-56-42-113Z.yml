@@ -1,0 +1,113 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - generic [ref=f1e5]:
+      - list [ref=f1e7]:
+        - listitem [ref=f1e8]:
+          - link "Turbo Workspace" [ref=f1e9] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=f1e16]:
+              - generic [ref=f1e17]: Turbo
+              - generic [ref=f1e18]: Workspace
+        - listitem [ref=f1e19]:
+          - button "Search ⌘ K" [ref=f1e20]:
+            - generic [ref=f1e24]: Search
+            - generic [ref=f1e25]:
+              - generic: ⌘
+              - generic: K
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]:
+          - generic [ref=f1e28]: Platform
+          - list [ref=f1e30]:
+            - listitem [ref=f1e31]:
+              - link "Overview" [ref=f1e32] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f1e39]:
+              - link "Tasks" [ref=f1e40] [cursor=pointer]:
+                - /url: /dashboard/tasks
+            - listitem [ref=f1e46]:
+              - link "Inbox" [ref=f1e47] [cursor=pointer]:
+                - /url: /dashboard/inbox
+            - listitem [ref=f1e52]:
+              - link "Customers" [ref=f1e53] [cursor=pointer]:
+                - /url: /dashboard/customers
+        - generic [ref=f1e62]:
+          - generic [ref=f1e63]: AI
+          - list [ref=f1e65]:
+            - listitem [ref=f1e66]:
+              - link "Assistant" [ref=f1e67] [cursor=pointer]:
+                - /url: /dashboard/assistant
+            - listitem [ref=f1e72]:
+              - link "Prompt Library" [ref=f1e73] [cursor=pointer]:
+                - /url: /dashboard/prompts
+        - generic [ref=f1e78]:
+          - generic [ref=f1e79]: Analytics
+          - list [ref=f1e81]:
+            - listitem [ref=f1e82]:
+              - link "Trends" [ref=f1e83] [cursor=pointer]:
+                - /url: /dashboard/trends
+            - listitem [ref=f1e88]:
+              - link "Reports" [ref=f1e89] [cursor=pointer]:
+                - /url: /dashboard/reports
+      - generic [ref=f1e94]:
+        - list [ref=f1e95]:
+          - listitem [ref=f1e96]:
+            - link "Settings" [ref=f1e97] [cursor=pointer]:
+              - /url: /dashboard/settings
+        - list [ref=f1e102]:
+          - listitem [ref=f1e103]:
+            - button [disabled]
+      - button "Toggle Sidebar" [ref=f1e104]
+    - main [ref=f1e105]:
+      - generic [ref=f1e107]:
+        - button "Toggle Sidebar" [ref=f1e108]
+        - generic [ref=f1e110]:
+          - generic [ref=f1e111]: Settings
+          - paragraph [ref=f1e115]: Workspace preferences and configuration.
+        - generic [ref=f1e116]:
+          - generic [ref=f1e117]:
+            - generic [ref=f1e118]:
+              - generic [ref=f1e119]: AY
+              - generic [ref=f1e121]: SC
+              - generic [ref=f1e123]: "+1"
+            - button "Search" [ref=f1e125]
+            - button "Export" [ref=f1e126]
+          - button "Toggle theme" [ref=f1e127]
+      - generic [ref=f1e130]:
+        - generic [ref=f1e131]:
+          - generic [ref=f1e132]:
+            - heading "API keys" [level=2] [ref=f1e133]
+            - paragraph [ref=f1e134]: Programmatic access to your workspace, rate limited per key.
+          - button "Create key" [ref=f1e135]
+        - table [ref=f1e137]:
+          - rowgroup [ref=f1e138]:
+            - row [ref=f1e139]:
+              - columnheader "Name" [ref=f1e140]
+              - columnheader "Key" [ref=f1e141]
+              - columnheader "Created" [ref=f1e142]
+              - columnheader "Status" [ref=f1e143]
+              - columnheader "Actions" [ref=f1e144]
+          - rowgroup [ref=f1e146]:
+            - row [ref=f1e147]:
+              - cell [ref=f1e148]
+              - cell [ref=f1e150]
+              - cell [ref=f1e152]
+              - cell [ref=f1e154]
+              - cell [ref=f1e156]
+            - row [ref=f1e158]:
+              - cell [ref=f1e159]
+              - cell [ref=f1e161]
+              - cell [ref=f1e163]
+              - cell [ref=f1e165]
+              - cell [ref=f1e167]
+            - row [ref=f1e169]:
+              - cell [ref=f1e170]
+              - cell [ref=f1e172]
+              - cell [ref=f1e174]
+              - cell [ref=f1e176]
+              - cell [ref=f1e178]
+        - generic [ref=f1e180]: Keys are shown in full exactly once, at creation. Revoking a key cuts off access immediately.
+    - generic [ref=f1e181]:
+      - heading "Command Palette" [level=2] [ref=f1e182]
+      - paragraph [ref=f1e183]: Search for a command to run...
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f1e189] [cursor=pointer]

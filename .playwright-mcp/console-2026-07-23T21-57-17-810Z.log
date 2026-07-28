@@ -1,0 +1,74 @@
+[     132ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[     144ms] [LOG] [HMR] connected @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[     202ms] [ERROR] ❌ Invalid environment variables: [Object, Object] @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1915
+[     205ms] [ERROR] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1915
+[     220ms] Error: Invalid environment variables
+    at http://localhost:3456/_next/static/chunks/node_modules_0dktejf._.js:347:15
+    at createEnv (http://localhost:3456/_next/static/chunks/node_modules_0dktejf._.js:352:31)
+    at createEnv (http://localhost:3456/_next/static/chunks/node_modules_0dktejf._.js:708:188)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_0pdm14g._.js:324:191)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_0pdm14g._.js:373:154)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_0pdm14g._.js:396:161)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_0pdm14g._.js:534:172)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_0pdm14g._.js:1869:192)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.commonJsRequire [as r] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:300:12)
+    at requireModule (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:96:84)
+    at initializeModuleChunk (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:1111:25)
+    at readChunk (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:847:17)
+    at Object.react_stack_bottom_frame (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15102:20)
+    at resolveLazy (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3867:20)
+    at beginWork (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6666:77)
+    at runWithFiberInDEV (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:966:74)
+    at performUnitOfWork (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9556:97)
+    at workLoopConcurrentByScheduler (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9552:58)
+    at renderRootConcurrent (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9535:71)
+    at performWorkOnRoot (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9062:150)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10256:9)
+[   54327ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed:  @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   55332ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   56336ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   57338ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   58340ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   59345ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   64350ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   69361ms] [ERROR] WebSocket connection to 'ws://localhost:3456/_next/webpack-hmr?id=hyzJuNQaabm0aH7qmUH6Z' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_client_1um1_-a._.js:14623
+[   74374ms] [LOG] [HMR] connected @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   74952ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   74966ms] [LOG] [HMR] connected @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   75161ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   75704ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   75704ms] [LOG] %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {route: /dashboard, path: /dashboard} @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   75705ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3456/dashboard color: rgb(120, 120, 120) color: inherit {o: http://localhost:3456/dashboard, sv: 0.1.3, sdkn: @vercel/analytics/next, sdkv: 2.0.1, ts: 1784843913514} /_vercel/insights/view @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   75767ms] [LOG] %c[Vercel Speed Insights]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   76125ms] [LOG] [Fast Refresh] done in 1067ms @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   84012ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[   84043ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074

@@ -1,0 +1,112 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Turbo Workspace" [ref=e9] [cursor=pointer]:
+            - /url: /dashboard
+            - generic [ref=e16]:
+              - generic [ref=e17]: Turbo
+              - generic [ref=e18]: Workspace
+        - listitem [ref=e19]:
+          - button "Search ⌘ K" [ref=e20]:
+            - generic [ref=e24]: Search
+            - generic [ref=e25]:
+              - generic: ⌘
+              - generic: K
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]: Platform
+          - list [ref=e30]:
+            - listitem [ref=e31]:
+              - link "Overview" [ref=e32] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=e39]:
+              - link "Tasks" [ref=e40] [cursor=pointer]:
+                - /url: /dashboard/tasks
+            - listitem [ref=e46]:
+              - link "Inbox" [ref=e47] [cursor=pointer]:
+                - /url: /dashboard/inbox
+            - listitem [ref=e52]:
+              - link "Customers" [ref=e53] [cursor=pointer]:
+                - /url: /dashboard/customers
+        - generic [ref=e62]:
+          - generic [ref=e63]: AI
+          - list [ref=e65]:
+            - listitem [ref=e66]:
+              - link "Assistant" [ref=e67] [cursor=pointer]:
+                - /url: /dashboard/assistant
+            - listitem [ref=e72]:
+              - link "Prompt Library" [ref=e73] [cursor=pointer]:
+                - /url: /dashboard/prompts
+        - generic [ref=e78]:
+          - generic [ref=e79]: Analytics
+          - list [ref=e81]:
+            - listitem [ref=e82]:
+              - link "Trends" [ref=e83] [cursor=pointer]:
+                - /url: /dashboard/trends
+            - listitem [ref=e88]:
+              - link "Reports" [ref=e89] [cursor=pointer]:
+                - /url: /dashboard/reports
+      - generic [ref=e94]:
+        - list [ref=e95]:
+          - listitem [ref=e96]:
+            - link "Settings" [ref=e97] [cursor=pointer]:
+              - /url: /dashboard/settings
+        - list [ref=e102]:
+          - listitem [ref=e103]:
+            - button [disabled]
+      - button "Toggle Sidebar" [ref=e104]
+    - main [ref=e105]:
+      - generic [ref=e107]:
+        - button "Toggle Sidebar" [ref=e108]
+        - generic [ref=e110]:
+          - generic [ref=e111]: Settings
+          - paragraph [ref=e115]: Workspace preferences and configuration.
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - generic [ref=e118]:
+              - generic [ref=e119]: AY
+              - generic [ref=e121]: SC
+              - generic [ref=e123]: "+1"
+            - button "Search" [ref=e125]
+            - button "Export" [ref=e126]
+          - button "Toggle theme" [ref=e127]
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - generic [ref=e132]:
+            - heading "API keys" [level=2] [ref=e133]
+            - paragraph [ref=e134]: Programmatic access to your workspace, rate limited per key.
+          - button "Create key" [ref=e135]
+        - table [ref=e137]:
+          - rowgroup [ref=e138]:
+            - row [ref=e139]:
+              - columnheader "Name" [ref=e140]
+              - columnheader "Key" [ref=e141]
+              - columnheader "Created" [ref=e142]
+              - columnheader "Status" [ref=e143]
+              - columnheader "Actions" [ref=e144]
+          - rowgroup [ref=e146]:
+            - row [ref=e147]:
+              - cell [ref=e148]
+              - cell [ref=e150]
+              - cell [ref=e152]
+              - cell [ref=e154]
+              - cell [ref=e156]
+            - row [ref=e158]:
+              - cell [ref=e159]
+              - cell [ref=e161]
+              - cell [ref=e163]
+              - cell [ref=e165]
+              - cell [ref=e167]
+            - row [ref=e169]:
+              - cell [ref=e170]
+              - cell [ref=e172]
+              - cell [ref=e174]
+              - cell [ref=e176]
+              - cell [ref=e178]
+        - generic [ref=e180]: Keys are shown in full exactly once, at creation. Revoking a key cuts off access immediately.
+    - generic [ref=e181]:
+      - heading "Command Palette" [level=2] [ref=e182]
+      - paragraph [ref=e183]: Search for a command to run...
+  - region "Notifications alt+T"

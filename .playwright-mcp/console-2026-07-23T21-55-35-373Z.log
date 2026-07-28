@@ -1,0 +1,50 @@
+[     201ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[     258ms] [LOG] [HMR] connected @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1074
+[     408ms] [ERROR] ❌ Invalid environment variables: [Object, Object] @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1915
+[     413ms] [ERROR] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). @ http://localhost:3456/_next/static/chunks/node_modules_next_dist_13-jpzv._.js:1915
+[     478ms] Error: Invalid environment variables
+    at http://localhost:3456/_next/static/chunks/node_modules_1m06esr._.js:82:15
+    at createEnv (http://localhost:3456/_next/static/chunks/node_modules_1m06esr._.js:87:31)
+    at createEnv (http://localhost:3456/_next/static/chunks/node_modules_1m06esr._.js:135:188)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_1j76jo-._.js:80:191)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_1j76jo-._.js:129:154)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_1j76jo-._.js:156:161)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.esmImport [as i] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:279:20)
+    at module evaluation (http://localhost:3456/_next/static/chunks/_1j76jo-._.js:1231:178)
+    at http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1308:27
+    at runModuleExecutionHooks (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1637:13)
+    at instantiateModuleShared (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1306:9)
+    at instantiateModule (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1622:12)
+    at getOrInstantiateModuleFromParent (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:1605:12)
+    at DevContext.commonJsRequire [as r] (http://localhost:3456/_next/static/chunks/turbopack-apps_web_023gg-p._.js:300:12)
+    at requireModule (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:96:84)
+    at initializeModuleChunk (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:1111:25)
+    at readChunk (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-6._.js:847:17)
+    at Object.react_stack_bottom_frame (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15102:20)
+    at resolveLazy (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3867:20)
+    at beginWork (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6666:77)
+    at runWithFiberInDEV (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:966:74)
+    at performUnitOfWork (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9556:97)
+    at workLoopConcurrentByScheduler (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9552:58)
+    at renderRootConcurrent (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9535:71)
+    at performWorkOnRoot (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9062:150)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10256:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3456/_next/static/chunks/node_modules_next_dist_compiled_06v8zzp._.js:3169:64)
+[     481ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3456/favicon.ico:0
