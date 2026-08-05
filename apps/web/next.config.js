@@ -19,6 +19,24 @@ const config = {
 
   /** We already do linting and typechecking as separate tasks in CI */
   typescript: { ignoreBuildErrors: true },
+
+  /**
+   * Instant Navigations (Next.js 16.3): explicit `use cache` caching plus
+   * partial prefetching of loading shells for SPA-like navigations.
+   */
+  cacheComponents: true,
+  partialPrefetching: true,
+
+  /** React Compiler: build-time memoization, run natively in Turbopack */
+  reactCompiler: true,
+
+  experimental: {
+    /** Rust port of the React Compiler (faster than the Babel path) */
+    turbopackRustReactCompiler: true,
+
+    /** Keep navigations/actions pending and retry when the network returns */
+    useOffline: true,
+  },
 };
 
 export default withSentryConfig(config, {

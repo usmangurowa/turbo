@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getSession } from "@/auth/server";
 import { OnboardingForm } from "@/components/auth/onboarding-form";
 
@@ -7,12 +8,12 @@ export const metadata: Metadata = {
   description: "Complete your profile",
 };
 
-export default async function OnboardingPage() {
+// Reads the session (cookies) at request time, so it streams inside the
+// page's Suspense boundary to keep the route prerenderable.
+async function OnboardingFormWithSession() {
   const session = await getSession();
 
-  const [firstName = "", lastName = ""] = (session?.user.name ?? "").split(
-    " ",
-  );
+  const [firstName = "", lastName = ""] = (session?.user.name ?? "").split(" ");
 
   return (
     <OnboardingForm
@@ -22,5 +23,13 @@ export default async function OnboardingPage() {
         avatarUrl: session?.user.image ?? "",
       }}
     />
+  );
+}
+
+export default function OnboardingPage() {
+  return (
+    <Suspense>
+      <OnboardingFormWithSession />
+    </Suspense>
   );
 }

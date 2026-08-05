@@ -45,7 +45,7 @@ tooling/
 | Layer            | Technology  | Version                                   |
 | ---------------- | ----------- | ----------------------------------------- |
 | Language         | TypeScript  | catalog (`^6.0.3`)                        |
-| Web framework    | Next.js     | 16.2.11                                   |
+| Web framework    | Next.js     | 16.3.0                                    |
 | Mobile framework | Expo SDK    | 57 (`react-native` ~0.86.0)               |
 | React            | React       | 19.2.8 via `catalog:react19`              |
 | API framework    | Hono        | ^4.12.31 (`@hono/node-server` ^2.0.11)    |

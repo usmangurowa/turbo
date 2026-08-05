@@ -99,6 +99,13 @@ Example: `packages/api/src/router/api-key.ts`
 - Never call `initAuth()` directly from an app — it is the low-level primitive; app code always goes through `createAppAuth()`.
 - New social providers or plugins are added once in `packages/auth/src/index.ts`.
 
+## Web Rendering (Next.js Cache Components)
+
+- `apps/web` runs Next.js 16.3 with `cacheComponents` and `partialPrefetching` enabled (`next.config.js`).
+- Request-time data in Server Components (`getSession()`, `cookies()`, `headers()`, `params`, uncached `fetch`) must stream inside a `<Suspense>` boundary — move the access into an async child component and wrap it, as in `apps/web/src/app/(auth)/onboarding/page.tsx`. Top-level access fails `next build`.
+- Cache shareable server data with the `"use cache"` directive instead of route segment configs (`export const dynamic/revalidate` are incompatible with Cache Components).
+- The React Compiler is enabled (`reactCompiler: true` + Rust variant); do not hand-add `useMemo`/`useCallback` for render memoization unless the compiler skips the component (see `react-hooks/incompatible-library` lint warnings).
+
 ## Database Patterns (Drizzle)
 
 - Schemas in `packages/db/src/` as `*-schema.ts`

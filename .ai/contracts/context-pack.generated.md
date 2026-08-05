@@ -267,16 +267,23 @@ architecture, contracts, or conventions.
 
 ## Implemented Features
 
-| Date       | Feature                                   | Files                                                                                                                                     | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| ---------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-05-17 | Agent-native memory foundation            | `AGENTS.md`, `.ai/`, `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`                                                    | `.ai/` is the source of truth for agent context.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| 2026-05-17 | Task-oriented agent skills                | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                                                 | Common tasks route through explicit procedures.                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| 2026-05-17 | Generated AI contract snapshots           | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                                                            | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing.                                                                                                                                                                                                                                                                                                                                                                                                   |
-| 2026-05-17 | Spec-first workflow                       | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md`                                 | Non-trivial work has an explicit planning and validation template.                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| 2026-06-30 | Standalone server runtime                 | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                                                       | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 2026-07-14 | Anti-slop UI skill                        | `.ai/skills/anti-slop-ui.md`, `.ai/skills/00-index.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/design-system.mdc` | UI review and page-polish tasks now have a repo-local quality bar for avoiding generic AI UI patterns while preserving the neutral product baseline.                                                                                                                                                                                                                                                                                                                                            |
-| 2026-07-15 | Full anti-slop reference                  | `.ai/references/pols-anti-slop-design-law.md`, `.ai/skills/anti-slop-ui.md`                                                               | The full external design law is vendored separately and linked from the concise repo-local UI workflow.                                                                                                                                                                                                                                                                                                                                                                                         |
-| 2026-07-22 | Design system rebuild (web + ui + mobile) | `tooling/tailwind/theme.css`, `packages/ui/src/*`, `packages/assets/fonts/*`, `apps/web/src/*`, `apps/mobile/src/*`                       | Neutral `#161616` dark / `#FAFAFA` light palette, `#0659FF` accent, Inter Display, radius 0.75rem. `packages/ui` regenerated with shadcn CLI (`radix-maia`, 60 components, exports `./components/*` `./lib/*` `./hooks/*`). Web rebuilt: landing, 6 auth pages, dashboard (collapsible sidebar, ⌘K, dashed stat cards, grouped tasks table, integrations). Mobile aligned: Inter fonts, token-driven tab bar, segmented theme switcher. Spec: `.ai/specs/active/design-system-rebuild.spec.md`. |
+| Date       | Feature                                      | Files                                                                                                                                                                                                                                                                                                                                                                              | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-05-17 | Agent-native memory foundation               | `AGENTS.md`, `.ai/`, `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`                                                                                                                                                                                                                                                                                             | `.ai/` is the source of truth for agent context.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| 2026-05-17 | Task-oriented agent skills                   | `.ai/skills/*`, `.github/prompts/*`, `.claude/commands/*`                                                                                                                                                                                                                                                                                                                          | Common tasks route through explicit procedures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| 2026-05-17 | Generated AI contract snapshots              | `.ai/contracts/*.generated.md`, `scripts/ai/*`, `package.json`                                                                                                                                                                                                                                                                                                                     | Agents can inspect API, DB, env, package export, and dependency graph facts without guessing.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 2026-05-17 | Spec-first workflow                          | `.ai/skills/feature-spec.md`, `.ai/specs/_template.spec.md`, `.github/prompts/new-feature-spec.prompt.md`                                                                                                                                                                                                                                                                          | Non-trivial work has an explicit planning and validation template.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 2026-06-30 | Standalone server runtime                    | `apps/server`, `packages/auth/src/trusted-origins.ts`, `.env.example`, `turbo.json`                                                                                                                                                                                                                                                                                                | `apps/server` hosts the existing `@turbo/api` app without moving API business logic.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 2026-07-14 | Anti-slop UI skill                           | `.ai/skills/anti-slop-ui.md`, `.ai/skills/00-index.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/design-system.mdc`                                                                                                                                                                                                                                          | UI review and page-polish tasks now have a repo-local quality bar for avoiding generic AI UI patterns while preserving the neutral product baseline.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 2026-07-15 | Full anti-slop reference                     | `.ai/references/pols-anti-slop-design-law.md`, `.ai/skills/anti-slop-ui.md`                                                                                                                                                                                                                                                                                                        | The full external design law is vendored separately and linked from the concise repo-local UI workflow.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 2026-07-22 | Design system rebuild (web + ui + mobile)    | `tooling/tailwind/theme.css`, `packages/ui/src/*`, `packages/assets/fonts/*`, `apps/web/src/*`, `apps/mobile/src/*`                                                                                                                                                                                                                                                                | Neutral `#161616` dark / `#FAFAFA` light palette, `#0659FF` accent, Inter Display, radius 0.75rem. `packages/ui` regenerated with shadcn CLI (`radix-maia`, 60 components, exports `./components/*` `./lib/*` `./hooks/*`). Web rebuilt: landing, 6 auth pages, dashboard (collapsible sidebar, ⌘K, dashed stat cards, grouped tasks table, integrations). Mobile aligned: Inter fonts, token-driven tab bar, segmented theme switcher. Spec: `.ai/specs/active/design-system-rebuild.spec.md`.                                                                                                                                                                                                                                                                                                                                                                 |
+| 2026-07-23 | Skills bundle sync check                     | `scripts/ai/check-skills-sync.mjs`, `package.json`, `.github/workflows/ci.yml`                                                                                                                                                                                                                                                                                                     | `pnpm skills:check` verifies every tool-specific skill mirror (`.claude`, `.github` full; `.cursor`, `.codex`, `.gemini` subsets) is valid symlinks into `.agents/skills/`, and CI fails on missing, dangling, or unknown entries.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 2026-07-23 | Support email flow via Trigger.dev           | `packages/jobs/src/tasks/send-support-email.ts`, `packages/api/src/router/support.ts`, `packages/api/src/__tests__/support.test.ts`, `.env.example`, `turbo.json`                                                                                                                                                                                                                  | POST /support now requires auth and sends the SupportEmail template: enqueued via the `send-support-email` Trigger.dev task when `TRIGGER_SECRET_KEY` is set, otherwise sent in-process via `@turbo/mail` (mock-logged without `RESEND_API_KEY`). Recipient is `SUPPORT_INBOX_EMAIL` falling back to `DEFAULT_FROM`; the API imports the task as a type only.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 2026-07-23 | Tasks tracer-bullet vertical slice           | `packages/db/src/app-schema.ts`, `packages/db/drizzle/0001_add-task-table.sql`, `packages/api/src/router/task.ts`, `packages/api/src/__tests__/task.test.ts`, `apps/web/src/hooks/use-tasks.ts`, `apps/web/src/components/dashboard/tasks-table.tsx`, `apps/web/src/components/dashboard/stat-cards.tsx`, `apps/mobile/src/app/(tabs)/index.tsx`, `.ai/patterns/vertical-slice.md` | First feature travelling the full DB → API → typed client → TanStack Query path on web and mobile. GET /tasks is public and returns an empty list when the database is unavailable; the dashboard and mobile home fall back to sample data, so the zero-env template keeps rendering. Copy this slice to add a feature end-to-end (see `.ai/patterns/vertical-slice.md`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| 2026-07-23 | API keys management (router + settings UI)   | `packages/api/src/router/api-key.ts`, `packages/api/src/__tests__/api-key.test.ts`, `apps/web/src/hooks/use-api-keys.ts`, `apps/web/src/components/dashboard/api-keys-card.tsx`, `apps/web/src/app/dashboard/settings/page.tsx`, `apps/web/src/app/dashboard/[section]/page.tsx`                                                                                                   | List/create/revoke API keys, delegated entirely to Better Auth's apiKey plugin (`auth.listApiKeys` / `createApiKey` / `deleteApiKey` with forwarded session headers — no direct `apikey` table access, no custom crypto). The plaintext key appears exactly once, in the 201 create response, and the settings dialog shows it once with copy-to-clipboard. GET maps to a safe DTO that never includes the `key` hash. `/dashboard/settings` is a static route; the `settings` slug is filtered out of the `[section]` `generateStaticParams`. Signed out, the card renders a sign-in empty state (zero-env safe).                                                                                                                                                                                                                                              |
+| 2026-07-23 | Streaming AI assistant (endpoint + web page) | `packages/ai/src/client.ts`, `packages/ai/src/__tests__/get-default-model.test.ts`, `packages/api/src/router/ai.ts`, `packages/api/src/__tests__/ai.test.ts`, `apps/web/src/components/dashboard/assistant-view.tsx`, `apps/web/src/app/dashboard/assistant/page.tsx`, `apps/web/src/app/dashboard/[section]/page.tsx`                                                             | First demonstration of `packages/ai` in app code and of streaming through the Hono → typed-client stack. POST /ai/chat requires auth and streams plain text via `streamText().toTextStreamResponse()`; with no provider key it returns 503 with a hint naming the three env vars, and the assistant page renders sign-in / setup empty states instead of crashing (zero-env safe). Provider preference (google → groq → openrouter) lives in `getDefaultModel()` in `@turbo/ai/client` — change it there, never in routers. Conversations are stateless (no persistence). Future streaming endpoints should copy the 503-fallback + raw-Response pattern.                                                                                                                                                                                                       |
+| 2026-07-26 | Vercel AI Elements kit in @turbo/ui          | `packages/ui/src/components/ai-elements/*` (30 components), `packages/ui/package.json`, `packages/ui/eslint.config.ts`, `.ai/context/tech-stack.md`, `.ai/context/conventions.md`                                                                                                                                                                                                  | Full AI Elements catalogue (conversation, message, prompt-input, reasoning, tool, sources, canvas, etc.) vendored from `https://registry.ai-sdk.dev` via the shadcn CLI into `components/ai-elements/`; components import existing `@turbo/ui` primitives (button, tooltip, …) through the components.json aliases, so no primitives were duplicated or overwritten. Patched for AI SDK v7 (`outputTokenDetails.reasoningTokens`, `inputTokenDetails.cacheReadTokens`) and strict tsconfig; scoped eslint relaxations for the folder. `message.tsx` (layout primitive) and `ai-elements/message.tsx` (AI SDK chat message) intentionally coexist. Spec: `.ai/specs/active/ai-elements-integration.spec.md`.                                                                                                                                                     |
+| 2026-07-27 | Assistant chat rendered with AI Elements     | `apps/web/src/components/dashboard/assistant-view.tsx`                                                                                                                                                                                                                                                                                                                             | First consumer of the vendored ai-elements kit: the dashboard assistant message list now uses `Conversation`/`ConversationContent`/`ConversationScrollButton` (stick-to-bottom autoscroll via `use-stick-to-bottom`), `Message`/`MessageContent` (`from` prop replaces the old `align`/`Bubble` styling), `MessageResponse` (Streamdown markdown for assistant replies), and `Loader` for the pre-stream placeholder. User content stays plain text; the typed Hono client + manual ReadableStream reader, react-hook-form composer, and 401/503 handling are unchanged — `@ai-sdk/react` useChat was deliberately NOT introduced (v7 UIMessage protocol conflicts with the endpoint's plain-text `toTextStreamResponse()`). The file-local empty state was renamed `AssistantEmptyState` to avoid colliding with ai-elements' `ConversationEmptyState` export. |
 
 ## Architectural Change Log
 
@@ -288,10 +295,9 @@ architecture, contracts, or conventions.
 
 ## Known TODOs
 
-| Priority | Task                                                         | Source                                                                                                   | Blocking? |
-| -------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | --------- |
-| high     | Keep generated contract snapshots current                    | `.ai/contracts/`, `scripts/ai/`                                                                          | no        |
-| medium   | Add a sync policy for duplicated tool-specific skill bundles | `.agents/`, `.github/skills/`, `.cursor/skills/`, `.claude/skills/`, `.codex/skills/`, `.gemini/skills/` | no        |
+| Priority | Task                                      | Source                          | Blocking? |
+| -------- | ----------------------------------------- | ------------------------------- | --------- |
+| high     | Keep generated contract snapshots current | `.ai/contracts/`, `scripts/ai/` | no        |
 
 ## Regression Guards
 
@@ -420,11 +426,12 @@ points that should reference `.ai/` instead of duplicating long-form rules.
 
 ## Monorepo Tooling
 
-| Tool      | Version                                | Purpose                                     |
-| --------- | -------------------------------------- | ------------------------------------------- |
-| Turborepo | ^2.10.5                                | Task orchestration, caching, build pipeline |
-| pnpm      | ^10.19.0                               | Package manager with workspace support      |
-| Node.js   | 22.21.0 (`.nvmrc`), engines `^22.14.0` | Runtime                                     |
+| Tool      | Version                                | Purpose                                                                                                      |
+| --------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Turborepo | ^2.10.5                                | Task orchestration, caching, build pipeline                                                                  |
+| pnpm      | ^10.19.0                               | Package manager with workspace support                                                                       |
+| Node.js   | 22.21.0 (`.nvmrc`), engines `^22.14.0` | Runtime                                                                                                      |
+| Infisical | `@infisical/cli` ^0.43.113             | Opt-in secrets injection (`pnpm dev:infisical`, `pnpm with-secrets`); `.env` remains the zero-setup fallback |
 
 ### Workspace layout
 
@@ -460,7 +467,7 @@ tooling/
 | Layer            | Technology  | Version                                   |
 | ---------------- | ----------- | ----------------------------------------- |
 | Language         | TypeScript  | catalog (`^6.0.3`)                        |
-| Web framework    | Next.js     | 16.2.11                                   |
+| Web framework    | Next.js     | 16.3.0                                    |
 | Mobile framework | Expo SDK    | 57 (`react-native` ~0.86.0)               |
 | React            | React       | 19.2.8 via `catalog:react19`              |
 | API framework    | Hono        | ^4.12.31 (`@hono/node-server` ^2.0.11)    |
@@ -475,6 +482,7 @@ tooling/
 | Tool               | Details                                                                  |
 | ------------------ | ------------------------------------------------------------------------ |
 | Component library  | shadcn/ui `radix-maia` style (Radix + CVA), CLI-managed in `packages/ui` |
+| AI chat UI         | Vercel AI Elements, vendored in `packages/ui` `components/ai-elements/`  |
 | Variant shorthands | `shadcn` npm pkg (web devDep) — `shadcn/tailwind.css` custom variants    |
 | CSS framework      | Tailwind CSS 4.3.3                                                       |
 | Shared theme       | `tooling/tailwind/theme.css` (web + mobile single source)                |
@@ -526,6 +534,23 @@ tooling/
 - `test` → `pnpm test`
 
 Turbo remote caching via Vercel.
+
+## AI Tooling (MCP)
+
+| Surface     | Config                                                   |
+| ----------- | -------------------------------------------------------- |
+| Claude Code | `.mcp.json` (repo root)                                  |
+| Cursor      | `.cursor/mcp.json`                                       |
+| VS Code     | `.vscode/mcp.json`                                       |
+| Server      | Expo MCP — Streamable HTTP at `https://mcp.expo.dev/mcp` |
+
+Auth is OAuth (browser sign-in with an Expo account) — no tokens in the repo.
+
+Local capabilities (simulator screenshots, tap-by-testID, expo-router sitemap,
+DevTools) come from the `expo-mcp` dev dependency in `apps/mobile`. Start the
+dev server with them enabled via `pnpm --filter @turbo/mobile dev:mcp`
+(`EXPO_UNSTABLE_MCP_SERVER=1`). Reconnect the MCP client after starting or
+stopping the dev server so it refreshes capabilities.
 ````
 
 ## .ai/context/conventions.md
@@ -571,6 +596,31 @@ Turbo remote caching via Vercel.
   `@turbo/ui` barrel import)
 - Registry components are CLI-managed: add/update with `pnpm ui-add` in
   `packages/ui`, don't hand-edit beyond documented patches
+- AI chat components live in `packages/ui/src/components/ai-elements/`
+  (Vercel AI Elements registry, `https://registry.ai-sdk.dev`); import as
+  `@turbo/ui/components/ai-elements/<name>`. Patched for AI SDK v7 usage
+  fields (`outputTokenDetails.reasoningTokens`,
+  `inputTokenDetails.cacheReadTokens` in `context.tsx`) and strict tsconfig;
+  `web-preview.tsx` default sandbox drops `allow-same-origin` (override via
+  the `sandbox` prop for trusted content); `code-block.tsx` imports
+  `shiki/bundle/web` instead of the full `shiki` bundle (CLI re-installs
+  restore the full-bundle import — re-apply); `packages/ui/src/css-modules.d.ts`
+  provides an ambient `*.css` declaration, so re-vendored components with CSS
+  side-effect imports (e.g. `canvas.tsx`) need no suppression; re-apply patches
+  after CLI reinstalls. Patches are guarded by
+  `packages/ui/src/__tests__/ai-elements-patches.test.ts` — after any CLI
+  re-install, run `pnpm --filter @turbo/ui test` and re-apply failing
+  patches. Style-rule relaxations for this folder live in
+  `packages/ui/eslint.config.ts`.
+- Icons: `lucide-react` is an internal implementation detail of the vendored
+  `ai-elements/` components only — it must not leak into the package's public
+  API (exported `icon` props use `ComponentType<{ className?: string }>`,
+  `CheckpointIconProps` is `ComponentProps<"svg">`) and apps must never import
+  `lucide-react`. App code and new components use HugeIcons via
+  `@turbo/ui/components/icon`.
+- `packages/ui/src/components/message.tsx` (layout primitive, data-slot) and
+  `ai-elements/message.tsx` (AI SDK chat message) are different components —
+  both are kept
 - `Button` has no `loading` prop — render
   `{pending && <Spinner data-icon="inline-start" />}` and set `disabled`
 - Toasts: `import { toast } from "sonner"` with `<Toaster />` mounted from
@@ -606,6 +656,13 @@ Example: `packages/api/src/router/api-key.ts`
 - Next.js apps pass `extraPlugins: [nextCookies()]`; the standalone server passes no extra plugins.
 - Never call `initAuth()` directly from an app — it is the low-level primitive; app code always goes through `createAppAuth()`.
 - New social providers or plugins are added once in `packages/auth/src/index.ts`.
+
+## Web Rendering (Next.js Cache Components)
+
+- `apps/web` runs Next.js 16.3 with `cacheComponents` and `partialPrefetching` enabled (`next.config.js`).
+- Request-time data in Server Components (`getSession()`, `cookies()`, `headers()`, `params`, uncached `fetch`) must stream inside a `<Suspense>` boundary — move the access into an async child component and wrap it, as in `apps/web/src/app/(auth)/onboarding/page.tsx`. Top-level access fails `next build`.
+- Cache shareable server data with the `"use cache"` directive instead of route segment configs (`export const dynamic/revalidate` are incompatible with Cache Components).
+- The React Compiler is enabled (`reactCompiler: true` + Rust variant); do not hand-add `useMemo`/`useCallback` for render memoization unless the compiler skips the component (see `react-hooks/incompatible-library` lint warnings).
 
 ## Database Patterns (Drizzle)
 
@@ -789,11 +846,15 @@ requests a visual change.
 - **Dark mode**: neutral charcoal `#161616` (`oklch(0.2002 0 0)`) — zero
   chroma, never warm/stone. Layered surfaces: card `#1C1C1C`, popover
   `#242424`, secondary/badge `#2A2A2A`.
-- **Light mode**: near-white `#FAFAFA`; greige `#D8D9D4`-family tints are used
-  for secondary surfaces and input borders only, never the page background.
+- **Light mode**: near-white `#FAFAFA` with pure-gray surfaces (zero chroma —
+  the earlier `#D8D9D4` greige tint was dropped). Ink hierarchy: foreground
+  `#292929`, muted-foreground `#5D5D5D`, borders `#E5E5E5`. Sidebar blends
+  with the app frame; the active nav pill is `#F2F2F2` (`--sidebar-accent`,
+  same value as `--accent` — icon tiles and hover rows share it) with a
+  near-black label — subtle, never dark.
 - **Accent**: electric blue `#0659FF` (`oklch(0.5406 0.2549 262.56)`, token
   `--primary-500`) in both modes.
-- **Muted text**: `#989A9D` dark / neutral gray light.
+- **Muted text**: `#989A9D` dark / `#5D5D5D` light.
 - **Brand mark**: HugeIcons "AI collage template" outline icon (1.5px stroke),
   embedded inline in `apps/web/src/components/turbo-logo.tsx` because
   `AiCollageTemplateIcon` is Pro-only (not in `@hugeicons/core-free-icons`).
@@ -813,6 +874,19 @@ requests a visual change.
   secondary background.
 - Sidebar: shadcn `sidebar-07` pattern (icon-collapsible), muted-caps group
   labels, ⌘K search entry, footer user dropdown.
+- Dashboard header: sticky bar with page chip (`bg-accent` rounded-full pill,
+  icon + nav label from `nav-config.ts`) + muted inline description, right
+  side avatar stack / search button / Export dropdown (`header-actions.tsx`).
+  Page titles come from the header chip — section pages must NOT repeat an h2.
+- Toolbar row (below header, Overview): "Sorted by **X**" secondary pill →
+  radio dropdown; "Filter" outline pill with count badge → checkbox dropdown
+  (`onSelect={(e) => e.preventDefault()}` keeps it open while toggling).
+  State lives in a client view component (`overview-view.tsx`) that feeds
+  props to `TasksTable`.
+- Search: one `SearchCommand` instance owned by `SearchProvider`
+  (`search-context.tsx`); sidebar + header both call
+  `useSearchCommand().openSearch()`. Never mount `SearchCommand` twice — its
+  internal ⌘K listener toggles, so two instances double-fire.
 - Integration cards: white squircle logo tile, dashed divider, ghost footer
   action.
 
@@ -837,7 +911,9 @@ requests a visual change.
 - Documented registry patch — soft focus rings: after regenerating any
   component, replace `ring-[3px]` → `ring-2` and `ring-ring/50` →
   `ring-ring/30` (web `packages/ui` and mobile `apps/mobile/src/components/ui`).
-  Never remove focus rings entirely (keyboard a11y).
+  Buttons go one notch softer: `focus-visible:border-ring/50` +
+  `focus-visible:ring-ring/20` (solid border-ring reads too loud on small
+  pills). Never remove focus rings entirely (keyboard a11y).
 - `CommandDialog` renders only Dialog chrome — consumers must nest a
   `<Command>` root inside it or cmdk crashes on mount.
 - `Tooltip` does not self-provide context; the app wraps everything in
@@ -935,13 +1011,16 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 | Method | Path | Source | Auth middleware |
 | --- | --- | --- | --- |
-| DELETE | `/apikeys/:id` | `packages/api/src/router/api-key.ts` | no |
-| GET | `/apikeys` | `packages/api/src/router/api-key.ts` | no |
+| DELETE | `/apikeys/:id` | `packages/api/src/router/api-key.ts` | yes |
+| GET | `/apikeys` | `packages/api/src/router/api-key.ts` | yes |
 | GET | `/auth/secret` | `packages/api/src/router/auth.ts` | yes |
 | GET | `/auth/session` | `packages/api/src/router/auth.ts` | no |
 | GET | `/health` | `packages/api/src/index.ts` | no |
-| POST | `/apikeys` | `packages/api/src/router/api-key.ts` | no |
-| POST | `/support` | `packages/api/src/router/support.ts` | no |
+| GET | `/tasks` | `packages/api/src/router/task.ts` | no |
+| POST | `/ai/chat` | `packages/api/src/router/ai.ts` | yes |
+| POST | `/apikeys` | `packages/api/src/router/api-key.ts` | yes |
+| POST | `/support` | `packages/api/src/router/support.ts` | yes |
+| POST | `/tasks` | `packages/api/src/router/task.ts` | yes |
 
 ## Typed client source
 
@@ -959,6 +1038,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 ## Schema files
 
+- `packages/db/src/app-schema.ts`
 - `packages/db/src/auth-schema.ts`
 - `packages/db/src/schema.ts`
 
@@ -966,6 +1046,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 
 | Export | DB table | Source |
 | --- | --- | --- |
+| `task` | `task` | `packages/db/src/app-schema.ts` |
 | `user` | `user` | `packages/db/src/auth-schema.ts` |
 | `session` | `session` | `packages/db/src/auth-schema.ts` |
 | `account` | `account` | `packages/db/src/auth-schema.ts` |
@@ -1017,6 +1098,8 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
+- `SUPPORT_INBOX_EMAIL`
+- `TRIGGER_SECRET_KEY`
 
 ## .env.example variables
 
@@ -1045,6 +1128,8 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 - `SERVER_PORT`
 - `SERVER_URL`
 - `SUPABASE_JWT_SECRET`
+- `SUPPORT_INBOX_EMAIL`
+- `TRIGGER_SECRET_KEY`
 
 ## Env validation modules
 
@@ -1088,7 +1173,7 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 | `@turbo/assets` | `packages/assets` | `./fonts/*` |
 | `@turbo/auth` | `packages/auth` | `.`, `./middleware`, `./client`, `./env`, `./trusted-origins` |
 | `@turbo/db` | `packages/db` | `.`, `./client`, `./schema` |
-| `@turbo/jobs` | `packages/jobs` | `.` |
+| `@turbo/jobs` | `packages/jobs` | `.`, `./tasks/*` |
 | `@turbo/mail` | `packages/mail` | `.`, `./client`, `./templates/*` |
 | `@turbo/shared` | `packages/shared` | `.`, `./constants`, `./env` |
 | `@turbo/supabase` | `packages/supabase` | `.`, `./client` |
@@ -1141,11 +1226,11 @@ router, or auth adapter. Use the matching `.ai/skills/*` procedure.
 | `@turbo/web` | `apps/web` | `@turbo/analytics`, `@turbo/api`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tailwind-config`, `@turbo/tsconfig`, `@turbo/ui`, `@turbo/validators` |
 | `@turbo/ai` | `packages/ai` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
 | `@turbo/analytics` | `packages/analytics` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
-| `@turbo/api` | `packages/api` | `@turbo/analytics`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`, `@turbo/validators` |
+| `@turbo/api` | `packages/api` | `@turbo/ai`, `@turbo/analytics`, `@turbo/auth`, `@turbo/db`, `@turbo/eslint-config`, `@turbo/jobs`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig`, `@turbo/validators` |
 | `@turbo/assets` | `packages/assets` | None |
 | `@turbo/auth` | `packages/auth` | `@turbo/db`, `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
 | `@turbo/db` | `packages/db` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/shared`, `@turbo/tsconfig` |
-| `@turbo/jobs` | `packages/jobs` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
+| `@turbo/jobs` | `packages/jobs` | `@turbo/eslint-config`, `@turbo/mail`, `@turbo/prettier-config`, `@turbo/tsconfig` |
 | `@turbo/mail` | `packages/mail` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
 | `@turbo/shared` | `packages/shared` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
 | `@turbo/supabase` | `packages/supabase` | `@turbo/eslint-config`, `@turbo/prettier-config`, `@turbo/tsconfig` |
