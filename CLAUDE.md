@@ -37,6 +37,7 @@ This repository ships reusable agent skills in `.agents/skills/` (symlinked into
 | `reddit-automation` | Automating Reddit workflows (posting, scraping, engagement). |
 | `find-skills` | The user asks "how do I do X" or wants to discover/install new agent skills. |
 | `codebase-first` | ALWAYS-ON for any code change: the codebase decides, never invent — follow documented rules and existing patterns, ask when neither exists. |
+| `selective-routing` | Before spawning any sub-agent, and for multi-file or high-risk feature work: declare a route (solo/delegate/audit/full) first. Solo is the default; sub-agent output is a claim until you verify the diff yourself. |
 | `shadcn` | Any shadcn/ui work: adding, composing, styling, or debugging components via the shadcn CLI and registry. |
 | `writing-style` | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy. |
 
