@@ -8,6 +8,8 @@
 
 - `.ai/context/conventions.md` — routing conventions
 - `.ai/context/tech-stack.md` — framework details
+- `DESIGN.md` — design language and machine-readable token contract
+- `.ai/patterns/ui-composition.md` — page, state, slot, and accessibility grammar
 - `.ai/skills/anti-slop-ui.md` — for broad web page composition, landing pages, or visual polish
 - `apps/web/src/app/` — existing page structure (Next.js App Router)
 - `apps/mobile/src/app/` — existing screen structure (Expo Router)
@@ -49,9 +51,14 @@
 - [ ] Auth check added if page is protected
 - [ ] For broad web page design work, the anti-slop UI checklist was applied
 - [ ] Page renders without errors
+- [ ] `pnpm design:lint` passes
+- [ ] `pnpm design:tokens` passes
+- [ ] `pnpm ui:composition` passes
 
 ## Anti-patterns (do NOT do)
 
 - Do not use `pages/` directory (Next.js Pages Router) — use App Router
 - Do not add `"use client"` unless the component needs client-side interactivity
 - Do not fetch data in client components when server components suffice (web)
+- Do not invent page, loading, empty, or error-state compositions outside the
+  documented grammar

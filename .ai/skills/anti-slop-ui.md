@@ -9,6 +9,7 @@ This skill is a repo-local adaptation of anti-slop UI principles. It is a qualit
 ## Prerequisite context to load
 
 - `.ai/references/pols-anti-slop-design-law.md` — full external design law for broad UI work
+- `DESIGN.md` — canonical design language and token mirror
 - `.ai/context/design-system.md` — repository visual baseline and token rules
 - `.ai/patterns/ui-composition.md` — composition and layout boundaries
 - `.ai/context/conventions.md` — shared coding conventions
@@ -34,6 +35,8 @@ If the task would materially change brand direction, palette, or typography and 
 1. User direction wins over this skill.
 2. Preserve shared theme tokens, spacing discipline, and existing component conventions.
 3. Do not introduce a broad palette or typography change without approval.
+4. Follow the slot, accessibility, page, and state productions in
+   `.ai/patterns/ui-composition.md`.
 
 ### 3. Remove default AI-looking patterns
 
@@ -78,10 +81,12 @@ Avoid defaulting to these patterns unless the user explicitly asks for them and 
 - [ ] Contrast, spacing, centering, and clipping issues were checked deliberately
 - [ ] Interactive controls were verified to behave like real controls
 - [ ] Any expressive styling still respects shared tokens and the repository baseline, unless the user approved a broader shift
+- [ ] `pnpm design:lint`, `pnpm design:tokens`, and `pnpm ui:composition` pass
 
 ## Canonical references
 
 - `.ai/references/pols-anti-slop-design-law.md`
+- `DESIGN.md`
 - `.ai/context/design-system.md`
 - `.ai/patterns/ui-composition.md`
 - `packages/ui/src/components/button.tsx`

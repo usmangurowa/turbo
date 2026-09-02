@@ -56,7 +56,12 @@ export default function LoginScreen() {
     <Container>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View className="gap-6">
-          <Button size={"icon"} variant={"ghost"} onPress={() => router.back()}>
+          <Button
+            size={"icon"}
+            variant={"ghost"}
+            accessibilityLabel="Go back"
+            onPress={() => router.back()}
+          >
             <Icon icon={ArrowLeft01Icon} className="text-foreground" />
           </Button>
           <View className="items-center gap-2">

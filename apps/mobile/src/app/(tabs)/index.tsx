@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { Link } from "expo-router";
 import { authClient } from "@/auth/client";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Text } from "@/components/ui/text";
 import { api } from "@/utils/api";
@@ -66,33 +66,52 @@ export default function HomeScreen() {
         </View>
 
         <View className="flex-row gap-4">
-          <Card className="flex-1 items-center p-4">
-            <Text className="text-3xl font-bold">0</Text>
-            <Text className="text-muted-foreground text-sm">Projects</Text>
+          <Card className="flex-1 items-center gap-3 py-4">
+            <CardHeader className="items-center px-4">
+              <CardTitle className="text-muted-foreground text-sm">
+                Projects
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="px-4">
+              <Text className="text-3xl font-bold">0</Text>
+            </CardContent>
           </Card>
-          <Card className="flex-1 items-center p-4">
-            <Text className="text-3xl font-bold">0</Text>
-            <Text className="text-muted-foreground text-sm">Tasks</Text>
+          <Card className="flex-1 items-center gap-3 py-4">
+            <CardHeader className="items-center px-4">
+              <CardTitle className="text-muted-foreground text-sm">
+                Tasks
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="px-4">
+              <Text className="text-3xl font-bold">0</Text>
+            </CardContent>
           </Card>
-          <Card className="flex-1 items-center p-4">
-            <Text className="text-3xl font-bold">0</Text>
-            <Text className="text-muted-foreground text-sm">Members</Text>
+          <Card className="flex-1 items-center gap-3 py-4">
+            <CardHeader className="items-center px-4">
+              <CardTitle className="text-muted-foreground text-sm">
+                Members
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="px-4">
+              <Text className="text-3xl font-bold">0</Text>
+            </CardContent>
           </Card>
         </View>
 
         <View className="mt-8 gap-3">
           <Text className="text-lg font-semibold">Recent tasks</Text>
           {taskList.map((task) => (
-            <Card
-              key={task.id}
-              className="flex-row items-center justify-between px-4 py-3"
-            >
-              <Text className="flex-1 pr-2" numberOfLines={1}>
-                {task.title}
-              </Text>
-              <Text className="text-muted-foreground text-xs capitalize">
-                {task.status}
-              </Text>
+            <Card key={task.id} className="flex-row items-center gap-2 py-3">
+              <CardHeader className="flex-1 px-4">
+                <CardTitle className="text-sm" numberOfLines={1}>
+                  {task.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pr-4 pl-0">
+                <Text className="text-muted-foreground text-xs capitalize">
+                  {task.status}
+                </Text>
+              </CardContent>
             </Card>
           ))}
         </View>

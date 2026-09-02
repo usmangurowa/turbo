@@ -8,6 +8,8 @@
 
 - `.ai/context/conventions.md` — component naming and patterns
 - `.ai/context/tech-stack.md` — UI library details
+- `DESIGN.md` — design language and machine-readable token contract
+- `.ai/patterns/ui-composition.md` — slot and accessibility grammar
 - `.agents/skills/tailwind-patterns/SKILL.md` — Tailwind patterns
 - `packages/ui/src/components/button.tsx` — reference component
 
@@ -71,11 +73,16 @@
 - [ ] Props extend `React.ComponentProps<"element">`
 - [ ] Named export (not default)
 - [ ] Exported from barrel file
+- [ ] `pnpm design:lint` passes
+- [ ] `pnpm design:tokens` passes
+- [ ] `pnpm ui:composition` passes
 
 ## Anti-patterns (do NOT do)
 
 - Do not use inline styles
 - Do not use default exports
 - Do not hardcode colors — use Tailwind theme tokens
+- Do not use arbitrary spacing or typography values
+- Do not omit or reorder required composite slots
 - Do not skip the `data-slot` attribute
 - Do not create a separate CSS file

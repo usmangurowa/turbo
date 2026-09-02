@@ -211,7 +211,7 @@ export function TypingAnimation({
     <MotionComponent
       ref={elementRef}
       className={cn(
-        "leading-20 tracking-[-0.02em]",
+        "leading-20 tracking-tight",
         Component === "span" && "inline-block",
         className,
       )}

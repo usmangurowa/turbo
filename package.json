@@ -41,7 +41,10 @@
     "ai:graph": "node scripts/ai/package-graph.mjs",
     "ai:context": "pnpm ai:contracts && node scripts/ai/context-pack.mjs",
     "ai:verify": "pnpm ai:contracts && pnpm verify",
+    "design:lint": "pnpm --package=@google/design.md@0.4.0 dlx designmd lint DESIGN.md",
+    "design:tokens": "node scripts/ai/check-design-tokens.mjs",
     "skills:check": "node scripts/ai/check-skills-sync.mjs --strict",
+    "ui:composition": "node scripts/ai/check-ui-composition.mjs",
     "ui-add": "turbo run ui-add",
     "android": "expo run:android",
     "ios": "expo run:ios"

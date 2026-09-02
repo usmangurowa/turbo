@@ -57,7 +57,7 @@ requests a visual change.
   (`search-context.tsx`); sidebar + header both call
   `useSearchCommand().openSearch()`. Never mount `SearchCommand` twice — its
   internal ⌘K listener toggles, so two instances double-fire.
-- Integration cards: white squircle logo tile, dashed divider, ghost footer
+- Integration cards: background squircle logo tile, dashed divider, ghost footer
   action.
 
 ## Component Rules
@@ -91,12 +91,19 @@ requests a visual change.
 
 ## Color And Tokens
 
+- `DESIGN.md` is the machine-readable token mirror and design-language contract.
+  `.ai/patterns/ui-composition.md` is the normative arrangement grammar. Read
+  both before UI work.
 - Use semantic tokens only: `bg-background`, `text-foreground`, `bg-card`,
   `border-border`, `bg-primary`, `text-muted-foreground`, `text-success`,
   `text-warning`.
-- Do not hardcode hex values in components (web or mobile).
-- Do not change shared theme variables without updating this file and
-  `ROADMAP_AI.md`.
+- Do not hardcode hex values, raw palette classes, arbitrary colors, arbitrary
+  spacing, or arbitrary typography in authored components.
+- A change to runtime tokens must update `DESIGN.md` in the same commit. Update
+  this file and `ROADMAP_AI.md` when the visual identity or token contract
+  changes.
+- Before completing UI work, run `pnpm design:lint`, `pnpm design:tokens`, and
+  `pnpm ui:composition`.
 
 ## Theming
 

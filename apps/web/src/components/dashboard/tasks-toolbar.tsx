@@ -111,7 +111,7 @@ export const TasksToolbar = ({
             <Icon icon={FilterHorizontalIcon} />
             Filter
             {activeFilters > 0 ? (
-              <Badge className="size-4 justify-center rounded-full p-0 text-[10px]">
+              <Badge className="size-4 justify-center rounded-full p-0 text-xs">
                 {activeFilters}
               </Badge>
             ) : null}

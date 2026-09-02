@@ -381,7 +381,7 @@ export const ApiKeysCard = () => {
         {Array.isArray(apiKeys) && apiKeys.length > 0 ? (
           <Badge
             variant="secondary"
-            className="ml-2 rounded-full text-[10px] font-normal"
+            className="ml-2 rounded-full text-xs font-normal"
           >
             {apiKeys.length} {apiKeys.length === 1 ? "key" : "keys"}
           </Badge>

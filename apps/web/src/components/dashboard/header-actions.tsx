@@ -24,7 +24,7 @@ import { Icon } from "@turbo/ui/components/icon";
 
 const members = [
   { initials: "AY", className: "bg-primary text-primary-foreground" },
-  { initials: "SC", className: "bg-chart-3 text-white" },
+  { initials: "SC", className: "bg-chart-3 text-primary-foreground" },
 ];
 
 export const HeaderActions = () => {
@@ -45,14 +45,14 @@ export const HeaderActions = () => {
             className="ring-background size-7 ring-2"
           >
             <AvatarFallback
-              className={`text-[10px] font-medium ${member.className}`}
+              className={`text-xs font-medium ${member.className}`}
             >
               {member.initials}
             </AvatarFallback>
           </Avatar>
         ))}
         <Avatar className="ring-background size-7 ring-2">
-          <AvatarFallback className="bg-muted text-foreground text-[10px] font-medium">
+          <AvatarFallback className="bg-muted text-foreground text-xs font-medium">
             +1
           </AvatarFallback>
         </Avatar>

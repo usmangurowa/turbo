@@ -36,6 +36,23 @@ jobs:
       - name: Verify skills bundles are in sync
         run: pnpm skills:check
 
+  design-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Lint design language
+        run: pnpm design:lint
+
+      - name: Verify design token parity
+        run: pnpm design:tokens
+
+      - name: Verify UI composition
+        run: pnpm ui:composition
+
   lint:
     runs-on: ubuntu-latest
     steps:

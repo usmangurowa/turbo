@@ -51,10 +51,10 @@ const IntegrationCard = ({ integration }: { integration: Integration }) => (
     className="bg-card flex flex-col gap-4 rounded-2xl border p-6"
   >
     <div className="flex items-start justify-between">
-      <div className="border-border/60 flex size-11 items-center justify-center rounded-xl border bg-white shadow-xs">
+      <div className="border-border/60 bg-background flex size-11 items-center justify-center rounded-xl border shadow-xs">
         <Icon
           icon={integration.icon}
-          className="size-5 text-neutral-900"
+          className="text-foreground size-5"
           strokeWidth={1.5}
         />
       </div>

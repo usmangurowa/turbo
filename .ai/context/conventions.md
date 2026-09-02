@@ -67,6 +67,16 @@
   `{pending && <Spinner data-icon="inline-start" />}` and set `disabled`
 - Toasts: `import { toast } from "sonner"` with `<Toaster />` mounted from
   `@turbo/ui/components/sonner`
+- UI work starts by reading `DESIGN.md` and
+  `.ai/patterns/ui-composition.md`. The former mirrors runtime tokens; the latter
+  is the normative slot, accessibility, page, and state grammar.
+- A change to runtime tokens in `tooling/tailwind/theme.css` must update
+  `DESIGN.md` in the same commit.
+- Authored UI uses semantic color classes and the documented spacing and
+  typography scales. Composite slots follow the composition grammar; do not
+  baseline or suppress violations.
+- Before completing UI work, run `pnpm design:lint`, `pnpm design:tokens`, and
+  `pnpm ui:composition`.
 
 Example: `packages/ui/src/components/button.tsx`
 

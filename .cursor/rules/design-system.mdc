@@ -1,12 +1,12 @@
 ---
 description: "Design-system and UI composition rules"
-globs: "packages/ui/**,apps/web/src/components/**,apps/web/src/app/**,tooling/tailwind/**"
+globs: "DESIGN.md,packages/ui/**,apps/web/src/components/**,apps/web/src/app/**,apps/mobile/src/**,tooling/tailwind/**"
 alwaysApply: false
 ---
 
 # Design System Rules
 
-Read `.ai/context/design-system.md` and `.ai/patterns/ui-composition.md` before broad UI work.
+Read `DESIGN.md`, `.ai/context/design-system.md`, and `.ai/patterns/ui-composition.md` before any UI work.
 For broad polish, landing pages, or premium-feel UI review, also read `.ai/skills/anti-slop-ui.md`.
 
 ## Key reminders
@@ -15,3 +15,6 @@ For broad polish, landing pages, or premium-feel UI review, also read `.ai/skill
 - Use shared theme tokens instead of hardcoded colors.
 - Use CVA, `cn()`, named exports, and `data-slot` for shared UI components.
 - Avoid nested cards and decorative-only layouts in app workflows.
+- Update `DESIGN.md` in the same commit as any runtime token change.
+- Run `pnpm design:lint`, `pnpm design:tokens`, and `pnpm ui:composition`
+  before completing UI work.

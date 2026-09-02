@@ -245,7 +245,7 @@ const columns: ColumnDef<Task>[] = [
             dateTone[row.original.tone],
           )}
         >
-          <span className="text-[10px] leading-none font-medium uppercase">
+          <span className="text-xs leading-none font-medium uppercase">
             {row.original.month}
           </span>
           <span className="text-sm leading-tight font-semibold">
@@ -284,10 +284,7 @@ const columns: ColumnDef<Task>[] = [
     accessorKey: "priority",
     header: () => <HeaderLabel icon={FlagIcon}>Priority</HeaderLabel>,
     cell: ({ row }) => (
-      <Badge
-        variant="secondary"
-        className="rounded-full text-[11px] font-normal"
-      >
+      <Badge variant="secondary" className="rounded-full text-xs font-normal">
         {priorityLabels[row.original.priority]}
       </Badge>
     ),
@@ -306,7 +303,7 @@ const columns: ColumnDef<Task>[] = [
         <div className="flex items-center gap-2">
           <Avatar className="size-6">
             <AvatarImage src={avatar} alt={name} />
-            <AvatarFallback className="text-[10px]">{initials}</AvatarFallback>
+            <AvatarFallback className="text-xs">{initials}</AvatarFallback>
           </Avatar>
           <span className="text-muted-foreground text-sm">{name}</span>
         </div>
@@ -357,10 +354,7 @@ export const TasksTable = ({
             Track work across your team
           </p>
         </div>
-        <Badge
-          variant="secondary"
-          className="rounded-full text-[11px] font-normal"
-        >
+        <Badge variant="secondary" className="rounded-full text-xs font-normal">
           {rows.length} {rows.length === 1 ? "task" : "tasks"}
         </Badge>
       </div>
@@ -404,7 +398,7 @@ export const TasksTable = ({
                       {groupLabels[group]}
                       <Badge
                         variant="secondary"
-                        className="rounded-full px-1.5 text-[10px] font-normal"
+                        className="rounded-full px-1.5 text-xs font-normal"
                       >
                         {groupRows.length}
                       </Badge>

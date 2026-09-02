@@ -7,17 +7,18 @@ architecture, contracts, or conventions.
 ## Current Focus
 
 - Phase: Phase 1 - Template Hardening
-- Active initiative: Keep AI contract snapshots and agent memory current
-- Last updated: 2026-07-22
+- Active initiative: Enforce structural design governance
+- Last updated: 2026-09-02
 
 ## Active Sprint
 
-| ID     | Status   | Task                                                 | Files                                                                              | Validation                |
-| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------- |
-| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`       |
-| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict`      |
-| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`       |
-| AI-004 | complete | Enforce fresh AI contract snapshots in CI            | `.github/workflows/ci.yml`, `package.json`                                         | `pnpm ai:contracts:check` |
+| ID     | Status   | Task                                                 | Files                                                                              | Validation                                                      |
+| ------ | -------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| AI-001 | complete | Bootstrap AI-native repository controls              | `AGENTS.md`, `.ai/`, `.github/`, `.cursor/`, `ARCHITECTURE.md`, `system_prompt.md` | `pnpm ai:contracts`                                             |
+| AI-002 | complete | Sync stale public documentation with package reality | `README.md`, `.env.example`, `turbo.json`                                          | `pnpm ai:env:strict`                                            |
+| AI-003 | complete | Add generated contract snapshots for agents          | `.ai/contracts/*.generated.md`, `scripts/ai/*`                                     | `pnpm ai:contracts`                                             |
+| AI-004 | complete | Enforce fresh AI contract snapshots in CI            | `.github/workflows/ci.yml`, `package.json`                                         | `pnpm ai:contracts:check`                                       |
+| AI-005 | complete | Enforce design language and UI composition           | `DESIGN.md`, `.ai/patterns/ui-composition.md`, `scripts/ai/check-*.mjs`            | `pnpm design:lint && pnpm design:tokens && pnpm ui:composition` |
 
 ## Implemented Features
 
@@ -38,14 +39,16 @@ architecture, contracts, or conventions.
 | 2026-07-23 | Streaming AI assistant (endpoint + web page) | `packages/ai/src/client.ts`, `packages/ai/src/__tests__/get-default-model.test.ts`, `packages/api/src/router/ai.ts`, `packages/api/src/__tests__/ai.test.ts`, `apps/web/src/components/dashboard/assistant-view.tsx`, `apps/web/src/app/dashboard/assistant/page.tsx`, `apps/web/src/app/dashboard/[section]/page.tsx`                                                             | First demonstration of `packages/ai` in app code and of streaming through the Hono → typed-client stack. POST /ai/chat requires auth and streams plain text via `streamText().toTextStreamResponse()`; with no provider key it returns 503 with a hint naming the three env vars, and the assistant page renders sign-in / setup empty states instead of crashing (zero-env safe). Provider preference (google → groq → openrouter) lives in `getDefaultModel()` in `@turbo/ai/client` — change it there, never in routers. Conversations are stateless (no persistence). Future streaming endpoints should copy the 503-fallback + raw-Response pattern.                                                                                                                                                                                                       |
 | 2026-07-26 | Vercel AI Elements kit in @turbo/ui          | `packages/ui/src/components/ai-elements/*` (30 components), `packages/ui/package.json`, `packages/ui/eslint.config.ts`, `.ai/context/tech-stack.md`, `.ai/context/conventions.md`                                                                                                                                                                                                  | Full AI Elements catalogue (conversation, message, prompt-input, reasoning, tool, sources, canvas, etc.) vendored from `https://registry.ai-sdk.dev` via the shadcn CLI into `components/ai-elements/`; components import existing `@turbo/ui` primitives (button, tooltip, …) through the components.json aliases, so no primitives were duplicated or overwritten. Patched for AI SDK v7 (`outputTokenDetails.reasoningTokens`, `inputTokenDetails.cacheReadTokens`) and strict tsconfig; scoped eslint relaxations for the folder. `message.tsx` (layout primitive) and `ai-elements/message.tsx` (AI SDK chat message) intentionally coexist. Spec: `.ai/specs/active/ai-elements-integration.spec.md`.                                                                                                                                                     |
 | 2026-07-27 | Assistant chat rendered with AI Elements     | `apps/web/src/components/dashboard/assistant-view.tsx`                                                                                                                                                                                                                                                                                                                             | First consumer of the vendored ai-elements kit: the dashboard assistant message list now uses `Conversation`/`ConversationContent`/`ConversationScrollButton` (stick-to-bottom autoscroll via `use-stick-to-bottom`), `Message`/`MessageContent` (`from` prop replaces the old `align`/`Bubble` styling), `MessageResponse` (Streamdown markdown for assistant replies), and `Loader` for the pre-stream placeholder. User content stays plain text; the typed Hono client + manual ReadableStream reader, react-hook-form composer, and 401/503 handling are unchanged — `@ai-sdk/react` useChat was deliberately NOT introduced (v7 UIMessage protocol conflicts with the endpoint's plain-text `toTextStreamResponse()`). The file-local empty state was renamed `AssistantEmptyState` to avoid colliding with ai-elements' `ConversationEmptyState` export. |
+| 2026-09-02 | Structural design governance                 | `DESIGN.md`, `.ai/patterns/ui-composition.md`, `scripts/ai/check-design-tokens.mjs`, `scripts/ai/check-ui-composition.mjs`, `.github/workflows/ci.yml`                                                                                                                                                                                                                             | Structured Restraint now has a machine-readable runtime-token mirror, a normative composition grammar, and zero-dependency CI checks. Authored UI must use complete Card/overlay/Avatar anatomy, accessible icon actions, semantic colors, the shared spacing/type scales, and standard state primitives. Runtime token changes update `DESIGN.md` in the same commit.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 ## Architectural Change Log
 
-| Date       | Decision                                          | ADR / Files                                                          | Regression Guard                                                                   |
-| ---------- | ------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| 2026-05-17 | Adopt `.ai/` as the canonical agent memory system | `.ai/decisions/ADR-0001-adopt-agent-native-architecture.md`          | New patterns, dependencies, and decisions must update `.ai/` in the same PR.       |
-| 2026-05-17 | Keep tool-specific agent files thin               | `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`    | Do not duplicate long-form rules across tools; link back to `.ai/`.                |
-| 2026-05-17 | Generate machine-readable contract snapshots      | `scripts/ai/generate-contracts.mjs`, `.ai/context/data-contracts.md` | Run `pnpm ai:contracts` after API, DB, env, package export, or dependency changes. |
+| Date       | Decision                                           | ADR / Files                                                             | Regression Guard                                                                           |
+| ---------- | -------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 2026-05-17 | Adopt `.ai/` as the canonical agent memory system  | `.ai/decisions/ADR-0001-adopt-agent-native-architecture.md`             | New patterns, dependencies, and decisions must update `.ai/` in the same PR.               |
+| 2026-05-17 | Keep tool-specific agent files thin                | `.github/copilot-instructions.md`, `.cursor/rules/*`, `CLAUDE.md`       | Do not duplicate long-form rules across tools; link back to `.ai/`.                        |
+| 2026-05-17 | Generate machine-readable contract snapshots       | `scripts/ai/generate-contracts.mjs`, `.ai/context/data-contracts.md`    | Run `pnpm ai:contracts` after API, DB, env, package export, or dependency changes.         |
+| 2026-09-02 | Treat design language and composition as contracts | `DESIGN.md`, `.ai/patterns/ui-composition.md`, `scripts/ai/check-*.mjs` | CI runs the pinned design.md linter plus token-parity and authored-JSX composition checks. |
 
 ## Known TODOs
 
@@ -62,8 +65,9 @@ architecture, contracts, or conventions.
 - Do not bypass the typed Hono client for application API calls.
 - Do not introduce database schema changes without updating Drizzle exports and
   generated contract snapshots.
-- Do not change shared design tokens or component shape conventions without
-  updating `.ai/context/design-system.md`.
+- Do not change runtime design tokens without updating `DESIGN.md` in the same
+  commit; do not change component shape conventions without updating
+  `.ai/patterns/ui-composition.md`.
 - Do not add new package exports without keeping package contract snapshots
   current.
 - Do not introduce new workflows without updating the matching `.ai/skills/*`

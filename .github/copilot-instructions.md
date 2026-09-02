@@ -8,6 +8,10 @@ Read `AGENTS.md`, `.ai/context/tech-stack.md`, `.ai/context/conventions.md`, `AR
 
 For non-trivial work or changes touching more than three implementation files, read `.ai/skills/feature-spec.md` and create/update a spec in `.ai/specs/active/` before editing code.
 
+For UI work, also read `DESIGN.md` and `.ai/patterns/ui-composition.md`. Run
+`pnpm design:lint`, `pnpm design:tokens`, and `pnpm ui:composition` before
+completion. Any runtime token change must update `DESIGN.md` in the same commit.
+
 ## Task → Skill mapping
 
 | When the user says...    | Read this skill                     |
@@ -47,22 +51,22 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 
 This repository ships reusable agent skills in `.agents/skills/` (symlinked into `.claude/skills/` and `.github/skills/`). Each skill is a folder with a `SKILL.md` describing when and how to apply it. **At the start of any task, check whether one of these skills matches the work and read its `SKILL.md` before proceeding.**
 
-| Skill | Use when |
-| ----- | -------- |
-| `brainstorming` | Before any creative work — new features, components, or behavior changes. Explore intent, requirements, and design before implementation. |
-| `write-a-prd` | Turning a client brief or request into a structured PRD in `issues/`. |
-| `grill-me` | A relentless interview to sharpen a plan or design before building. |
-| `tdd` | Building features or fixing bugs test-first with a red-green-refactor loop. |
-| `improve-codebase-architecture` | Finding refactoring opportunities and deepening shallow modules to improve testability. |
-| `to-tickets` | Breaking a plan, spec, or conversation into tracer-bullet tickets with blocking edges. |
-| `teach` | Teaching the user a new skill or concept within this workspace. |
-| `remotion-best-practices` | Any work involving Remotion video composition. |
-| `reddit-automation` | Automating Reddit workflows (posting, scraping, engagement). |
-| `find-skills` | The user asks "how do I do X" or wants to discover/install new agent skills. |
-| `codebase-first` | ALWAYS-ON for any code change: the codebase decides, never invent — follow documented rules and existing patterns, ask when neither exists. |
-| `selective-routing` | Before spawning any sub-agent, and for multi-file or high-risk feature work: declare a route (solo/delegate/audit/full) first. Solo is the default; sub-agent output is a claim until you verify the diff yourself. |
-| `shadcn` | Any shadcn/ui work: adding, composing, styling, or debugging components via the shadcn CLI and registry. |
-| `writing-style` | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy. |
+| Skill                           | Use when                                                                                                                                                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `brainstorming`                 | Before any creative work — new features, components, or behavior changes. Explore intent, requirements, and design before implementation.                                                                           |
+| `write-a-prd`                   | Turning a client brief or request into a structured PRD in `issues/`.                                                                                                                                               |
+| `grill-me`                      | A relentless interview to sharpen a plan or design before building.                                                                                                                                                 |
+| `tdd`                           | Building features or fixing bugs test-first with a red-green-refactor loop.                                                                                                                                         |
+| `improve-codebase-architecture` | Finding refactoring opportunities and deepening shallow modules to improve testability.                                                                                                                             |
+| `to-tickets`                    | Breaking a plan, spec, or conversation into tracer-bullet tickets with blocking edges.                                                                                                                              |
+| `teach`                         | Teaching the user a new skill or concept within this workspace.                                                                                                                                                     |
+| `remotion-best-practices`       | Any work involving Remotion video composition.                                                                                                                                                                      |
+| `reddit-automation`             | Automating Reddit workflows (posting, scraping, engagement).                                                                                                                                                        |
+| `find-skills`                   | The user asks "how do I do X" or wants to discover/install new agent skills.                                                                                                                                        |
+| `codebase-first`                | ALWAYS-ON for any code change: the codebase decides, never invent — follow documented rules and existing patterns, ask when neither exists.                                                                         |
+| `selective-routing`             | Before spawning any sub-agent, and for multi-file or high-risk feature work: declare a route (solo/delegate/audit/full) first. Solo is the default; sub-agent output is a claim until you verify the diff yourself. |
+| `shadcn`                        | Any shadcn/ui work: adding, composing, styling, or debugging components via the shadcn CLI and registry.                                                                                                            |
+| `writing-style`                 | Always-on for prose: READMEs, docs, PR descriptions, commit messages, reports, UI and marketing copy.                                                                                                               |
 
 Skill workflow rules:
 
