@@ -1,3 +1,4 @@
+import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs";
 import { createJiti } from "jiti";
 
@@ -8,6 +9,13 @@ await jiti.import("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  // Only apps/web/Dockerfile sets DOCKER_BUILD=1: standalone output is what the image
+  // copies, but it makes local `next start` warn and is ignored by Vercel, so keep it opt-in.
+  ...(process.env.DOCKER_BUILD === "1" && {
+    output: "standalone",
+    outputFileTracingRoot: path.join(import.meta.dirname, "../../"),
+  }),
+
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@turbo/api",

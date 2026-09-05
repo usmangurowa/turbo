@@ -1,0 +1,54 @@
+# Build context for apps/web/Dockerfile and apps/server/Dockerfile.
+# Both build from the repo root; keep the context to source + manifests.
+
+# Dependencies and build output (rebuilt inside the image)
+node_modules
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/.cache
+**/.expo
+**/.trigger
+**/coverage
+**/*.tsbuildinfo
+
+# Version control and editor state
+.git
+.github
+.vscode
+.playwright-mcp
+
+# Expo app: never installed in web/server images. Keep its package.json so
+# pnpm's workspace graph still matches pnpm-lock.yaml under --frozen-lockfile.
+apps/mobile/*
+!apps/mobile/package.json
+
+# Local env files (.env.example stays for reference)
+.env
+.env.*
+!.env.example
+
+# Agent memory, docs, and plans
+.agent
+.agents
+.ai
+.claude
+.codex
+.cursor
+.gemini
+.mcp.json
+docs
+plans
+skills-lock.json
+system_prompt.md
+turbo/generators
+
+# Root markdown except README.md
+*.md
+!README.md
+
+# Misc
+**/.DS_Store
+**/*.log
+**/*.pem

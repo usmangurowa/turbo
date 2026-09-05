@@ -82,16 +82,16 @@ tooling/
 
 ## Infrastructure & Services
 
-| Service         | Tool                                          |
-| --------------- | --------------------------------------------- |
-| Hosting         | Vercel (web), EAS (mobile)                    |
-| API runtime     | Standalone Node/Hono app (`apps/server`)      |
-| Database        | Supabase (Postgres)                           |
-| Email           | Resend                                        |
-| Background jobs | Trigger.dev                                   |
-| Analytics       | PostHog                                       |
-| Error tracking  | Sentry (@sentry/nextjs, @sentry/react-native) |
-| AI providers    | Gemini, OpenRouter, Groq (Vercel AI SDK v7)   |
+| Service         | Tool                                                                                                                                           |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hosting         | Vercel (web), EAS (mobile), or Docker on Coolify / any container host (web + server, `apps/*/Dockerfile`; see `.ai/patterns/docker-images.md`) |
+| API runtime     | Standalone Node/Hono app (`apps/server`)                                                                                                       |
+| Database        | Supabase (Postgres)                                                                                                                            |
+| Email           | Resend                                                                                                                                         |
+| Background jobs | Trigger.dev                                                                                                                                    |
+| Analytics       | PostHog                                                                                                                                        |
+| Error tracking  | Sentry (@sentry/nextjs, @sentry/react-native)                                                                                                  |
+| AI providers    | Gemini, OpenRouter, Groq (Vercel AI SDK v7)                                                                                                    |
 
 ## Testing & Quality
 
