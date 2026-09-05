@@ -36,6 +36,9 @@ jobs:
       - name: Verify skills bundles are in sync
         run: pnpm skills:check
 
+      - name: Verify Dockerfile pins and build args
+        run: pnpm docker:check
+
   design-governance:
     runs-on: ubuntu-latest
     steps:

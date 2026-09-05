@@ -48,7 +48,9 @@ app serves Next's own standalone `server.js`.
    source-map upload.
 6. **`NEXT_PUBLIC_*` are build args.** They are inlined into the client
    bundle, so every key in `apps/web/src/env.ts` has an `ARG` line in the web
-   Dockerfile. Adding a `NEXT_PUBLIC_*` env var means adding an `ARG`.
+   Dockerfile. Adding a `NEXT_PUBLIC_*` env var means adding an `ARG`. The
+   same check fails when `apps/web/src/env.ts` `client` keys and the web
+   Dockerfile `ARG`s differ.
 7. **Runtime deps must be `dependencies`.** `pnpm deploy --prod` drops
    `devDependencies`, so `tsx` (`apps/server`) and `drizzle-kit`
    (`packages/db`) live in `dependencies`. Anything new the server needs at
@@ -65,7 +67,9 @@ app serves Next's own standalone `server.js`.
 ## Version pins
 
 `NODE_VERSION` mirrors `.nvmrc` and `PNPM_VERSION` mirrors
-`package.json#packageManager`. Bump all three together.
+`package.json#packageManager`. Bump all three together. `pnpm docker:check`
+(CI job `ai-contracts`) fails when the Dockerfile `ARG`s disagree with
+`.nvmrc` or `package.json#packageManager`.
 
 ## Coolify settings
 
