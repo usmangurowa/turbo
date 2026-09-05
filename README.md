@@ -308,6 +308,8 @@ How it works on each deploy:
 3. If migrations succeed, the server boots and the health check passes.
 4. If migrations fail, the server never starts, the health check fails, and the previous version keeps serving.
 
+On a brand-new (empty) database, the journal's first entry (`0000_baseline_auth_schema`) creates the Better Auth tables, so a fork's first deploy needs no manual `db:push`. Existing databases skip it because it is dated before their first applied migration, so nothing changes for them.
+
 Requirements:
 
 - Set `POSTGRES_URL` in the deployment environment. `TURBO_DB_SKIP_DOTENV=1` is baked into the script so migrate reads the injected environment instead of a local `.env` file.
