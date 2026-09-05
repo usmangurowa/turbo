@@ -5,12 +5,19 @@
     {
       "idx": 0,
       "version": "7",
+      "when": 1780696580000,
+      "tag": "0000_baseline_auth_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
       "when": 1780696590000,
       "tag": "0000_migrate_apikey_reference_id",
       "breakpoints": true
     },
     {
-      "idx": 1,
+      "idx": 2,
       "version": "7",
       "when": 1784838858129,
       "tag": "0001_add-task-table",

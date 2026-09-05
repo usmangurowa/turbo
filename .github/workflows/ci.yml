@@ -36,6 +36,9 @@ jobs:
       - name: Verify skills bundles are in sync
         run: pnpm skills:check
 
+      - name: Verify Dockerfile pins and build args
+        run: pnpm docker:check
+
   design-governance:
     runs-on: ubuntu-latest
     steps:
@@ -104,3 +107,45 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: web
+            dockerfile: apps/web/Dockerfile
+            smoke: >-
+              docker run -d --rm --name smoke -p 3000:3000 -e SKIP_ENV_VALIDATION=1 turbo-web
+              && sleep 8
+              && curl -fsS -o /dev/null http://localhost:3000/
+              && docker stop smoke
+          - app: server
+            dockerfile: apps/server/Dockerfile
+            smoke: >-
+              docker run --rm --entrypoint sh turbo-server -c
+              'which pnpm tsx drizzle-kit
+              && test -f node_modules/@turbo/db/scripts/drizzle.mjs
+              && ls node_modules/@turbo/db/drizzle/*.sql'
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.app }} image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          tags: turbo-${{ matrix.app }}
+          push: false
+          load: true
+          cache-from: type=gha,scope=${{ matrix.app }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.app }}
+
+      - name: Smoke test ${{ matrix.app }} image
+        run: ${{ matrix.smoke }}
+
+      - name: Report image size
+        run: docker image ls turbo-${{ matrix.app }} --format '{{.Repository}} {{.Size}}'

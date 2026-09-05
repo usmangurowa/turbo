@@ -43,6 +43,7 @@
     "ai:verify": "pnpm ai:contracts && pnpm verify",
     "design:lint": "pnpm --package=@google/design.md@0.4.0 dlx designmd lint DESIGN.md",
     "design:tokens": "node scripts/ai/check-design-tokens.mjs",
+    "docker:check": "node scripts/ai/check-docker-contract.mjs",
     "skills:check": "node scripts/ai/check-skills-sync.mjs --strict",
     "ui:composition": "node scripts/ai/check-ui-composition.mjs",
     "ui-add": "turbo run ui-add",

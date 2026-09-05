@@ -26,6 +26,7 @@
     "hono": "^4.12.31",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
+    "tsx": "^4.23.1",
     "zod": "catalog:"
   },
   "devDependencies": {
@@ -36,7 +37,6 @@
     "dotenv-cli": "^11.0.0",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "tsx": "^4.23.1",
     "typescript": "catalog:",
     "vitest": "4.1.10"
   },

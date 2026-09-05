@@ -308,11 +308,47 @@ How it works on each deploy:
 3. If migrations succeed, the server boots and the health check passes.
 4. If migrations fail, the server never starts, the health check fails, and the previous version keeps serving.
 
+On a brand-new (empty) database, the journal's first entry (`0000_baseline_auth_schema`) creates the Better Auth tables, so a fork's first deploy needs no manual `db:push`. Existing databases skip it because it is dated before their first applied migration, so nothing changes for them.
+
 Requirements:
 
 - Set `POSTGRES_URL` in the deployment environment. `TURBO_DB_SKIP_DOTENV=1` is baked into the script so migrate reads the injected environment instead of a local `.env` file.
 - Keep exactly one migration owner: only the server's start command runs `db:migrate`. Other apps (web, mobile) never migrate.
 - Keep migrations backward-compatible (expand/contract): add columns and tables first, drop or rename in a later release, since old code briefly runs against the new schema during the deploy window.
+
+### Docker (Coolify / any container host)
+
+`apps/web/Dockerfile` and `apps/server/Dockerfile` build slim multi-stage images (Next.js standalone for web, `pnpm deploy --prod` output for the server). Docker is an additional path: Vercel ignores Dockerfiles and the `output: "standalone"` switch (it is gated on `DOCKER_BUILD=1`, which only the web Dockerfile sets), and `pnpm start:server` keeps working on a plain VPS. Both targets coexist.
+
+Build from the repo root — the context must be the monorepo, not the app folder:
+
+```bash
+docker build -f apps/web/Dockerfile -t turbo-web .
+docker build -f apps/server/Dockerfile -t turbo-server .
+
+docker run --rm -p 3000:3000 -e POSTGRES_URL=... -e AUTH_SECRET=... turbo-web
+docker run --rm -p 3001:3001 -e POSTGRES_URL=... -e AUTH_SECRET=... -e RESEND_API_KEY=... turbo-server
+```
+
+What the images do:
+
+- **web** serves `node apps/web/server.js` on port 3000. `NEXT_PUBLIC_*` values are inlined at build time, so pass them as `--build-arg` (every key in `apps/web/src/env.ts` has an `ARG`). `SENTRY_AUTH_TOKEN` is an optional BuildKit secret (`--secret id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN`); the build succeeds without it.
+- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`. Env vars come from the platform; there is no `.env` or Infisical in the image.
+- Neither image installs `apps/mobile`, dev toolchains, `.git`, or docs (see `.dockerignore`).
+
+Coolify settings per app:
+
+| Setting                            | Web                    | Server                    |
+| ---------------------------------- | ---------------------- | ------------------------- |
+| Build pack                         | `dockerfile`           | `dockerfile`              |
+| Base directory                     | `/`                    | `/`                       |
+| Dockerfile location                | `/apps/web/Dockerfile` | `/apps/server/Dockerfile` |
+| Port                               | `3000`                 | `3001`                    |
+| Health check                       | `GET /`                | `GET /health`             |
+| Custom install/build/start command | clear all three        | clear all three           |
+| `NEXT_PUBLIC_*` variables          | mark as **build time** | —                         |
+
+Runtime env vars (`POSTGRES_URL`, `AUTH_SECRET`, `RESEND_API_KEY`, …) stay as normal Coolify environment variables. Layout and invariants: `.ai/patterns/docker-images.md`.
 
 ### Auth Proxy
 
