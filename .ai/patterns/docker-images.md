@@ -86,3 +86,8 @@ docker run --rm -p 3000:3000 -e SKIP_ENV_VALIDATION=1 turbo-web
 docker build -f apps/server/Dockerfile -t turbo-server .
 docker run --rm --entrypoint sh turbo-server -c 'which pnpm tsx drizzle-kit; ls node_modules/@turbo/db/drizzle'
 ```
+
+The `docker` job in `.github/workflows/ci.yml` builds both images on every
+pull request (`push: false`, GHA layer cache) and runs the same smoke checks;
+a red `docker` check means the deploy path is broken even if lint/typecheck
+are green.
