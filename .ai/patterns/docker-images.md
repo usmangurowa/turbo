@@ -10,7 +10,9 @@ deploy path next to Vercel (web) and a plain `pnpm start:server` process
 
 Runtime behavior matches the existing scripts: the server still applies
 `drizzle-kit migrate` on boot and still runs from `src/` with `tsx`; the web
-app serves Next's own standalone `server.js`.
+app serves Next's own standalone `server.js`. Both boot through
+`scripts/infisical-run.sh`, so Infisical remains the secrets source in
+production exactly as `pnpm with-secrets` makes it locally.
 
 ## Stage layout
 
@@ -29,14 +31,23 @@ app serves Next's own standalone `server.js`.
    keeps its `package.json` so `--frozen-lockfile` still sees the full
    workspace graph. `nodeLinker: hoisted` means `--filter` barely shrinks the
    build-stage install; only the runner size matters.
-2. **Install scripts are skipped.** The root `postinstall` runs
-   `pnpm dlx sherif@latest` over the network, and nothing at runtime depends
-   on an install script. `@infisical/cli` is a root devDependency and never
-   reaches a runner; do not `pnpm rebuild` it.
-3. **No Infisical or dotenv in the images.** Package `with-env` scripts read
-   `../../.env`, which does not exist in a container. Root `with-secrets`
-   (`infisical run --`) is a local convenience. The CMDs call the underlying
-   commands and rely on platform-injected env vars.
+2. **Install scripts are skipped, except `@infisical/cli`.** The root
+   `postinstall` runs `pnpm dlx sherif@latest` over the network, and nothing
+   else at runtime depends on an install script. `@infisical/cli`'s preinstall
+   downloads the Infisical CLI binary, so the `deps` stage runs
+   `pnpm rebuild @infisical/cli` and the runner copies
+   `node_modules/@infisical/cli/bin/infisical` to `/usr/local/bin/infisical`.
+3. **Secrets come from Infisical at boot, or from the platform.** Both CMDs go
+   through `scripts/infisical-run.sh` (the same wrapper as root
+   `with-secrets`). With `INFISICAL_CLIENT_ID` + `INFISICAL_CLIENT_SECRET`
+   (universal-auth machine identity) plus `INFISICAL_PROJECT_ID` (or a
+   committed `.infisical.json`) and `INFISICAL_ENV`, the container fetches
+   its secrets at start; a half-configured identity fails fast; with no
+   credentials it runs the command on platform-injected env vars and logs
+   that it did. Package `with-env` (`dotenv -e ../../.env`) is never used in
+   containers — there is no `.env` in the image. The build stage guarantees
+   `.infisical.json` exists (`{}` if the fork has not run `infisical init`) so
+   the runner COPY never fails.
 4. **`DOCKER_BUILD=1` gates standalone output.** `next.config.js` only sets
    `output: "standalone"` + `outputFileTracingRoot` (monorepo root) under
    that flag, so local `next start` stays warning-free and Vercel's build is
@@ -84,7 +95,7 @@ command** (the CMD is baked in). Mark `NEXT_PUBLIC_*` variables as build-time.
 docker build -f apps/web/Dockerfile -t turbo-web .
 docker run --rm -p 3000:3000 -e SKIP_ENV_VALIDATION=1 turbo-web
 docker build -f apps/server/Dockerfile -t turbo-server .
-docker run --rm --entrypoint sh turbo-server -c 'which pnpm tsx drizzle-kit; ls node_modules/@turbo/db/drizzle'
+docker run --rm --entrypoint sh turbo-server -c 'which pnpm tsx drizzle-kit infisical; ls node_modules/@turbo/db/drizzle'
 ```
 
 The `docker` job in `.github/workflows/ci.yml` builds both images on every

@@ -5,7 +5,7 @@
 - State: implemented
 - Owner: AI agent
 - Created: 2026-09-05
-- Updated: 2026-09-05
+- Updated: 2026-09-05 (Infisical runtime wrapper)
 
 ## Problem
 
@@ -90,10 +90,16 @@ server:
 
 ## Decisions
 
-- **No Infisical in images.** The template's `with-env` scripts read
-  `../../.env`, which does not exist in a container. Root `with-secrets`
-  (`infisical run --`) is a local convenience. Container platforms inject env
-  vars directly, so the CMDs call the underlying commands.
+- **Infisical at boot, platform env as fallback** (revised 2026-09-05; the
+  first cut shipped without Infisical). Both CMDs run through
+  `scripts/infisical-run.sh`, the same wrapper as root `with-secrets`. The
+  `deps` stage runs `pnpm rebuild @infisical/cli` and the runner carries the
+  CLI at `/usr/local/bin/infisical`. With a universal-auth machine identity
+  (`INFISICAL_CLIENT_ID`/`INFISICAL_CLIENT_SECRET` + `INFISICAL_PROJECT_ID` or
+  `.infisical.json` + `INFISICAL_ENV`) the container pulls secrets at start;
+  with no credentials it runs on platform-injected env vars, so the
+  Coolify-only path keeps working. Package `with-env` (`dotenv -e ../../.env`)
+  is never used in containers.
 - **`DOCKER_BUILD` gate.** Unconditional `output: "standalone"` makes local
   `next start` warn and changes Vercel's build output. Gating keeps both
   paths byte-identical to today.

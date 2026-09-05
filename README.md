@@ -96,7 +96,9 @@ pnpm dev:infisical
 pnpm with-secrets pnpm db:migrate
 ```
 
-Both sources compose: variables injected by Infisical take precedence, and anything missing still falls back to `.env` via each app's `with-env` script. CI can do the same with a [machine identity](https://infisical.com/docs/documentation/platform/identities/machine-identities) and `infisical run --token`.
+Both sources compose: variables injected by Infisical take precedence, and anything missing still falls back to `.env` via each app's `with-env` script.
+
+`pnpm with-secrets` and `pnpm dev:infisical` run through `scripts/infisical-run.sh`, the same wrapper the Docker images boot with. It picks credentials in this order: `INFISICAL_CLIENT_ID` + `INFISICAL_CLIENT_SECRET` ([machine identity](https://infisical.com/docs/documentation/platform/identities/machine-identities), what production uses), a pre-issued `INFISICAL_TOKEN`, then your local `infisical login` session; in CI or with nothing configured it runs the command on the existing env vars and says so. The project comes from `INFISICAL_PROJECT_ID` or `.infisical.json`, the environment slug from `INFISICAL_ENV` (default `dev`).
 
 ### 2. Database Setup (Drizzle ORM)
 
@@ -333,7 +335,8 @@ docker run --rm -p 3001:3001 -e POSTGRES_URL=... -e AUTH_SECRET=... -e RESEND_AP
 What the images do:
 
 - **web** serves `node apps/web/server.js` on port 3000. `NEXT_PUBLIC_*` values are inlined at build time, so pass them as `--build-arg` (every key in `apps/web/src/env.ts` has an `ARG`). `SENTRY_AUTH_TOKEN` is an optional BuildKit secret (`--secret id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN`); the build succeeds without it.
-- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`. Env vars come from the platform; there is no `.env` or Infisical in the image.
+- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`.
+- Both images boot through `scripts/infisical-run.sh` with the Infisical CLI on `PATH`. Set `INFISICAL_CLIENT_ID`, `INFISICAL_CLIENT_SECRET`, `INFISICAL_PROJECT_ID` (or commit `.infisical.json`), and `INFISICAL_ENV` (e.g. `prod`) on the platform and the container pulls every other secret from Infisical at start. Leave them unset and the container runs on platform-injected env vars alone — there is no `.env` in the image either way.
 - Neither image installs `apps/mobile`, dev toolchains, `.git`, or docs (see `.dockerignore`).
 
 Coolify settings per app:
@@ -348,7 +351,7 @@ Coolify settings per app:
 | Custom install/build/start command | clear all three        | clear all three           |
 | `NEXT_PUBLIC_*` variables          | mark as **build time** | —                         |
 
-Runtime env vars (`POSTGRES_URL`, `AUTH_SECRET`, `RESEND_API_KEY`, …) stay as normal Coolify environment variables. Layout and invariants: `.ai/patterns/docker-images.md`.
+With Infisical, the only runtime variables Coolify needs are the four `INFISICAL_*` credentials above (plus anything you deliberately keep out of Infisical). Without it, `POSTGRES_URL`, `AUTH_SECRET`, `RESEND_API_KEY`, … are normal Coolify environment variables. Layout and invariants: `.ai/patterns/docker-images.md`.
 
 ### Auth Proxy
 
