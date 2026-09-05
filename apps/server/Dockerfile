@@ -56,16 +56,21 @@ RUN set -eu; \
 
 # ---------------------------------------------------------------------------
 # deps: install @turbo/server and its workspace dependencies. Scripts are
-# skipped: the root postinstall runs sherif over the network and nothing at
-# runtime depends on an install script (esbuild ships platform binaries as
-# optional deps; @infisical/cli is a root devDependency that never reaches the
-# runner).
+# skipped (the root postinstall runs sherif over the network; esbuild ships
+# platform binaries as optional deps). The one exception is @infisical/cli:
+# its preinstall downloads the Infisical CLI binary that the runner's secrets
+# wrapper needs, so it is rebuilt explicitly (and stripped: the unstripped Go
+# binary is 120 MB, stripped ~85 MB).
 # ---------------------------------------------------------------------------
 FROM base AS deps
 COPY --from=manifests /manifests /app
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
   pnpm config set store-dir /pnpm/store \
-  && pnpm install --frozen-lockfile --ignore-scripts --filter "@turbo/server..."
+  && pnpm install --frozen-lockfile --ignore-scripts --filter "@turbo/server..." \
+  && pnpm rebuild @infisical/cli \
+  && test -x node_modules/@infisical/cli/bin/infisical \
+  && apk add --no-cache binutils \
+  && strip node_modules/@infisical/cli/bin/infisical
 
 # ---------------------------------------------------------------------------
 # build: tsc for the server and the workspace packages it depends on. The
@@ -76,6 +81,11 @@ FROM deps AS build
 COPY . /app
 ENV SKIP_ENV_VALIDATION=1
 RUN pnpm turbo build -F @turbo/server --concurrency=1
+
+# .infisical.json (written by `pnpm exec infisical init`) is optional for the
+# template: forks can set INFISICAL_PROJECT_ID instead. Guarantee the file
+# exists so the runner's COPY never fails.
+RUN [ -f .infisical.json ] || echo '{}' > .infisical.json
 
 # ---------------------------------------------------------------------------
 # prune: the server package plus a self-contained production node_modules.
@@ -113,11 +123,21 @@ WORKDIR /app
 
 COPY --from=prune --chown=node:node /out ./
 
+# Secrets wrapper (the same script `pnpm with-secrets` runs locally) and the
+# Infisical CLI it falls back to on PATH. With INFISICAL_CLIENT_ID +
+# INFISICAL_CLIENT_SECRET (+ INFISICAL_PROJECT_ID / INFISICAL_ENV) set, the
+# container pulls its secrets from Infisical at boot; without them it runs on
+# platform-injected env vars alone.
+COPY --from=build --chown=node:node /app/scripts/infisical-run.sh ./scripts/infisical-run.sh
+COPY --from=build --chown=node:node /app/.infisical.json ./.infisical.json
+COPY --from=build /app/node_modules/@infisical/cli/bin/infisical /usr/local/bin/infisical
+
 USER node
 EXPOSE 3001
 
-# Same chain as root `start:server`. `pnpm deploy` flattens the workspace, so
-# packages/db lives at node_modules/@turbo/db. There is no .env in the image
-# and the platform injects env vars directly, so the dotenv wrappers are skipped.
-CMD ["sh", "-c", \
+# Equivalent to `pnpm with-secrets pnpm start:server`. `pnpm deploy` flattens
+# the workspace, so packages/db lives at node_modules/@turbo/db. There is no
+# .env in the image: the wrapper injects Infisical secrets (or passes platform
+# env vars through), and the dotenv wrappers are skipped.
+CMD ["sh", "scripts/infisical-run.sh", "--", "sh", "-c", \
   "TURBO_DB_SKIP_DOTENV=1 node node_modules/@turbo/db/scripts/drizzle.mjs migrate && exec tsx src/index.ts"]

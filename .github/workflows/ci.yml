@@ -125,7 +125,7 @@ jobs:
             dockerfile: apps/server/Dockerfile
             smoke: >-
               docker run --rm --entrypoint sh turbo-server -c
-              'which pnpm tsx drizzle-kit
+              'which pnpm tsx drizzle-kit infisical
               && test -f node_modules/@turbo/db/scripts/drizzle.mjs
               && ls node_modules/@turbo/db/drizzle/*.sql'
     steps:

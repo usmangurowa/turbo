@@ -53,16 +53,22 @@ RUN set -eu; \
   [ -f .npmrc ] && cp .npmrc /manifests/ || true
 
 # ---------------------------------------------------------------------------
-# deps: install @turbo/web and its workspace dependencies. Scripts are skipped:
-# the root postinstall runs sherif over the network and nothing at runtime
-# depends on an install script (esbuild and @tailwindcss/oxide ship platform
-# binaries as optional deps).
+# deps: install @turbo/web and its workspace dependencies. Scripts are skipped
+# (the root postinstall runs sherif over the network; esbuild and
+# @tailwindcss/oxide ship platform binaries as optional deps). The one
+# exception is @infisical/cli: its preinstall downloads the Infisical CLI
+# binary that the runner's secrets wrapper needs, so it is rebuilt explicitly
+# (and stripped: the unstripped Go binary is 120 MB, stripped ~85 MB).
 # ---------------------------------------------------------------------------
 FROM base AS deps
 COPY --from=manifests /manifests /app
 RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
   pnpm config set store-dir /pnpm/store \
-  && pnpm install --frozen-lockfile --ignore-scripts --filter "@turbo/web..."
+  && pnpm install --frozen-lockfile --ignore-scripts --filter "@turbo/web..." \
+  && pnpm rebuild @infisical/cli \
+  && test -x node_modules/@infisical/cli/bin/infisical \
+  && apk add --no-cache binutils \
+  && strip node_modules/@infisical/cli/bin/infisical
 
 # ---------------------------------------------------------------------------
 # build: compile workspace packages and the Next.js app.
@@ -93,8 +99,14 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
   export SENTRY_AUTH_TOKEN="$(cat /run/secrets/SENTRY_AUTH_TOKEN 2>/dev/null || true)" \
   && pnpm turbo build -F @turbo/web --concurrency=1
 
+# .infisical.json (written by `pnpm exec infisical init`) is optional for the
+# template: forks can set INFISICAL_PROJECT_ID instead. Guarantee the file
+# exists so the runner's COPY never fails.
+RUN [ -f .infisical.json ] || echo '{}' > .infisical.json
+
 # ---------------------------------------------------------------------------
-# runner: only the traced standalone output, static assets, and public/.
+# runner: only the traced standalone output, static assets, public/, and the
+# Infisical secrets wrapper.
 # ---------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-alpine AS runner
 RUN apk add --no-cache libc6-compat
@@ -110,10 +122,20 @@ COPY --from=build --chown=node:node /app/apps/web/.next/standalone ./
 COPY --from=build --chown=node:node /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build --chown=node:node /app/apps/web/public ./apps/web/public
 
+# Secrets wrapper (the same script `pnpm with-secrets` runs locally) and the
+# Infisical CLI it falls back to on PATH. With INFISICAL_CLIENT_ID +
+# INFISICAL_CLIENT_SECRET (+ INFISICAL_PROJECT_ID / INFISICAL_ENV) set, the
+# container pulls its secrets from Infisical at boot; without them it runs on
+# platform-injected env vars alone.
+COPY --from=build --chown=node:node /app/scripts/infisical-run.sh ./scripts/infisical-run.sh
+COPY --from=build --chown=node:node /app/.infisical.json ./.infisical.json
+COPY --from=build /app/node_modules/@infisical/cli/bin/infisical /usr/local/bin/infisical
+
 USER node
 EXPOSE 3000
 
-# Equivalent to `pnpm -F @turbo/web start` (`dotenv -e ../../.env -- next start`):
-# there is no .env in the image, the platform injects env vars directly, and
-# standalone ships its own server.js instead of the `next` CLI.
-CMD ["node", "apps/web/server.js"]
+# Equivalent to `pnpm with-secrets pnpm -F @turbo/web start`: there is no .env
+# in the image, so the wrapper injects Infisical secrets (or passes platform
+# env vars through), and standalone ships its own server.js instead of the
+# `next` CLI.
+CMD ["sh", "scripts/infisical-run.sh", "--", "node", "apps/web/server.js"]
