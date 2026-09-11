@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc --watch",
+    "dev": "tsc",
     "email:dev": "email dev --dir src/templates --port 3010",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",

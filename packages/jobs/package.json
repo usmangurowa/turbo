@@ -16,8 +16,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "npx trigger.dev@latest dev",
-    "dev:tsc": "tsc --watch",
+    "dev": "tsc",
+    "dev:trigger": "npx trigger.dev@latest dev",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "format:fix": "prettier --write . --ignore-path ../../.gitignore",
     "lint": "eslint",
