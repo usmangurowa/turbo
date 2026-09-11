@@ -1075,7 +1075,9 @@ variant="dashed"` with a required `title`, `description`, one `action`, and
   (`integrations.tsx`).
 - Query error states: `QueryError` (`query-error.tsx`) — `Empty` with a retry
   button and a sign-in link for expired sessions; `framed={false}` when the
-  parent card already draws the dashed frame.
+  parent card already draws the dashed frame; `className` puts a divider on the
+  state itself (`border-t border-dashed` inside a `TableCard`). The divider is
+  never on a wrapper `div`.
 
 ## Precedent-First UI Workflow
 
