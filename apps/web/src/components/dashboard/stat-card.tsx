@@ -31,7 +31,7 @@ export interface StatCardProps {
   dim?: boolean;
   caption?: React.ReactNode;
   captionTone?: "success" | "destructive" | "warning";
-  /** Makes the whole card a link. */
+  /** Makes the label a stretched link that covers the whole card. */
   href?: string;
   className?: string;
   /** Support zone: sparkline, progress, secondary lines. */
@@ -48,6 +48,10 @@ const valueToneClass = {
  * House stat card (DESIGN.md → Components → Stat card): dashed frame, muted
  * 12px label, tabular numeral, small muted caption. Composed from `Card` so
  * header / value / support zones follow `.ai/patterns/ui-composition.md`.
+ *
+ * `href` turns the label into a stretched link: the anchor's `after:` overlay
+ * covers the card, while `hint` and `action` stay positioned above it, so a
+ * linked card never nests a button inside the anchor.
  */
 export const StatCard = ({
   label,
@@ -66,7 +70,19 @@ export const StatCard = ({
   className,
   children,
 }: StatCardProps) => {
-  const card = (
+  const labelNode = href ? (
+    <Link
+      href={href}
+      data-slot="stat-card-link"
+      className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
+    >
+      {label}
+    </Link>
+  ) : (
+    label
+  );
+
+  return (
     <Card
       variant="dashed"
       size={size === "hero" ? "default" : "sm"}
@@ -75,7 +91,7 @@ export const StatCard = ({
       className={cn(
         size === "hero" ? "gap-3" : "gap-1",
         href &&
-          "group-hover/stat-link:bg-accent/50 group-focus-visible/stat-link:ring-ring w-full transition-colors group-focus-visible/stat-link:ring-2",
+          "hover:bg-accent/50 has-[a:focus-visible]:ring-ring relative transition-colors has-[a:focus-visible]:ring-2",
         className,
       )}
     >
@@ -87,9 +103,17 @@ export const StatCard = ({
               className={cn("size-4 shrink-0", iconClassName)}
             />
           ) : null}
-          {hint ? <HintLabel label={label} hint={hint} /> : label}
+          {hint ? (
+            <HintLabel label={label} hint={hint}>
+              {labelNode}
+            </HintLabel>
+          ) : (
+            labelNode
+          )}
         </CardTitle>
-        {action ? <CardAction>{action}</CardAction> : null}
+        {action ? (
+          <CardAction className={cn(href && "relative")}>{action}</CardAction>
+        ) : null}
       </CardHeader>
       <CardContent
         className={cn("flex flex-1 flex-col gap-1", size === "hero" && "gap-3")}
@@ -121,17 +145,5 @@ export const StatCard = ({
         ) : null}
       </CardContent>
     </Card>
-  );
-
-  if (!href) return card;
-
-  return (
-    <Link
-      href={href}
-      data-slot="stat-card-link"
-      className="group/stat-link flex rounded-2xl outline-none"
-    >
-      {card}
-    </Link>
   );
 };

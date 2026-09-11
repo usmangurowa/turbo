@@ -28,15 +28,19 @@ providers) is out of scope.
 ## Acceptance Criteria
 
 - [x] `Card` accepts `variant="default" | "dashed"` and exposes
-      `data-variant`; the default rendering is byte-identical to before.
+      `data-variant`; the default variant keeps the registry's ring classes
+      unchanged (its markup gains only `data-variant="default"`, matching the
+      existing `data-size` attribute).
 - [x] `Badge` accepts `variant="success" | "warning"` and
       `size="xs" | "sm"` (default `xs`); existing variants render unchanged.
 - [x] `ThemeToggle` is a one-click switch on the resolved theme with an
       accessible label; no dropdown.
 - [x] `apps/web` ships `StatCard`, `TableCard`, `TablePagination`,
       `PageToolbar`, `HintLabel`, and `QueryError` under
-      `src/components/dashboard/`, each composed from full `Card` anatomy so
-      `pnpm ui:composition` passes.
+      `src/components/dashboard/`. The card-bearing recipes (`StatCard`,
+      `TableCard`) compose full `Card` anatomy; the others compose their own
+      primitives (`Pagination`, `Tooltip`, `Empty`). `pnpm ui:composition`
+      passes.
 - [x] The dashboard overview, tasks table, integrations, API keys card, and
       section placeholder use the primitives instead of hand-written dashed
       frames.

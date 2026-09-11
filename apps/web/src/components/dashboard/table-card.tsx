@@ -58,7 +58,9 @@ export const TableCard = ({
       {children}
     </CardContent>
     {footer ? (
-      <CardFooter className="border-t px-4 pb-3">{footer}</CardFooter>
+      <CardFooter className="border-t border-dashed px-4 pb-3">
+        {footer}
+      </CardFooter>
     ) : null}
   </Card>
 );

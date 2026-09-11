@@ -20,7 +20,9 @@ export interface TablePaginationProps {
  * State-driven Previous / "Page x of y" / Next footer for offset-paginated
  * tables. Composes the shadcn `Pagination` primitives; the anchors keep
  * `href="#"` and prevent default, which is the documented pattern for
- * client-side paging. Bound anchors carry `aria-disabled`.
+ * client-side paging. Bound anchors carry `aria-disabled`. Both `page` and
+ * `pageCount` are clamped, so a stale or URL-derived page (`0`, `4 of 3`)
+ * still renders a valid label and emits only in-range page changes.
  */
 export const TablePagination = ({
   page,
@@ -28,9 +30,10 @@ export const TablePagination = ({
   onPageChange,
   className,
 }: TablePaginationProps) => {
-  const safeCount = Math.max(1, pageCount);
-  const atStart = page <= 1;
-  const atEnd = page >= safeCount;
+  const safeCount = Math.max(1, Math.trunc(pageCount) || 1);
+  const current = Math.min(Math.max(1, Math.trunc(page) || 1), safeCount);
+  const atStart = current <= 1;
+  const atEnd = current >= safeCount;
 
   return (
     <Pagination
@@ -47,13 +50,13 @@ export const TablePagination = ({
             className={cn(atStart && "pointer-events-none opacity-50")}
             onClick={(event) => {
               event.preventDefault();
-              if (!atStart) onPageChange(page - 1);
+              if (!atStart) onPageChange(current - 1);
             }}
           />
         </PaginationItem>
         <PaginationItem>
           <span className="text-muted-foreground text-xs tabular-nums">
-            Page {page} of {safeCount}
+            Page {current} of {safeCount}
           </span>
         </PaginationItem>
         <PaginationItem>
@@ -65,7 +68,7 @@ export const TablePagination = ({
             className={cn(atEnd && "pointer-events-none opacity-50")}
             onClick={(event) => {
               event.preventDefault();
-              if (!atEnd) onPageChange(page + 1);
+              if (!atEnd) onPageChange(current + 1);
             }}
           />
         </PaginationItem>

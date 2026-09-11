@@ -663,10 +663,13 @@ stopping the dev server so it refreshes capabilities.
 - Registry components are CLI-managed: add/update with `pnpm ui-add` in
   `packages/ui`, don't hand-edit beyond documented patches
 - Documented registry patch — `Card variant="dashed"` (`card.tsx`): swaps
-  the `ring-1` hairline for `border border-dashed`. Every dashed frame goes
-  through this variant (directly, or via `StatCard` / `TableCard` in
-  `apps/web/src/components/dashboard/`); never hand-write
-  `bg-card rounded-2xl border border-dashed` on a `div`.
+  the `ring-1` hairline for `border border-dashed`. Every dashed card frame
+  — dashboard and landing page alike — goes through this variant (directly,
+  or via `StatCard` / `TableCard` in `apps/web/src/components/dashboard/`);
+  never hand-write `bg-card rounded-2xl border border-dashed` on a `div`.
+  The two documented exceptions are standalone `Empty` states, which carry
+  `rounded-2xl border border-dashed` themselves, and structural dividers
+  (`border-t border-dashed`) — see `.ai/patterns/ui-composition.md`.
 - Documented registry patch — `Badge` `success` / `warning` variants and a
   `size="xs" | "sm"` axis (`badge.tsx`): `bg-success/10 text-success`,
   `bg-warning/10 text-warning`; `xs` (20px) is the default display badge,

@@ -33,10 +33,12 @@ describe("registry component patches", () => {
     expect(source).toContain("badgeVariants({ variant, size })");
   });
 
-  it("theme.tsx ThemeToggle flips the resolved theme in one click", () => {
+  it("theme.tsx ThemeToggle flips the resolved theme only once mounted", () => {
     const source = read("theme.tsx");
-    expect(source).toContain("resolvedTheme");
-    expect(source).toContain("aria-label={`Switch to ${next} mode`}");
+    expect(source).toContain("useSyncExternalStore");
+    expect(source).toContain("mounted && resolvedTheme");
+    expect(source).toContain('"Toggle theme"');
+    expect(source).toContain("if (next) setTheme(next);");
     expect(source).not.toContain("DropdownMenu");
   });
 });
