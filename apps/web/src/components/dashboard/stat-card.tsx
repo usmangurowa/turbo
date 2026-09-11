@@ -51,7 +51,12 @@ const valueToneClass = {
  *
  * `href` turns the label into a stretched link: the anchor's `after:` overlay
  * covers the card, while `hint` and `action` stay positioned above it, so a
- * linked card never nests a button inside the anchor.
+ * linked card never nests a button inside the anchor. Two consequences:
+ * the support zone (`children`, `valueCaption`, `caption`) sits under the
+ * overlay, so keep it non-interactive on a linked card; and the overlay
+ * relies on `container-type` no longer creating an absolute-positioning
+ * containing block (Chrome 129 / Firefox 133 / Safari 18.4 and later — on
+ * older engines the click target shrinks to the header, the link still works).
  */
 export const StatCard = ({
   label,
@@ -91,7 +96,7 @@ export const StatCard = ({
       className={cn(
         size === "hero" ? "gap-3" : "gap-1",
         href &&
-          "hover:bg-accent/50 has-[a:focus-visible]:ring-ring relative transition-colors has-[a:focus-visible]:ring-2",
+          "hover:bg-accent/50 has-[a:focus-visible]:ring-ring/30 relative transition-colors has-[a:focus-visible]:ring-2",
         className,
       )}
     >

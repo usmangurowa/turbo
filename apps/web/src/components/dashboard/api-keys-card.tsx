@@ -2,6 +2,8 @@
 
 import type { ApiKeySummary } from "@/hooks/use-api-keys";
 import * as React from "react";
+import Link from "next/link";
+import { QueryError } from "@/components/dashboard/query-error";
 import { TableCard } from "@/components/dashboard/table-card";
 import {
   useApiKeys,
@@ -48,6 +50,7 @@ import {
 } from "@turbo/ui/components/dialog";
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -304,7 +307,7 @@ const LoadingRows = () => (
  * request is unauthenticated, so the zero-env template never crashes here.
  */
 export const ApiKeysCard = () => {
-  const { data: apiKeys, isPending, isError } = useApiKeys();
+  const { data: apiKeys, isPending, isError, refetch } = useApiKeys();
 
   const signedOut = !isPending && !isError && apiKeys === null;
   const showTable = isPending || (Array.isArray(apiKeys) && apiKeys.length > 0);
@@ -341,19 +344,20 @@ export const ApiKeysCard = () => {
               them.
             </EmptyDescription>
           </EmptyHeader>
+          <EmptyContent>
+            <Button size="sm" asChild>
+              <Link href="/login">Sign in</Link>
+            </Button>
+          </EmptyContent>
         </Empty>
       ) : isError ? (
-        <Empty className="border-t border-dashed">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Icon icon={Key01Icon} />
-            </EmptyMedia>
-            <EmptyTitle>Couldn&apos;t load API keys</EmptyTitle>
-            <EmptyDescription>
-              Something went wrong fetching your keys. Refresh to try again.
-            </EmptyDescription>
-          </EmptyHeader>
-        </Empty>
+        <div className="border-t border-dashed">
+          <QueryError
+            framed={false}
+            title="Couldn't load API keys"
+            onRetry={() => void refetch()}
+          />
+        </div>
       ) : showTable ? (
         <Table>
           <TableHeader>

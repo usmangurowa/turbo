@@ -105,9 +105,11 @@
 - Dashboard house primitives live in `apps/web/src/components/dashboard/`:
   `StatCard` (dashed stat tile), `TableCard` (dashed table/list frame with
   header, body, footer), `TablePagination`, `PageToolbar` (the 48px bar under
-  the sticky header), `HintLabel` (label + tooltip for a hidden calculation),
-  and `QueryError`. Compose these instead of writing a private stat or table
-  wrapper again.
+  the sticky header, only on pages with page-level controls), `HintLabel`
+  (label + tooltip for a hidden calculation), and `QueryError` (the error
+  state for dashboard queries — see `api-keys-card.tsx`). Compose these
+  instead of writing a private stat or table wrapper again; `TablePagination`
+  has no live consumer yet, its tests are the precedent.
 - A change to runtime tokens in `tooling/tailwind/theme.css` must update
   `DESIGN.md` in the same commit.
 - Authored UI uses semantic color classes and the documented spacing and

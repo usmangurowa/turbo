@@ -11,10 +11,13 @@ caller in the domain layer.
 
 ## Where it lives
 
-- `packages/api/src/domain/<provider>/<provider>.ts` — one file per provider.
-- The domain function that consumes it (for example a search or sync
-  orchestrator) merges provider data with whatever already works locally and
-  owns caching and upserts.
+There is no in-repo instance yet; this is the shape to use when one arrives.
+
+- `packages/api/src/providers/<provider>.ts` — one file per provider, an
+  adapter with no business logic in it.
+- The router (business logic stays in `packages/api/src/router/` per
+  `ARCHITECTURE.md`) or a helper it calls consumes the adapter, merges provider
+  data with whatever already works locally, and owns caching and upserts.
 
 ## Shape of the boundary module
 
@@ -24,19 +27,30 @@ caller in the domain layer.
    states — do not conflate them.
 2. **One function per capability, typed input and output, no DB access.** The
    provider module never touches Drizzle; it returns plain data.
-3. **A 10s `AbortController` timeout on every external fetch:**
+3. **A 10s timeout that covers the body, not just the headers.** `fetch()`
+   resolves once headers arrive; a provider that then trickles the body is
+   bounded only by the runtime's default body timeout unless the read is
+   inside the guarded region. Cap the size before parsing, too:
 
    ```ts
-   const controller = new AbortController();
-   const timeout = setTimeout(() => controller.abort(), 10_000);
+   const MAX_BYTES = 1_000_000;
    try {
-     response = await fetch(url, { signal: controller.signal });
+     const response = await fetch(url, {
+       signal: AbortSignal.timeout(10_000),
+     });
+     if (!response.ok) return { status: "unavailable" as const };
+     const length = Number(response.headers.get("content-length"));
+     if (length > MAX_BYTES) return { status: "unavailable" as const };
+     const text = await response.text(); // still under the 10s signal
+     if (text.length > MAX_BYTES) return { status: "unavailable" as const };
+     return parse(JSON.parse(text)); // parse() validates every field
    } catch {
      return { status: "unavailable" as const };
-   } finally {
-     clearTimeout(timeout);
    }
    ```
+
+   User-derived values reach the provider only through `URLSearchParams` (or
+   a request body), never interpolated into the host or path.
 
 4. **Every failure mode collapses to one typed "unavailable" result** — 429,
    network error, timeout, non-2xx, and malformed JSON all return the same

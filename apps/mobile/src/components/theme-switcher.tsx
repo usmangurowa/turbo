@@ -22,8 +22,9 @@ const themes: {
 
 /**
  * Theme switcher — segmented control with light/dark/system options.
- * Uses Uniwind's setTheme + useUniwind for theme management, mirroring
- * the web ThemeToggle (next-themes) behavior.
+ * Uses Uniwind's setTheme + useUniwind for theme management. Web splits the
+ * same three states across two controls: the header `ThemeToggle` flips
+ * light/dark and the user menu's "Use system theme" restores system.
  */
 export const ThemeSwitcher = () => {
   const { theme, hasAdaptiveThemes } = useUniwind();

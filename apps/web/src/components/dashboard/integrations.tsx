@@ -77,14 +77,15 @@ const IntegrationCard = ({ integration }: { integration: Integration }) => {
               strokeWidth={1.5}
             />
           </span>
-          {integration.name}
+          <h3>{integration.name}</h3>
         </CardTitle>
         <CardDescription>{integration.description}</CardDescription>
         <CardAction>
           <Switch
             checked={connected}
             onCheckedChange={setConnected}
-            aria-label={`${connected ? "Disconnect" : "Connect"} ${integration.name}`}
+            // A switch keeps a stable name; `aria-checked` conveys the state.
+            aria-label={`${integration.name} connection`}
             className="data-checked:bg-success"
           />
         </CardAction>

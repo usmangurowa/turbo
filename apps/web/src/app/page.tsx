@@ -262,8 +262,10 @@ export default function HomePage() {
           <Card
             variant="dashed"
             data-slot="cta-card"
-            className="items-center rounded-3xl py-16 text-center"
+            className="rounded-3xl py-16 text-center"
           >
+            {/* Centre inside the slots, never with `items-center` on the Card:
+                CardHeader is a `@container`, so shrink-to-fit sizing collapses it. */}
             <CardHeader className="justify-items-center gap-6 px-6">
               <CardTitle className="max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
                 <h2>Point your agent at a codebase it can actually navigate</h2>
@@ -273,7 +275,7 @@ export default function HomePage() {
                 repo and let your coding agent read the memory.
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-6">
+            <CardContent className="flex justify-center px-6">
               <Button size="lg" asChild>
                 <Link href="/create-account">
                   Start building

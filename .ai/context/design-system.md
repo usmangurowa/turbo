@@ -55,17 +55,24 @@ requests a visual change.
   `size="compact"` text-xl for detail grids), optional `valueCaption`,
   support-zone `children` (sparkline, `Progress`), muted caption.
   `tone`/`captionTone` take `success | warning | destructive`; `dim` mutes a
-  zero; `href` makes the whole card a link. Do not write a private stat tile
-  again.
+  zero; `href` makes the label a stretched link over the whole card — keep the
+  support zone (`children`, captions) non-interactive on a linked card, and
+  note the overlay relies on `container-type` no longer creating a positioning
+  containing block (Chrome 129 / Firefox 133 / Safari 18.4+). Do not write a
+  private stat tile again.
 - Table / container cards: `TableCard` (`table-card.tsx`) — `Card
 variant="dashed"` with a required `title`, `description`, one `action`, and
-  a `footer` slot (pagination, counts, fine print). Body padding is `none`
-  for tables and `sm` for charts and lists. Table titles stay 14px; the
-  override lives in `TableCard`, not at call sites.
+  a `footer` slot (pagination, counts, fine print) behind a dashed divider.
+  Body padding is `none` for tables and `sm` for charts and lists. The title
+  renders in a real heading (`titleAs`, default `h2`) at the `title` role
+  (`text-base font-semibold`) so table cards and plain section headers such as
+  the Integrations grid share one scale and one outline.
 - Pagination: `TablePagination` (`table-pagination.tsx`) composes the shadcn
   `Pagination` primitives for state-driven Previous / "Page x of y" / Next in
-  a `TableCard` footer. Anchors carry `aria-disabled` at the bounds; tests
-  query `getByRole("link", { name: "Go to next page" })`.
+  a `TableCard` footer. Both `page` and `pageCount` are clamped; anchors
+  carry `aria-disabled` and `tabIndex={-1}` at the bounds. No live page
+  paginates yet — `apps/web/src/__tests__/table-pagination.test.tsx` is the
+  precedent for its behaviour.
 - Tables: icon+label column headers, muted grouped section rows ("This Week" +
   count chip), colored squircle date icons, status dots, pill badges on
   secondary background. Never render a value cell as a bare `text-xs` span
@@ -78,8 +85,10 @@ variant="dashed"` with a required `title`, `description`, one `action`, and
   icon + nav label from `nav-config.ts`) + muted inline description, right
   side avatar stack / search button / Export dropdown (`header-actions.tsx`).
   Page titles come from the header chip — section pages must NOT repeat an h2.
-- Page toolbar: a section page renders exactly one `PageToolbar`
-  (`page-toolbar.tsx`) directly under the sticky header — a fixed 48px
+- Page toolbar: a section page **with page-level controls** renders exactly
+  one `PageToolbar` (`page-toolbar.tsx`) directly under the sticky header;
+  routes without controls (Settings, the section placeholders) start with
+  their primary workflow instead of an empty bar. The toolbar is a fixed 48px
   (`h-12`) `border-b` row with controls left and the primary action right.
   Controls inside are `size="sm"` (h-8) or smaller. Detail pages pass `wrap`
   (`min-h-12`) so badges can break onto a second line at narrow widths. Do not
@@ -143,10 +152,14 @@ must preserve the behavior and accessibility appropriate to its own workflow.
 text-warning`, plus a `size="xs" | "sm"` axis (20px display badge by
   default, 28px for pickers and toggles). Web only; the mobile badge port has
   no equivalent yet.
-- Documented registry patch — `ThemeToggle` (`theme.tsx`) is a one-click
-  switch on the resolved theme with an `aria-label`; the registry dropdown
-  (Light / Dark / System) is not used.
-- All three patches are guarded by
+- Custom wrapper — `ThemeToggle` (`theme.tsx`, not registry output) is a
+  one-click switch on the resolved theme. It decides its direction only after
+  mount (`useSyncExternalStore`), so the server renders a neutral
+  `aria-label="Toggle theme"` and hydration never mismatches;
+  `packages/ui/src/__tests__/theme.test.tsx` hydrates it under jsdom to prove
+  it. The way back to "system" is the user menu's "Use system theme" item
+  (`nav-user.tsx`).
+- The `Card` and `Badge` patches are guarded structurally by
   `packages/ui/src/__tests__/registry-patches.test.ts`; re-apply and re-run
   after any `pnpm ui-add`.
 - Registry components use shorthand data variants (`data-checked:`,

@@ -12,9 +12,12 @@ import { cn } from "@turbo/ui/lib/utils";
 
 interface Stat {
   label: string;
+  /** Shown behind an info icon when the label hides a calculation. */
+  hint?: string;
   value: number;
   suffix?: string;
   caption: string;
+  captionTone?: "success" | "warning";
   trend: number;
 }
 
@@ -28,12 +31,19 @@ const sampleStats: Stat[] = [
   },
   {
     label: "Avg. response",
+    hint: "Mean time from a task's creation to its first status change, over the last 7 days.",
     value: 42,
     suffix: "m",
     caption: "8m faster than last week",
     trend: -16.1,
   },
-  { label: "Escalations", value: 12, caption: "3 urgent open", trend: -25.0 },
+  {
+    label: "Escalations",
+    value: 12,
+    caption: "3 urgent open",
+    captionTone: "warning",
+    trend: -25.0,
+  },
 ];
 
 const TrendBadge = ({ stat }: { stat: Stat }) => {
@@ -62,7 +72,9 @@ const TaskStatCard = ({ stat }: { stat: Stat }) => (
   <StatCard
     size="hero"
     label={stat.label}
+    hint={stat.hint}
     action={<TrendBadge stat={stat} />}
+    dim={stat.value === 0}
     value={
       <span className="flex items-baseline gap-1">
         <NumberTicker value={stat.value} />
@@ -74,6 +86,7 @@ const TaskStatCard = ({ stat }: { stat: Stat }) => (
       </span>
     }
     caption={stat.caption}
+    captionTone={stat.captionTone}
   />
 );
 

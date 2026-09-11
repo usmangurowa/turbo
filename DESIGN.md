@@ -210,10 +210,11 @@ primary alignment axis in each section. Page and component anatomy lives in
 `.ai/patterns/ui-composition.md`.
 
 Dashboards use bento grids of flat cards; workflows with repeated data entry or
-comparison use conventional forms and tables. Every section page opens with one
-`PageToolbar` (a fixed 48px bar under the sticky header: controls left, primary
-action right), then its body column. One primary action per region; siblings in
-a grid align on internal baselines.
+comparison use conventional forms and tables. A section page that has
+page-level controls opens with exactly one `PageToolbar` (a fixed 48px bar under
+the sticky header: controls left, primary action right), then its body column;
+routes without controls start with their primary workflow — never an empty bar.
+One primary action per region; siblings in a grid align on internal baselines.
 
 ## Elevation & Depth
 
@@ -222,8 +223,9 @@ Structured Restraint is flat-first. Depth comes from surface color steps
 from shadows. Cards sit one surface above the page; popovers and overlays may
 use the inherited shadow scale, tight and directional. Use the lowest shadow
 that separates the surface. Avoid soft bloom, colored shadows, and stacked
-shadow effects. Focus rings are soft (`ring-2` at `ring-ring/30`); never remove
-them.
+shadow effects. Focus rings are soft (`ring-2` at `ring-ring/30`). Focus
+indication may move to a containing surface (a linked card rings itself when
+its anchor is focused) but is never removed.
 
 ## Shapes
 
@@ -255,10 +257,13 @@ House recipes (implementation in `apps/web/src/components/dashboard/`, rules in
 
 - **Dashed frame:** `Card variant="dashed"` — the documented registry patch
   behind every dashed card. Never hand-write the frame on a `div`.
-- **Stat card:** `StatCard` — dashed frame, muted `label` top-left, one action
-  slot top-right, `tabular-nums` numeral, small muted caption.
-- **Table card:** `TableCard` — dashed frame with a 14px title, description,
-  one action, edge-to-edge body, and a footer for pagination or counts.
+- **Stat card:** `StatCard` — dashed frame, muted caption-size (12px, medium)
+  label top-left, one action slot top-right, `tabular-nums` numeral, small
+  muted caption.
+- **Table card:** `TableCard` — dashed frame with a `title`-role heading
+  (16px semibold, an `h2` by default), description, one action, edge-to-edge
+  body, and a dashed-divider footer for pagination or counts. Section titles
+  on one page share this scale whether or not they sit in a card.
 - **Header chip:** `accent` rounded-full pill with icon + nav label; the only
   page title.
 - **Status badge:** `Badge variant="success" | "warning" | "destructive"`

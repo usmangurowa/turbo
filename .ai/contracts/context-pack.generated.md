@@ -224,8 +224,10 @@ The standalone server hosts the same API app from `apps/server` under `/api` and
 keeps a root `/health` runtime check. Better Auth handlers are mounted under
 `/api/auth/*` by each runtime. Business logic belongs in
 `packages/api/src/router/`, not in app-local API route handlers or runtime
-entrypoints. The API app is created in `packages/api/src/index.ts` and exports
-`AppType` for typed clients.
+entrypoints. Adapters for external APIs, when a feature needs one, live beside
+the routers in `packages/api/src/providers/` and hold no business logic
+(`.ai/patterns/external-provider-boundary.md`; none exist yet). The API app is
+created in `packages/api/src/index.ts` and exports `AppType` for typed clients.
 
 ## Frontend Data Flow
 
@@ -570,12 +572,12 @@ tooling/
 
 ## Testing & Quality
 
-| Tool              | Purpose                                          |
-| ----------------- | ------------------------------------------------ |
-| Vitest            | Unit/integration testing (4.1.x)                 |
-| ESLint 10         | Linting (flat config)                            |
-| Prettier 3.9      | Code formatting with import sort + tailwind sort |
-| TypeScript strict | Type checking across all packages                |
+| Tool              | Purpose                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| Vitest            | Unit/integration testing (4.1.x); `jsdom` only in `packages/ui` for hydration tests |
+| ESLint 10         | Linting (flat config)                                                               |
+| Prettier 3.9      | Code formatting with import sort + tailwind sort                                    |
+| TypeScript strict | Type checking across all packages                                                   |
 
 ## CI/CD
 
@@ -596,7 +598,9 @@ earlier failure so one run surfaces every problem:
 10. `pnpm format`
 11. `pnpm test`
 
-A separate `docker` matrix job builds and smoke-tests the web and server
+Check steps run only after Setup succeeded (`steps.setup.outcome`), so a
+broken install is one red step rather than eleven. A separate, parallel
+`docker` matrix job (30-minute cap) builds and smoke-tests the web and server
 images. `tooling/github/setup` installs pnpm + Node from `.nvmrc` with the pnpm
 store cached and `pnpm install --frozen-lockfile`. Turbo remote caching via
 Vercel.
@@ -729,9 +733,11 @@ stopping the dev server so it refreshes capabilities.
 - Dashboard house primitives live in `apps/web/src/components/dashboard/`:
   `StatCard` (dashed stat tile), `TableCard` (dashed table/list frame with
   header, body, footer), `TablePagination`, `PageToolbar` (the 48px bar under
-  the sticky header), `HintLabel` (label + tooltip for a hidden calculation),
-  and `QueryError`. Compose these instead of writing a private stat or table
-  wrapper again.
+  the sticky header, only on pages with page-level controls), `HintLabel`
+  (label + tooltip for a hidden calculation), and `QueryError` (the error
+  state for dashboard queries — see `api-keys-card.tsx`). Compose these
+  instead of writing a private stat or table wrapper again; `TablePagination`
+  has no live consumer yet, its tests are the precedent.
 - A change to runtime tokens in `tooling/tailwind/theme.css` must update
   `DESIGN.md` in the same commit.
 - Authored UI uses semantic color classes and the documented spacing and
@@ -1013,17 +1019,24 @@ requests a visual change.
   `size="compact"` text-xl for detail grids), optional `valueCaption`,
   support-zone `children` (sparkline, `Progress`), muted caption.
   `tone`/`captionTone` take `success | warning | destructive`; `dim` mutes a
-  zero; `href` makes the whole card a link. Do not write a private stat tile
-  again.
+  zero; `href` makes the label a stretched link over the whole card — keep the
+  support zone (`children`, captions) non-interactive on a linked card, and
+  note the overlay relies on `container-type` no longer creating a positioning
+  containing block (Chrome 129 / Firefox 133 / Safari 18.4+). Do not write a
+  private stat tile again.
 - Table / container cards: `TableCard` (`table-card.tsx`) — `Card
 variant="dashed"` with a required `title`, `description`, one `action`, and
-  a `footer` slot (pagination, counts, fine print). Body padding is `none`
-  for tables and `sm` for charts and lists. Table titles stay 14px; the
-  override lives in `TableCard`, not at call sites.
+  a `footer` slot (pagination, counts, fine print) behind a dashed divider.
+  Body padding is `none` for tables and `sm` for charts and lists. The title
+  renders in a real heading (`titleAs`, default `h2`) at the `title` role
+  (`text-base font-semibold`) so table cards and plain section headers such as
+  the Integrations grid share one scale and one outline.
 - Pagination: `TablePagination` (`table-pagination.tsx`) composes the shadcn
   `Pagination` primitives for state-driven Previous / "Page x of y" / Next in
-  a `TableCard` footer. Anchors carry `aria-disabled` at the bounds; tests
-  query `getByRole("link", { name: "Go to next page" })`.
+  a `TableCard` footer. Both `page` and `pageCount` are clamped; anchors
+  carry `aria-disabled` and `tabIndex={-1}` at the bounds. No live page
+  paginates yet — `apps/web/src/__tests__/table-pagination.test.tsx` is the
+  precedent for its behaviour.
 - Tables: icon+label column headers, muted grouped section rows ("This Week" +
   count chip), colored squircle date icons, status dots, pill badges on
   secondary background. Never render a value cell as a bare `text-xs` span
@@ -1036,8 +1049,10 @@ variant="dashed"` with a required `title`, `description`, one `action`, and
   icon + nav label from `nav-config.ts`) + muted inline description, right
   side avatar stack / search button / Export dropdown (`header-actions.tsx`).
   Page titles come from the header chip — section pages must NOT repeat an h2.
-- Page toolbar: a section page renders exactly one `PageToolbar`
-  (`page-toolbar.tsx`) directly under the sticky header — a fixed 48px
+- Page toolbar: a section page **with page-level controls** renders exactly
+  one `PageToolbar` (`page-toolbar.tsx`) directly under the sticky header;
+  routes without controls (Settings, the section placeholders) start with
+  their primary workflow instead of an empty bar. The toolbar is a fixed 48px
   (`h-12`) `border-b` row with controls left and the primary action right.
   Controls inside are `size="sm"` (h-8) or smaller. Detail pages pass `wrap`
   (`min-h-12`) so badges can break onto a second line at narrow widths. Do not
@@ -1101,10 +1116,14 @@ must preserve the behavior and accessibility appropriate to its own workflow.
 text-warning`, plus a `size="xs" | "sm"` axis (20px display badge by
   default, 28px for pickers and toggles). Web only; the mobile badge port has
   no equivalent yet.
-- Documented registry patch — `ThemeToggle` (`theme.tsx`) is a one-click
-  switch on the resolved theme with an `aria-label`; the registry dropdown
-  (Light / Dark / System) is not used.
-- All three patches are guarded by
+- Custom wrapper — `ThemeToggle` (`theme.tsx`, not registry output) is a
+  one-click switch on the resolved theme. It decides its direction only after
+  mount (`useSyncExternalStore`), so the server renders a neutral
+  `aria-label="Toggle theme"` and hydration never mismatches;
+  `packages/ui/src/__tests__/theme.test.tsx` hydrates it under jsdom to prove
+  it. The way back to "system" is the user menu's "Use system theme" item
+  (`nav-user.tsx`).
+- The `Card` and `Badge` patches are guarded structurally by
   `packages/ui/src/__tests__/registry-patches.test.ts`; re-apply and re-run
   after any `pnpm ui-add`.
 - Registry components use shorthand data variants (`data-checked:`,

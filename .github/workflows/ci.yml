@@ -23,9 +23,11 @@ env:
 
 # One job, one install. The steps mirror the root `pnpm run ci` script in the
 # same order; keep the two in sync (see .ai/decisions/ADR-0003-single-job-ci.md).
-# Later steps still run after an earlier failure so a PR surfaces every problem
-# in one run, while the job itself stays red. The Docker matrix stays separate
-# because it needs buildx rather than the Node toolchain.
+# Once Setup succeeds, later steps still run after an earlier check fails so a
+# PR surfaces every problem in one run, while the job itself stays red; a
+# failed install skips them all instead of producing eleven misleading reds.
+# The Docker matrix stays a separate, parallel job because it needs buildx
+# rather than the Node toolchain.
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -34,6 +36,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Setup
+        id: setup
         uses: ./tooling/github/setup
 
       - name: Copy env
@@ -43,47 +46,48 @@ jobs:
         run: pnpm ai:contracts:check
 
       - name: Verify skills bundles are in sync
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm skills:check
 
       - name: Verify Dockerfile pins and build args
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm docker:check
 
       - name: Lint design language contract
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm design:lint
 
       - name: Check design token drift
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm design:tokens
 
       - name: Check UI composition rules
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm ui:composition
 
       - name: Lint workspace manifests
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm lint:ws
 
       - name: Typecheck
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm typecheck
 
       - name: Lint
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm lint
 
       - name: Format
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm format
 
       - name: Test
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: pnpm test
 
   docker:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:

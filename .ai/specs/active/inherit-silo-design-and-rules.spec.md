@@ -43,7 +43,13 @@ providers) is out of scope.
       passes.
 - [x] The dashboard overview, tasks table, integrations, API keys card, and
       section placeholder use the primitives instead of hand-written dashed
-      frames.
+      frames; the landing page's feature grids and CTA compose `Card` too.
+- [x] Section-level cards keep their heading element (`TableCard` `titleAs`,
+      `IntegrationCard` `h3`) and the API keys card's empty/error states carry
+      a CTA (`QueryError`, sign-in button) as the new copy rule requires.
+- [x] `TablePagination` clamping and the `StatCard` stretched-link invariant
+      have markup tests in `apps/web/src/__tests__/`; `ThemeToggle` has a jsdom
+      hydration test in `packages/ui/src/__tests__/theme.test.tsx`.
 - [x] `DESIGN.md` prose documents dashed borders as a signature, the stat card
       / table card / header chip recipes, flat-first depth, and the
       precedent-first workflow. Front-matter tokens are unchanged.
@@ -60,6 +66,9 @@ providers) is out of scope.
 | `packages/ui/src/components/badge.tsx`                                          | `success` / `warning` variants, `size` axis                      |
 | `packages/ui/src/components/theme.tsx`                                          | One-click `ThemeToggle`                                          |
 | `packages/ui/src/__tests__/registry-patches.test.ts`                            | Patch guards for the three documented patches above              |
+| `packages/ui/src/__tests__/theme.test.tsx`                                      | jsdom hydration + click test for `ThemeToggle`                   |
+| `apps/web/vitest.config.ts`, `apps/web/src/__tests__/*.test.tsx`                | Node markup-test harness; `TablePagination` and `StatCard` tests |
+| `apps/web/src/components/dashboard/nav-user.tsx`                                | "Use system theme" item — the way back from the one-click toggle |
 | `apps/web/src/components/dashboard/stat-card.tsx`                               | New house `StatCard`                                             |
 | `apps/web/src/components/dashboard/table-card.tsx`                              | New house `TableCard`                                            |
 | `apps/web/src/components/dashboard/table-pagination.tsx`                        | New `TablePagination`                                            |

@@ -40,6 +40,13 @@
    - A `dev` task that never starts the apps — a package `dev` script is in
      watch mode or hosts a long-running process (see
      `.ai/patterns/turbo-dev-tasks.md`).
+   - Every connection to a remote Postgres fails with
+     `AggregateError [ETIMEDOUT]` while `nc` succeeds — Node 20+ races
+     IPv6/IPv4 with a 250ms per-attempt timeout (`autoSelectFamilyAttemptTimeout`)
+     that slow links exceed. Raise it with
+     `net.setDefaultAutoSelectFamilyAttemptTimeout(3000)` in the shared client,
+     or `NODE_OPTIONS="--network-family-autoselection-attempt-timeout=3000"`
+     for `drizzle-kit`, which swallows the error and exits 1 with no message.
 4. **Fix the issue** following the relevant conventions.
 5. **Run the full CI check locally**: `pnpm run ci` (same steps and order as `.github/workflows/ci.yml`, stops on first failure; needs a root `.env` — `cp .env.example .env` if missing)
 

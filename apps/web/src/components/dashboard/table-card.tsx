@@ -13,6 +13,8 @@ import { cn } from "@turbo/ui/lib/utils";
 
 export interface TableCardProps {
   title: React.ReactNode;
+  /** Heading element for the title so the card stays in the page outline. */
+  titleAs?: "h2" | "h3";
   description?: React.ReactNode;
   /** One element for the header's right edge: a button, filters, a count badge. */
   action?: React.ReactNode;
@@ -26,12 +28,13 @@ export interface TableCardProps {
 /**
  * Dashed-frame container card for tables and lists: `Card variant="dashed"`
  * with the header / body / footer zones from `.ai/patterns/ui-composition.md`.
- * Titles stay 14px to hold table density (the one typography override lives
- * here, not at call sites). `title` is required so every frame keeps a real
- * `CardHeader`/`CardTitle` in every branch.
+ * The title uses the `title` role (16px semibold) inside a real heading so
+ * table cards and plain section headers share one scale and one outline;
+ * `title` is required so every frame keeps a `CardHeader`/`CardTitle`.
  */
 export const TableCard = ({
   title,
+  titleAs: Heading = "h2",
   description,
   action,
   footer,
@@ -46,10 +49,10 @@ export const TableCard = ({
     className={cn("gap-0 py-0", className)}
   >
     <CardHeader className="pt-4 pb-3">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-      {description ? (
-        <CardDescription className="text-xs">{description}</CardDescription>
-      ) : null}
+      <CardTitle className="text-base font-semibold">
+        <Heading>{title}</Heading>
+      </CardTitle>
+      {description ? <CardDescription>{description}</CardDescription> : null}
       {action ? <CardAction>{action}</CardAction> : null}
     </CardHeader>
     <CardContent

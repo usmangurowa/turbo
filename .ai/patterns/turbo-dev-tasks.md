@@ -20,7 +20,18 @@ Rules:
   Use `pnpm dev:mobile` in its own terminal.
 - Web works without built package `dist/` at all (Next `transpilePackages`);
   the one-shot `tsc` exists only for declaration output that per-package
-  `typecheck`/`lint` read through `types` in `package.json`.
+  `typecheck`/`lint` and editors read through `types` in `package.json`.
+
+## Startup cost of `dependsOn: ["^dev"]`
+
+Because `dev` is `cache: false` and the apps depend on `^dev`, every `pnpm dev`
+runs the nine package `tsc` passes before `next dev` / `tsx watch` start —
+roughly ten to twenty seconds cold. The apps do not need that output at
+runtime (their imports resolve to `src/`); it keeps `dist/` declarations fresh
+for editors and per-package checks. Dropping `^dev` from the app-level
+`turbo.json` overrides would start the apps immediately at the cost of stale
+declarations until the first `turbo watch` re-run; that trade-off is open, not
+decided.
 
 ## Optional env vars with empty-string tolerance
 
@@ -37,18 +48,3 @@ Do not write `z.string().transform(...).pipe(z.string().optional())` — the
 outer `z.string()` runs first and rejects `undefined`, making the var
 effectively required (this crashes `apps/server` on boot when the var is
 unset).
-
-## Remote Postgres on slow links: Happy Eyeballs timeout
-
-Node 20+ races IPv6/IPv4 connection attempts with a 250ms per-attempt
-timeout (`autoSelectFamilyAttemptTimeout`). On links where the SYN
-round-trip to a remote Postgres exceeds that, **every** connect fails with
-`AggregateError [ETIMEDOUT]` even though the host is reachable (`nc`
-succeeds because it does not race).
-
-- Raise the default with `net.setDefaultAutoSelectFamilyAttemptTimeout(3000)`
-  in the shared client module if a deployment hits this.
-- Standalone scripts (`drizzle-kit`) need
-  `NODE_OPTIONS="--network-family-autoselection-attempt-timeout=3000"`.
-  `drizzle-kit migrate`/`push` swallow connection errors and exit 1 with no
-  message — suspect this timeout first.

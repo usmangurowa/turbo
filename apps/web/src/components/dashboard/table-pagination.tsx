@@ -21,8 +21,9 @@ export interface TablePaginationProps {
  * tables. Composes the shadcn `Pagination` primitives; the anchors keep
  * `href="#"` and prevent default, which is the documented pattern for
  * client-side paging. Bound anchors carry `aria-disabled`. Both `page` and
- * `pageCount` are clamped, so a stale or URL-derived page (`0`, `4 of 3`)
- * still renders a valid label and emits only in-range page changes.
+ * `pageCount` are clamped, so a stale or URL-derived page (`0`, `4 of 3`,
+ * `NaN`, `Infinity`) still renders a valid label and emits only in-range
+ * page changes.
  */
 export const TablePagination = ({
   page,
@@ -30,8 +31,12 @@ export const TablePagination = ({
   onPageChange,
   className,
 }: TablePaginationProps) => {
-  const safeCount = Math.max(1, Math.trunc(pageCount) || 1);
-  const current = Math.min(Math.max(1, Math.trunc(page) || 1), safeCount);
+  const safeCount = Number.isFinite(pageCount)
+    ? Math.max(1, Math.trunc(pageCount))
+    : 1;
+  const current = Number.isFinite(page)
+    ? Math.min(Math.max(1, Math.trunc(page)), safeCount)
+    : 1;
   const atStart = current <= 1;
   const atEnd = current >= safeCount;
 

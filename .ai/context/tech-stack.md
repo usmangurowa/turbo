@@ -95,12 +95,12 @@ tooling/
 
 ## Testing & Quality
 
-| Tool              | Purpose                                          |
-| ----------------- | ------------------------------------------------ |
-| Vitest            | Unit/integration testing (4.1.x)                 |
-| ESLint 10         | Linting (flat config)                            |
-| Prettier 3.9      | Code formatting with import sort + tailwind sort |
-| TypeScript strict | Type checking across all packages                |
+| Tool              | Purpose                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| Vitest            | Unit/integration testing (4.1.x); `jsdom` only in `packages/ui` for hydration tests |
+| ESLint 10         | Linting (flat config)                                                               |
+| Prettier 3.9      | Code formatting with import sort + tailwind sort                                    |
+| TypeScript strict | Type checking across all packages                                                   |
 
 ## CI/CD
 
@@ -121,7 +121,9 @@ earlier failure so one run surfaces every problem:
 10. `pnpm format`
 11. `pnpm test`
 
-A separate `docker` matrix job builds and smoke-tests the web and server
+Check steps run only after Setup succeeded (`steps.setup.outcome`), so a
+broken install is one red step rather than eleven. A separate, parallel
+`docker` matrix job (30-minute cap) builds and smoke-tests the web and server
 images. `tooling/github/setup` installs pnpm + Node from `.nvmrc` with the pnpm
 store cached and `pnpm install --frozen-lockfile`. Turbo remote caching via
 Vercel.

@@ -56,6 +56,11 @@ Do not put loose workflow content directly under `Card`, omit a title, reorder
 slots, or nest one `Card` inside another. A visually small tile still needs a
 real title and content region.
 
+`CardTitle` renders a `div`; when the card is a section of the page (a table
+card, an integration tile, a landing feature), put the heading element inside
+it — `<CardTitle><h2>…</h2></CardTitle>` — so restyling never drops the card
+out of the document outline. `TableCard` does this for you via `titleAs`.
+
 `Card` takes `variant="default"` (ring hairline) or `variant="dashed"` (the
 signature dashed frame). The variant changes the frame only; the slot grammar
 above is identical for both.
@@ -74,14 +79,14 @@ HintLabel           -> label + Tooltip(icon button "What <label> means")
 QueryError          -> Empty(EmptyHeader(title, description), EmptyContent(retry, sign-in))
 ```
 
-| Primitive         | Rule                                                                                     |
-| ----------------- | ---------------------------------------------------------------------------------------- |
-| `StatCard`        | One per metric; `size="hero"` on the overview row, `compact` in detail grids             |
-| `TableCard`       | `title` is required; `padding="none"` for tables, `sm` for charts and lists              |
-| `TablePagination` | Only inside a `TableCard` `footer`; bound anchors carry `aria-disabled`                  |
-| `PageToolbar`     | Exactly one per section page, directly under the sticky header; controls are `size="sm"` |
-| `HintLabel`       | Only where the label hides a calculation or policy                                       |
-| `QueryError`      | `framed={false}` when the parent already draws a dashed frame                            |
+| Primitive         | Rule                                                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `StatCard`        | One per metric; `size="hero"` on the overview row, `compact` in detail grids                                                   |
+| `TableCard`       | `title` is required and renders in a heading (`titleAs`, default `h2`); `padding="none"` for tables, `sm` for charts and lists |
+| `TablePagination` | Only inside a `TableCard` `footer`; bound anchors carry `aria-disabled`                                                        |
+| `PageToolbar`     | Exactly one per section page **that has page-level controls**, directly under the sticky header; controls are `size="sm"`      |
+| `HintLabel`       | Only where the label hides a calculation or policy                                                                             |
+| `QueryError`      | `framed={false}` when the parent already draws a dashed frame                                                                  |
 
 Standalone empty and error states (no surrounding card) put
 `rounded-2xl border border-dashed` on the `Empty` itself rather than wrapping it
