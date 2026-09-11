@@ -89,6 +89,25 @@ Per app: build pack `dockerfile`, base directory `/`, Dockerfile location
 health check `GET /` / `GET /health`, and **no custom install/build/start
 command** (the CMD is baked in). Mark `NEXT_PUBLIC_*` variables as build-time.
 
+`git_branch: main` does not mean auto-deploy. Coolify rebuilds only when
+GitHub delivers a `push` webhook, and the app's **source** decides whether one
+exists: a Coolify **GitHub App** source registers and manages the webhook; a
+**Public Repository** source registers nothing, so the app silently stays on
+whatever commit was last deployed by hand. For a public source, add one
+repository webhook per app: payload URL
+`https://<coolify-host>/webhooks/source/github/events/manual`, content type
+`application/json`, `push` events, secret = that app's GitHub webhook secret
+from its Webhooks tab. Coolify matches a delivery to the app whose secret
+signed it (the other app logs `Invalid signature` and ignores it). The secret
+lives in Coolify and GitHub only — never in this repo.
+
+Set **Watch paths** per app to what its Dockerfile copies once `.dockerignore`
+has filtered the context: `apps/web/**` or `apps/server/**`, plus
+`packages/**`, `tooling/**`, `scripts/**`, `package.json`, `pnpm-lock.yaml`,
+`pnpm-workspace.yaml`, `turbo.json`, `.dockerignore`, `.nvmrc`, and
+`.infisical.json`. Empty watch paths rebuild both images on every push,
+including `.ai/` and README edits.
+
 ## Local verification
 
 ```sh
