@@ -4,6 +4,7 @@ import type { ApiTask } from "@/hooks/use-tasks";
 import type { IconSvgElement } from "@hugeicons/react";
 import type { ColumnDef } from "@tanstack/react-table";
 import * as React from "react";
+import { TableCard } from "@/components/dashboard/table-card";
 import { useTasks } from "@/hooks/use-tasks";
 import {
   Calendar03Icon,
@@ -346,18 +347,15 @@ export const TasksTable = ({
   const groups = ["today", "this-week", "earlier"] as const;
 
   return (
-    <div className="bg-card rounded-2xl border">
-      <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-semibold">Tasks</h2>
-          <p className="text-muted-foreground text-sm">
-            Track work across your team
-          </p>
-        </div>
-        <Badge variant="secondary" className="rounded-full text-xs font-normal">
+    <TableCard
+      title="Tasks"
+      description="Track work across your team"
+      action={
+        <Badge variant="secondary" className="rounded-full font-normal">
           {rows.length} {rows.length === 1 ? "task" : "tasks"}
         </Badge>
-      </div>
+      }
+    >
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -422,6 +420,6 @@ export const TasksTable = ({
           })}
         </TableBody>
       </Table>
-    </div>
+    </TableCard>
   );
 };

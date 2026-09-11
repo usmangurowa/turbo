@@ -7,6 +7,7 @@ import type {
 } from "@/components/dashboard/tasks-table";
 import * as React from "react";
 import { Integrations } from "@/components/dashboard/integrations";
+import { PageToolbar } from "@/components/dashboard/page-toolbar";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { TasksTable } from "@/components/dashboard/tasks-table";
 import { TasksToolbar } from "@/components/dashboard/tasks-toolbar";
@@ -18,7 +19,7 @@ export const OverviewView = () => {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex items-center border-b px-4 py-2.5 md:px-6">
+      <PageToolbar>
         <TasksToolbar
           sortBy={sortBy}
           onSortByChange={setSortBy}
@@ -27,7 +28,7 @@ export const OverviewView = () => {
           priorities={priorities}
           onPrioritiesChange={setPriorities}
         />
-      </div>
+      </PageToolbar>
       <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
         <StatCards />
         <TasksTable

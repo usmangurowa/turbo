@@ -2,6 +2,7 @@
 
 import type { ApiKeySummary } from "@/hooks/use-api-keys";
 import * as React from "react";
+import { TableCard } from "@/components/dashboard/table-card";
 import {
   useApiKeys,
   useCreateApiKey,
@@ -309,16 +310,25 @@ export const ApiKeysCard = () => {
   const showTable = isPending || (Array.isArray(apiKeys) && apiKeys.length > 0);
 
   return (
-    <div data-slot="api-keys-card" className="bg-card rounded-2xl border">
-      <div className="flex items-center justify-between gap-4 px-6 py-4">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-semibold">API keys</h2>
-          <p className="text-muted-foreground text-sm">
-            Programmatic access to your workspace, rate limited per key.
-          </p>
-        </div>
-        {!signedOut && !isError ? <CreateKeyDialog /> : null}
-      </div>
+    <TableCard
+      title="API keys"
+      description="Programmatic access to your workspace, rate limited per key."
+      action={!signedOut && !isError ? <CreateKeyDialog /> : null}
+      footer={
+        <p className="text-muted-foreground text-xs">
+          Keys are shown in full exactly once, at creation. Revoking a key cuts
+          off access immediately.
+          {Array.isArray(apiKeys) && apiKeys.length > 0 ? (
+            <Badge
+              variant="secondary"
+              className="ml-2 rounded-full font-normal"
+            >
+              {apiKeys.length} {apiKeys.length === 1 ? "key" : "keys"}
+            </Badge>
+          ) : null}
+        </p>
+      }
+    >
       {signedOut ? (
         <Empty className="border-t border-dashed">
           <EmptyHeader>
@@ -375,18 +385,6 @@ export const ApiKeysCard = () => {
           </EmptyHeader>
         </Empty>
       )}
-      <div className="text-muted-foreground border-t px-6 py-3 text-xs">
-        Keys are shown in full exactly once, at creation. Revoking a key cuts
-        off access immediately.
-        {Array.isArray(apiKeys) && apiKeys.length > 0 ? (
-          <Badge
-            variant="secondary"
-            className="ml-2 rounded-full text-xs font-normal"
-          >
-            {apiKeys.length} {apiKeys.length === 1 ? "key" : "keys"}
-          </Badge>
-        ) : null}
-      </div>
-    </div>
+    </TableCard>
   );
 };
