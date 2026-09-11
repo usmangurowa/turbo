@@ -1,11 +1,21 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
 delete process.env.RESEND_API_KEY;
 
+// The env change above must precede the module load, hence the dynamic
+// imports — done once here under the hook timeout so no test times a cold
+// react-email/resend import on a busy runner.
+let client: typeof import("../client");
+let OTPEmail: typeof import("../templates/otp").OTPEmail;
+
+beforeAll(async () => {
+  client = await import("../client");
+  ({ OTPEmail } = await import("../templates/otp"));
+});
+
 describe("sendEmail (mock transport, no RESEND_API_KEY)", () => {
   it("returns success with a mock id", async () => {
-    const { sendEmail } = await import("../client");
-    const { OTPEmail } = await import("../templates/otp");
+    const { sendEmail } = client;
     const result = await sendEmail({
       to: "user@example.com",
       subject: "Test",
@@ -17,7 +27,7 @@ describe("sendEmail (mock transport, no RESEND_API_KEY)", () => {
 
   it("sendOTPEmail picks the right subject per type", async () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    const { sendOTPEmail } = await import("../client");
+    const { sendOTPEmail } = client;
     const result = await sendOTPEmail({
       to: "user@example.com",
       otp: "123456",
@@ -29,8 +39,7 @@ describe("sendEmail (mock transport, no RESEND_API_KEY)", () => {
   });
 
   it("renderEmail produces HTML containing the OTP", async () => {
-    const { renderEmail } = await import("../client");
-    const { OTPEmail } = await import("../templates/otp");
+    const { renderEmail } = client;
     const html = await renderEmail(
       OTPEmail({ otp: "654321", type: "sign-in" }),
     );

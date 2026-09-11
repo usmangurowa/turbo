@@ -42,6 +42,17 @@
 3. **Run tests**: `pnpm test --filter=@turbo/<package>`
 4. **Check coverage** for the specific file.
 
+## Module loading never counts against a test
+
+When a test must set env (`process.env.SKIP_ENV_VALIDATION`, deleting a
+provider key) before a module loads, do the `await import(...)` once in
+`beforeAll`, never inside `it`. Static imports load during collection and are
+free; a dynamic import inside a test is charged to that test's 5s budget, and
+loading a heavy graph (Better Auth, the server app, react-email) cold while
+`turbo run test` shares a hosted runner has tripped it (#12). Packages that
+need the hook set `hookTimeout`/`testTimeout: 30_000` in their
+`vitest.config.ts` — see `apps/server`, `packages/auth`, `packages/mail`.
+
 ## Testing React components
 
 Two harnesses exist; pick the cheapest one that can fail on the bug you care
