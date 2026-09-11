@@ -351,6 +351,11 @@ Coolify settings per app:
 | Health check                       | `GET /`                | `GET /health`             |
 | Custom install/build/start command | clear all three        | clear all three           |
 | `NEXT_PUBLIC_*` variables          | mark as **build time** | —                         |
+| Watch paths                        | `apps/web/**` + shared | `apps/server/**` + shared |
+
+Shared watch paths for both apps: `packages/**`, `tooling/**`, `scripts/**`, `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `turbo.json`, `.dockerignore`, `.nvmrc`, `.infisical.json` — everything the Dockerfiles copy after `.dockerignore` has filtered the context. Leave watch paths empty and every push rebuilds both images, docs included.
+
+Auto-deploy needs a webhook. Coolify rebuilds on push only when GitHub tells it about the push: a **GitHub App** source sets that up for you, a **Public Repository** source does not, and pushes to `main` then sit undeployed until someone clicks Deploy. If you keep a public source, add a repository webhook per app — payload URL `https://<coolify-host>/webhooks/source/github/events/manual`, content type `application/json`, `push` events, secret = that app's GitHub webhook secret from its Webhooks tab. Each app has its own secret, so one webhook per app; keep the secrets out of the repo.
 
 With Infisical, the only runtime variables Coolify needs are the four `INFISICAL_*` credentials above (plus anything you deliberately keep out of Infisical). Without it, `POSTGRES_URL`, `AUTH_SECRET`, `RESEND_API_KEY`, … are normal Coolify environment variables. Layout and invariants: `.ai/patterns/docker-images.md`.
 

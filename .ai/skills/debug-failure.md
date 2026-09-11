@@ -47,6 +47,12 @@
      `net.setDefaultAutoSelectFamilyAttemptTimeout(3000)` in the shared client,
      or `NODE_OPTIONS="--network-family-autoselection-attempt-timeout=3000"`
      for `drizzle-kit`, which swallows the error and exits 1 with no message.
+   - A Coolify app is healthy but serving an old commit and its deployment
+     history is all manual — nothing tells Coolify about pushes. A **Public
+     Repository** source registers no GitHub webhook; either switch the source
+     to a Coolify GitHub App or add a per-app push webhook to
+     `/webhooks/source/github/events/manual` signed with the app's GitHub
+     webhook secret (see `.ai/patterns/docker-images.md`, "Coolify settings").
 4. **Fix the issue** following the relevant conventions.
 5. **Run the full CI check locally**: `pnpm run ci` (same steps and order as `.github/workflows/ci.yml`, stops on first failure; needs a root `.env` — `cp .env.example .env` if missing)
 
