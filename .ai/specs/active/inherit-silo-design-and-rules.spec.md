@@ -50,32 +50,32 @@ providers) is out of scope.
 
 ## Expected Files
 
-| File                                                           | Expected change                                                  |
-| -------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `packages/ui/src/components/card.tsx`                          | CVA `variant` (default ring / dashed border), `data-variant`     |
-| `packages/ui/src/components/badge.tsx`                         | `success` / `warning` variants, `size` axis                      |
-| `packages/ui/src/components/theme.tsx`                         | One-click `ThemeToggle`                                          |
-| `packages/ui/src/__tests__/registry-patches.test.ts`           | Patch guards for the three documented patches above              |
-| `apps/web/src/components/dashboard/stat-card.tsx`              | New house `StatCard`                                             |
-| `apps/web/src/components/dashboard/table-card.tsx`             | New house `TableCard`                                            |
-| `apps/web/src/components/dashboard/table-pagination.tsx`       | New `TablePagination`                                            |
-| `apps/web/src/components/dashboard/page-toolbar.tsx`           | New `PageToolbar`                                                |
-| `apps/web/src/components/dashboard/hint-label.tsx`             | New `HintLabel`                                                  |
-| `apps/web/src/components/dashboard/query-error.tsx`            | New `QueryError`                                                 |
-| `apps/web/src/components/dashboard/stat-cards.tsx`             | Compose `StatCard`                                               |
-| `apps/web/src/components/dashboard/tasks-table.tsx`            | Wrap in `TableCard`                                              |
-| `apps/web/src/components/dashboard/api-keys-card.tsx`          | Wrap in `TableCard`                                              |
-| `apps/web/src/components/dashboard/integrations.tsx`           | Compose `Card` anatomy                                           |
-| `apps/web/src/components/dashboard/overview-view.tsx`          | Use `PageToolbar`                                                |
-| `apps/web/src/app/dashboard/[section]/page.tsx`                | Use `Card variant="dashed"` frame                                |
-| `DESIGN.md`                                                    | Prose only: signatures, recipes, precedent-first workflow        |
-| `.ai/context/design-system.md`                                 | Signature patterns, registry patches, precedent-first workflow   |
-| `.ai/patterns/ui-composition.md`                               | House primitive grammar (`StatCard`, `TableCard`, `PageToolbar`) |
-| `.ai/context/conventions.md`                                   | Generic additions from silo                                      |
-| `.ai/patterns/ai-memory.md`, `.ai/patterns/turbo-dev-tasks.md` | New generic patterns                                             |
-| `.ai/specs/README.md`                                          | Spec lifecycle                                                   |
-| `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`    | Per-package verification note, new pattern links                 |
-| `ROADMAP_AI.md`                                                | Feature row + change-log row                                     |
+| File                                                                            | Expected change                                                  |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `packages/ui/src/components/card.tsx`                                           | CVA `variant` (default ring / dashed border), `data-variant`     |
+| `packages/ui/src/components/badge.tsx`                                          | `success` / `warning` variants, `size` axis                      |
+| `packages/ui/src/components/theme.tsx`                                          | One-click `ThemeToggle`                                          |
+| `packages/ui/src/__tests__/registry-patches.test.ts`                            | Patch guards for the three documented patches above              |
+| `apps/web/src/components/dashboard/stat-card.tsx`                               | New house `StatCard`                                             |
+| `apps/web/src/components/dashboard/table-card.tsx`                              | New house `TableCard`                                            |
+| `apps/web/src/components/dashboard/table-pagination.tsx`                        | New `TablePagination`                                            |
+| `apps/web/src/components/dashboard/page-toolbar.tsx`                            | New `PageToolbar`                                                |
+| `apps/web/src/components/dashboard/hint-label.tsx`                              | New `HintLabel`                                                  |
+| `apps/web/src/components/dashboard/query-error.tsx`                             | New `QueryError`                                                 |
+| `apps/web/src/components/dashboard/stat-cards.tsx`                              | Compose `StatCard`                                               |
+| `apps/web/src/components/dashboard/tasks-table.tsx`                             | Wrap in `TableCard`                                              |
+| `apps/web/src/components/dashboard/api-keys-card.tsx`                           | Wrap in `TableCard`                                              |
+| `apps/web/src/components/dashboard/integrations.tsx`                            | Compose `Card` anatomy                                           |
+| `apps/web/src/components/dashboard/overview-view.tsx`                           | Use `PageToolbar`                                                |
+| `apps/web/src/app/dashboard/[section]/page.tsx`                                 | Use `Card variant="dashed"` frame                                |
+| `DESIGN.md`                                                                     | Prose only: signatures, recipes, precedent-first workflow        |
+| `.ai/context/design-system.md`                                                  | Signature patterns, registry patches, precedent-first workflow   |
+| `.ai/patterns/ui-composition.md`                                                | House primitive grammar (`StatCard`, `TableCard`, `PageToolbar`) |
+| `.ai/context/conventions.md`                                                    | Generic additions from silo                                      |
+| `.ai/patterns/turbo-dev-tasks.md`, `.ai/patterns/external-provider-boundary.md` | New generic patterns                                             |
+| `.ai/specs/README.md`                                                           | Spec lifecycle                                                   |
+| `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`                     | Per-package verification note, new pattern links                 |
+| `ROADMAP_AI.md`                                                                 | Feature row + change-log row                                     |
 
 ## Contracts
 
@@ -120,6 +120,9 @@ the house primitives are app-local files with no external consumers.
 
 - Silo's `category` badge variant and the 28 `--category-*` tokens are a
   finance-domain exception and are deliberately not ported.
+- Silo's `.ai/patterns/ai-memory.md`, `trust-microcopy.md`, and
+  `recurring-period-outcomes.md` describe silo-only features (assistant
+  memory, `TrustNote`, income periods) and are not ported.
 - Silo renders `TableCard` without a header when no title is passed; this
   template's composition checker requires one `CardHeader`/`CardTitle` in every
   branch, so `TableCard` here requires a `title`.
