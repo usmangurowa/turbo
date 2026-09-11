@@ -50,6 +50,9 @@ Ask for each value one at a time. Offer the current value as the default so the 
 5. Verify:
    - `cd apps/mobile && npx expo config --json` resolves with the new name/slug/owner/bundle ID
    - `pnpm turbo typecheck lint -F @turbo/mobile -F @turbo/web -F @turbo/shared -F @turbo/mail -F @turbo/jobs --output-logs=errors-only`
+   - In a fresh worktree, build dependencies before any per-package check:
+     `pnpm turbo run build --output-logs=errors-only` (or `--filter=<pkg>^...`
+     for one package). Root `pnpm typecheck`/`pnpm lint` do this for you.
    - `pnpm ai:context` to refresh generated contracts
 6. Summarize what was changed and what was skipped (with placeholders remaining) so the user can finish later.
 

@@ -33,9 +33,16 @@ If the task would materially change brand direction, palette, or typography and 
 ### 2. Respect repo and user constraints
 
 1. User direction wins over this skill.
-2. Preserve shared theme tokens, spacing discipline, and existing component conventions.
-3. Do not introduce a broad palette or typography change without approval.
-4. Follow the slot, accessibility, page, and state productions in
+2. Inspect the nearest existing route and component before designing. Follow
+   its information hierarchy, action placement, responsive behavior, and
+   state handling when they fit the requested workflow. Name the inspected
+   precedent in the feature spec, design note, or working context before
+   editing so the choice is explicit and reviewable.
+3. Use the configured shadcn primitive and verify unfamiliar compositions
+   against current shadcn documentation before creating a custom interaction.
+4. Preserve shared theme tokens, spacing discipline, and existing component conventions.
+5. Do not introduce a broad palette or typography change without approval.
+6. Follow the slot, accessibility, page, and state productions in
    `.ai/patterns/ui-composition.md`.
 
 ### 3. Remove default AI-looking patterns
@@ -73,14 +80,27 @@ Avoid defaulting to these patterns unless the user explicitly asks for them and 
 3. Avoid clipped glows, fake shadow boxes, and motion that exists only to add noise.
 4. Respect `prefers-reduced-motion` for non-essential animation.
 
+### 7. Run the refinement pass
+
+After the surface works, do a dedicated second pass — never ship the first draft:
+
+1. **Structure** — the screen matches a page archetype and cards follow the slot anatomy (`.ai/patterns/ui-composition.md`); one primary action per region; grid siblings align on internal baselines.
+2. **Typography** — sizes and weights come from the `DESIGN.md` scale; the dashboard page title lives in the header chip, never duplicated as an `h2`.
+3. **Spacing** — 4px grid rhythm from the documented scale; no ad-hoc values.
+4. **Density** — tables and lists match the house recipes in `.ai/context/design-system.md` (dashed frames, icon+label headers, status dots, pill badges); no empty decorative regions.
+5. **Interaction states** — hover, focus ring, disabled, loading, and empty states all exist and use semantic tokens.
+6. **Mechanical check** — run `pnpm design:lint`, `pnpm design:tokens`, and `pnpm ui:composition`; fix every error before shipping (CI runs the same checks).
+
 ## Validation checklist
 
+- [ ] The nearest existing precedent and relevant shadcn primitive were inspected and named
 - [ ] The surface keeps one coherent visual language instead of mixing unrelated ideas
 - [ ] The design does not rely on stock AI-marketing skeletons or filler props
 - [ ] Content is visible and readable without motion or client-side timing
 - [ ] Contrast, spacing, centering, and clipping issues were checked deliberately
 - [ ] Interactive controls were verified to behave like real controls
 - [ ] Any expressive styling still respects shared tokens and the repository baseline, unless the user approved a broader shift
+- [ ] The refinement pass (structure, typography, spacing, density, interaction states) was run
 - [ ] `pnpm design:lint`, `pnpm design:tokens`, and `pnpm ui:composition` pass
 
 ## Canonical references

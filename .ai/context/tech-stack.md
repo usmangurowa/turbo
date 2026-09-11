@@ -104,14 +104,27 @@ tooling/
 
 ## CI/CD
 
-**GitHub Actions** (`.github/workflows/ci.yml`):
+**GitHub Actions** (`.github/workflows/ci.yml`) — one `ci` job, one cached
+install, then the same steps as the root `pnpm run ci` script in the same order
+(`.ai/decisions/ADR-0003-single-job-ci.md`); later steps still run after an
+earlier failure so one run surfaces every problem:
 
-- `lint` → `pnpm lint && pnpm lint:ws`
-- `format` → `pnpm format`
-- `typecheck` → `pnpm typecheck`
-- `test` → `pnpm test`
+1. `pnpm ai:contracts:check`
+2. `pnpm skills:check`
+3. `pnpm docker:check`
+4. `pnpm design:lint`
+5. `pnpm design:tokens`
+6. `pnpm ui:composition`
+7. `pnpm lint:ws`
+8. `pnpm typecheck`
+9. `pnpm lint`
+10. `pnpm format`
+11. `pnpm test`
 
-Turbo remote caching via Vercel.
+A separate `docker` matrix job builds and smoke-tests the web and server
+images. `tooling/github/setup` installs pnpm + Node from `.nvmrc` with the pnpm
+store cached and `pnpm install --frozen-lockfile`. Turbo remote caching via
+Vercel.
 
 ## AI Tooling (MCP)
 

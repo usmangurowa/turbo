@@ -38,6 +38,29 @@
   `@turbo/ui` barrel import)
 - Registry components are CLI-managed: add/update with `pnpm ui-add` in
   `packages/ui`, don't hand-edit beyond documented patches
+- Documented registry patch — `Card variant="dashed"` (`card.tsx`): swaps
+  the `ring-1` hairline for `border border-dashed`. Every dashed frame goes
+  through this variant (directly, or via `StatCard` / `TableCard` in
+  `apps/web/src/components/dashboard/`); never hand-write
+  `bg-card rounded-2xl border border-dashed` on a `div`.
+- Documented registry patch — `Badge` `success` / `warning` variants and a
+  `size="xs" | "sm"` axis (`badge.tsx`): `bg-success/10 text-success`,
+  `bg-warning/10 text-warning`; `xs` (20px) is the default display badge,
+  `sm` (28px) is for pickers and toggles. Never tint a badge via `className`
+  — add a variant instead.
+- Documented registry patch — `ThemeToggle` (`theme.tsx`) is a one-click
+  switch that flips the _resolved_ theme; no dropdown, no explicit "system"
+  item (the system default still applies until the first click).
+- Registry patches are guarded by
+  `packages/ui/src/__tests__/registry-patches.test.ts` — after any CLI
+  re-install, run `pnpm --filter @turbo/ui test` and re-apply failing patches.
+- A popover or menu that offers a write must not auto-focus that write. Radix
+  `PopoverContent` focuses its first focusable child on open; when that child
+  commits something irreversible (delete, revoke, confirm), pass
+  `ref={contentRef}` and
+  `onOpenAutoFocus={(e) => { e.preventDefault(); contentRef.current?.focus(); }}`
+  so focus lands on the panel, and add a test that the button is not
+  `document.activeElement` after opening.
 - AI chat components live in `packages/ui/src/components/ai-elements/`
   (Vercel AI Elements registry, `https://registry.ai-sdk.dev`); import as
   `@turbo/ui/components/ai-elements/<name>`. Patched for AI SDK v7 usage
@@ -70,6 +93,18 @@
 - UI work starts by reading `DESIGN.md` and
   `.ai/patterns/ui-composition.md`. The former mirrors runtime tokens; the latter
   is the normative slot, accessibility, page, and state grammar.
+- UI work is precedent-first: explicit user direction → the nearest existing
+  route or component that solves a similar workflow → the configured shadcn
+  primitive (verified against current shadcn docs when unfamiliar) → a new
+  composition only when none of those solve it. Name the inspected precedent
+  in the spec or working notes before editing. Full order in
+  `.ai/context/design-system.md`.
+- Dashboard house primitives live in `apps/web/src/components/dashboard/`:
+  `StatCard` (dashed stat tile), `TableCard` (dashed table/list frame with
+  header, body, footer), `TablePagination`, `PageToolbar` (the 48px bar under
+  the sticky header), `HintLabel` (label + tooltip for a hidden calculation),
+  and `QueryError`. Compose these instead of writing a private stat or table
+  wrapper again.
 - A change to runtime tokens in `tooling/tailwind/theme.css` must update
   `DESIGN.md` in the same commit.
 - Authored UI uses semantic color classes and the documented spacing and
@@ -98,6 +133,8 @@ Example: `packages/ui/src/components/button.tsx`
 - **Web API auth is cookie-based; never attach `Authorization` headers from session data.** Cookies ride along automatically on same-origin fetches. There is exactly one `hc<AppType>` construction in the web app — `apps/web/src/lib/api.ts`; `useApi()` returns that instance.
 - **Mobile uses exactly one Better Auth client: `@/auth/client`.** `apps/mobile/src/utils/api.tsx` reads cookies from that client. Do not create additional `createAuthClient` instances anywhere in the mobile app.
 - **API composition: `createApp(auth, db)` — apps own the real db/auth instances; `packages/api` never imports `@turbo/db/client` at runtime.** Middleware and routers receive `db` through `c.get("db")`; never import concrete clients directly inside `packages/api`.
+- **AI endpoints degrade, never crash.** Call `getDefaultModel()` from `@turbo/ai/client`; when it returns `null` (no provider key — the zero-env template) respond 503 with `{ error, hint }` and return a raw `Response` for streams. New AI routes copy the pattern in `packages/api/src/router/ai.ts`.
+- **External providers go through a boundary module, never a raw `fetch` in a router.** See `.ai/patterns/external-provider-boundary.md`: typed config, per-request timeout, every failure collapsed to one typed "unavailable" result, no secrets in logs.
 
 Example: `packages/api/src/router/api-key.ts`
 
@@ -125,6 +162,8 @@ Example: `packages/api/src/router/api-key.ts`
 - Column naming: `snake_case` in DB, `camelCase` in TypeScript
 - All tables include `createdAt` and `updatedAt` timestamps
 - Foreign keys with `onDelete: "cascade"` for user-owned data
+- Raw SQL reads bypass Drizzle's UTC decoder for `timestamp without time zone`. When reading those stored UTC instants through `db.execute`, select `column AT TIME ZONE 'UTC'` before parsing them as JavaScript dates.
+- Schema changes: `pnpm db:generate` then `pnpm db:migrate` — never edit applied migrations, never `db:push` against durable databases. `packages/db/src/__tests__/migrations.test.ts` locks the chain's ability to bootstrap an empty database.
 
 Example: `packages/db/src/auth-schema.ts`
 
@@ -157,6 +196,16 @@ Example: `packages/db/src/auth-schema.ts`
 - Use `pnpm db:push:local` only for disposable local databases.
 - Use `pnpm db:studio` for local schema/data inspection during development.
 - Prefer workspace/root scripts when available over ad-hoc package commands.
+- `pnpm run ci` runs the same checks as `.github/workflows/ci.yml` in the same order and stops on the first failure; it is the local merge gate. Invoke it as `pnpm run ci` — bare `pnpm ci` is a reserved pnpm built-in. Any step added to or removed from the workflow must be mirrored in the script, and vice versa (`.ai/decisions/ADR-0003-single-job-ci.md`).
+- Per-package `pnpm typecheck` / `pnpm lint` in a fresh worktree need dependencies built once: `pnpm turbo run build --filter=<pkg>^... --output-logs=errors-only`. Root-level commands do this automatically via `dependsOn: ["^build"]`.
+- Package `dev` scripts are one-shot (`tsc`, never `tsc --watch`); long-running package processes use a separate script name (`pnpm -F @turbo/jobs dev:trigger`). See `.ai/patterns/turbo-dev-tasks.md`.
+
+## Copy Voice (user-facing text)
+
+- Plain language over jargon in labels, captions, and empty states; say what the screen shows, not how it is computed.
+- Every empty state says what is absent and offers the next action as a real CTA (`Empty` + `EmptyContent` button), never a bare sentence.
+- Labels that hide a calculation or a policy get a `HintLabel` (`apps/web/src/components/dashboard/hint-label.tsx`); self-evident labels do not, so hints stay meaningful.
+- Status words map to badge variants: positive states (active, connected, verified) are `Badge variant="success"`, attention states (due, pending review) are `warning`, failures are `destructive`, neutral or terminal states stay `outline`.
 
 ## Code Style
 

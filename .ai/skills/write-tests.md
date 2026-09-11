@@ -40,6 +40,31 @@
 3. **Run tests**: `pnpm test --filter=@turbo/<package>`
 4. **Check coverage** for the specific file.
 
+## Guarding documented patches
+
+Vendored or CLI-managed files (shadcn registry components, AI Elements) carry
+documented local patches that a re-install silently overwrites. Guard each
+patch with a source-string test that reads the file and asserts the patched
+lines are present — see `packages/ui/src/__tests__/registry-patches.test.ts`
+(Card `dashed` variant, Badge status variants, one-click `ThemeToggle`) and
+`ai-elements-patches.test.ts`. When you add a patch, add its guard in the same
+change.
+
+## Adding tests to a package that has none
+
+Copy the `packages/shared` setup:
+
+1. Add to `package.json`: `"test": "vitest run"` and a `vitest` devDependency
+   pinned to the workspace version (`4.1.10`).
+2. Create `vitest.config.ts` with `globals: true`, `environment: "node"`, and
+   `include: ["src/__tests__/**/*.test.ts"]` (add `.tsx` when testing
+   components). Packages that may legitimately have no tests yet add
+   `passWithNoTests: true`.
+3. `pnpm install`, then `pnpm turbo test` picks the package up automatically
+   through the root `test` task.
+4. Package-specific needs (jsdom, setup files) extend the local config; do not
+   import another package's config.
+
 ## Canonical example
 
 `packages/shared/src/__tests__/sanitize.test.ts` — demonstrates `describe`/`it`/`expect` pattern with edge case coverage.

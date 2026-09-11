@@ -29,8 +29,11 @@ implementation files.
 7. Update generated contract snapshots if contracts changed.
 8. Update `ROADMAP_AI.md` and any affected `.ai/context`, `.ai/patterns`, or
    `.ai/decisions` files.
-9. Move accepted specs to `.ai/specs/accepted/` when the feature is complete, or
-   leave them in `.ai/specs/active/` while work remains.
+9. Mark a finished spec's Status `State: implemented` (or `shipped`) in
+   place. Specs stay in `.ai/specs/active/` as the decision record even once
+   implemented, and move to `.ai/specs/archive/` (create it on first use)
+   only when their content is no longer needed for any future decision — see
+   `.ai/specs/README.md`. Never delete a spec.
 
 ## Validation checklist
 
@@ -44,5 +47,6 @@ implementation files.
 ## Anti-patterns
 
 - Do not create specs for tiny one-file fixes unless the user asks.
-- Do not keep stale accepted specs in `active/`.
+- Do not leave a finished spec's Status as `draft`/`approved` — update it to
+  `implemented` (or `shipped`) once the work lands.
 - Do not use a spec to justify unrelated refactors.

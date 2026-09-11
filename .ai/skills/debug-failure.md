@@ -30,8 +30,18 @@
    - Missing dependencies (`pnpm install`)
    - Type errors from package changes (check `exports` in `package.json`)
    - Turborepo cache issues (`pnpm clean`)
+   - Unbuilt workspace dependencies in a fresh worktree — `pnpm typecheck` or
+     `pnpm lint` run _inside_ a package (not from the root) fails with
+     `TS6142 … '--jsx' is not set` or `no-unsafe-call` lint errors, because
+     dependency packages point `types` at `dist/`. Build them first:
+     `pnpm turbo run build --filter=<pkg>^... --output-logs=errors-only`
+     (e.g. `--filter=@turbo/api^...`). The root `pnpm typecheck`/`pnpm lint`
+     do this automatically via `dependsOn: ["^build"]` in `turbo.json`.
+   - A `dev` task that never starts the apps — a package `dev` script is in
+     watch mode or hosts a long-running process (see
+     `.ai/patterns/turbo-dev-tasks.md`).
 4. **Fix the issue** following the relevant conventions.
-5. **Run the full CI check locally**: `pnpm lint && pnpm format && pnpm typecheck && pnpm test`
+5. **Run the full CI check locally**: `pnpm run ci` (same steps and order as `.github/workflows/ci.yml`, stops on first failure; needs a root `.env` — `cp .env.example .env` if missing)
 
 ## Canonical example
 
@@ -42,7 +52,7 @@ CI workflow: `.github/workflows/ci.yml` — shows the exact commands run in CI.
 - [ ] Error is reproduced locally
 - [ ] Root cause identified
 - [ ] Fix applied
-- [ ] All CI checks pass locally
+- [ ] All CI checks pass locally (`pnpm run ci` is green)
 
 ## Anti-patterns (do NOT do)
 

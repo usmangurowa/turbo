@@ -74,10 +74,28 @@ Before completing any task, complete the `update-ai-memory` checklist and update
 - Run `pnpm ai:context` to refresh the consolidated AI context pack.
 - Use `pnpm ai:env` to report environment contract drift and `pnpm ai:env:strict` when drift should fail CI.
 
+## Verifying Work
+
+- `pnpm run ci` is the local merge gate: the same steps as
+  `.github/workflows/ci.yml`, in the same order, stopping on the first failure
+  (`.ai/decisions/ADR-0003-single-job-ci.md`). Invoke it as `pnpm run ci`.
+- Per-package `pnpm typecheck` / `pnpm lint` need dependencies built once per
+  fresh worktree: `pnpm turbo run build --filter=<pkg>^...`. Root-level
+  commands handle this automatically.
+- Package `dev` scripts are one-shot; never put watch mode or a long-running
+  process behind `dev` (`.ai/patterns/turbo-dev-tasks.md`).
+
 ## UI Design Governance
 
 - Before any UI task, read `DESIGN.md` and
   `.ai/patterns/ui-composition.md`.
+- Work precedent-first: explicit user direction → the nearest existing route
+  or component → the configured shadcn primitive → a new composition only when
+  none of those solve it (`.ai/context/design-system.md`).
+- Dashboard surfaces compose the house primitives in
+  `apps/web/src/components/dashboard/` (`StatCard`, `TableCard`,
+  `PageToolbar`, `TablePagination`, `HintLabel`, `QueryError`) and the
+  `Card variant="dashed"` frame; never hand-write a dashed card on a `div`.
 - `tooling/tailwind/theme.css` remains the runtime token source of truth. Any
   runtime token change must update `DESIGN.md` in the same commit.
 - Authored UI uses semantic colors, the documented spacing and typography

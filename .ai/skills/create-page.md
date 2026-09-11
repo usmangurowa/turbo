@@ -9,6 +9,7 @@
 - `.ai/context/conventions.md` — routing conventions
 - `.ai/context/tech-stack.md` — framework details
 - `DESIGN.md` — design language and machine-readable token contract
+- `.ai/context/design-system.md` — house surface recipes (stat cards, table cards, page toolbar, header chip)
 - `.ai/patterns/ui-composition.md` — page, state, slot, and accessibility grammar
 - `.ai/skills/anti-slop-ui.md` — for broad web page composition, landing pages, or visual polish
 - `apps/web/src/app/` — existing page structure (Next.js App Router)
@@ -31,7 +32,8 @@
 3. Optionally create `layout.tsx` for nested layouts.
 4. Use server components by default; add `"use client"` only when needed.
 5. Use `@turbo/ui` components for UI.
-6. If the page includes broad visual composition or landing-page treatment, apply `.ai/skills/anti-slop-ui.md` before finalizing the layout.
+6. Design flow (all pages): pick the page archetype and card slots from `.ai/patterns/ui-composition.md` → read `DESIGN.md` tokens and the matching surface recipe in `.ai/context/design-system.md` (dashboard sections start with `PageToolbar`, stats use `StatCard`, tables use `TableCard`) → build → run the refinement pass from `.ai/skills/anti-slop-ui.md`.
+7. If the page includes broad visual composition or landing-page treatment, apply `.ai/skills/anti-slop-ui.md` in full before finalizing the layout.
 
 ### Mobile (Expo Router)
 
@@ -49,6 +51,8 @@
 - [ ] Route follows file-based routing conventions
 - [ ] Uses shared UI components from `@turbo/ui` (web) or local components (mobile)
 - [ ] Auth check added if page is protected
+- [ ] The screen matches a page archetype from `.ai/patterns/ui-composition.md`; cards follow the slot anatomy; one primary action per region
+- [ ] Dashboard pages do not repeat the header-chip title as an `h2`
 - [ ] For broad web page design work, the anti-slop UI checklist was applied
 - [ ] Page renders without errors
 - [ ] `pnpm design:lint` passes
