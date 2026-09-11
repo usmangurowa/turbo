@@ -2,10 +2,10 @@ name: CI
 
 on:
   pull_request:
-    branches: ["*"]
   push:
     branches: ["main"]
   merge_group:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,91 +21,65 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
+# One job, one install. The steps mirror the root `pnpm run ci` script in the
+# same order; keep the two in sync (see .ai/decisions/ADR-0003-single-job-ci.md).
+# Later steps still run after an earlier failure so a PR surfaces every problem
+# in one run, while the job itself stays red. The Docker matrix stays separate
+# because it needs buildx rather than the Node toolchain.
 jobs:
-  ai-contracts:
+  ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
 
       - name: Setup
         uses: ./tooling/github/setup
+
+      - name: Copy env
+        run: cp .env.example .env
 
       - name: Verify AI contracts are up to date
         run: pnpm ai:contracts:check
 
       - name: Verify skills bundles are in sync
+        if: success() || failure()
         run: pnpm skills:check
 
       - name: Verify Dockerfile pins and build args
+        if: success() || failure()
         run: pnpm docker:check
 
-  design-governance:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup
-        uses: ./tooling/github/setup
-
-      - name: Lint design language
+      - name: Lint design language contract
+        if: success() || failure()
         run: pnpm design:lint
 
-      - name: Verify design token parity
+      - name: Check design token drift
+        if: success() || failure()
         run: pnpm design:tokens
 
-      - name: Verify UI composition
+      - name: Check UI composition rules
+        if: success() || failure()
         run: pnpm ui:composition
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup
-        uses: ./tooling/github/setup
-
-      - name: Copy env
-        shell: bash
-        run: cp .env.example .env
-
-      - name: Lint
-        run: pnpm lint && pnpm lint:ws
-
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup
-        uses: ./tooling/github/setup
-
-      - name: Format
-        run: pnpm format
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup
-        uses: ./tooling/github/setup
+      - name: Lint workspace manifests
+        if: success() || failure()
+        run: pnpm lint:ws
 
       - name: Typecheck
+        if: success() || failure()
         run: pnpm typecheck
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
+      - name: Lint
+        if: success() || failure()
+        run: pnpm lint
 
-      - name: Setup
-        uses: ./tooling/github/setup
-
-      - name: Copy env
-        shell: bash
-        run: cp .env.example .env
+      - name: Format
+        if: success() || failure()
+        run: pnpm format
 
       - name: Test
+        if: success() || failure()
         run: pnpm test
 
   docker:
