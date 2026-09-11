@@ -17,13 +17,24 @@ const badgeVariants = cva(
           "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
         outline:
           "border-border bg-input/30 text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+        // Documented registry patch: status tints for state badges (active,
+        // connected, verified / due, attention) — see .ai/context/design-system.md.
+        success: "bg-success/10 text-success [a]:hover:bg-success/20",
+        warning: "bg-warning/10 text-warning [a]:hover:bg-warning/20",
         ghost:
           "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
         link: "text-primary underline-offset-4 hover:underline",
       },
+      // Documented registry patch: `sm` is the 28px picker/toggle size; `xs`
+      // keeps the registry's 20px display badge.
+      size: {
+        xs: "h-5 min-w-0 px-2 text-xs",
+        sm: "h-7 min-w-0 px-2.5 text-xs",
+      },
     },
     defaultVariants: {
       variant: "default",
+      size: "xs",
     },
   },
 );
@@ -31,6 +42,7 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant = "default",
+  size = "xs",
   asChild = false,
   ...props
 }: React.ComponentProps<"span"> &
@@ -41,7 +53,7 @@ function Badge({
     <Comp
       data-slot="badge"
       data-variant={variant}
-      className={cn(badgeVariants({ variant }), className)}
+      className={cn(badgeVariants({ variant, size }), className)}
       {...props}
     />
   );
