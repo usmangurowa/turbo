@@ -79,8 +79,8 @@ production exactly as `pnpm with-secrets` makes it locally.
 
 `NODE_VERSION` mirrors `.nvmrc` and `PNPM_VERSION` mirrors
 `package.json#packageManager`. Bump all three together. `pnpm docker:check`
-(CI job `ai-contracts`) fails when the Dockerfile `ARG`s disagree with
-`.nvmrc` or `package.json#packageManager`.
+(a step of the single `ci` job, and of `pnpm run ci`) fails when the
+Dockerfile `ARG`s disagree with `.nvmrc` or `package.json#packageManager`.
 
 ## Coolify settings
 
