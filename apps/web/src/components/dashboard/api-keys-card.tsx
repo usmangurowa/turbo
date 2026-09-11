@@ -351,13 +351,12 @@ export const ApiKeysCard = () => {
           </EmptyContent>
         </Empty>
       ) : isError ? (
-        <div className="border-t border-dashed">
-          <QueryError
-            framed={false}
-            title="Couldn't load API keys"
-            onRetry={() => void refetch()}
-          />
-        </div>
+        <QueryError
+          framed={false}
+          className="border-t border-dashed"
+          title="Couldn't load API keys"
+          onRetry={() => void refetch()}
+        />
       ) : showTable ? (
         <Table>
           <TableHeader>

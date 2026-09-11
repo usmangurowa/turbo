@@ -17,15 +17,22 @@ export const QueryError = ({
   title,
   onRetry,
   framed = true,
+  className,
 }: {
   title: string;
   onRetry: () => void;
   /** Dashed frame around the state. Turn off when the parent card already has one. */
   framed?: boolean;
+  /** Extra classes for the state, e.g. a top divider inside a card. */
+  className?: string;
 }) => (
   <Empty
     data-slot="query-error"
-    className={cn("flex-1", framed && "rounded-2xl border border-dashed")}
+    className={cn(
+      "flex-1",
+      framed && "rounded-2xl border border-dashed",
+      className,
+    )}
   >
     <EmptyHeader>
       <EmptyTitle>{title}</EmptyTitle>
