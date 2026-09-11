@@ -148,7 +148,7 @@ pnpm db:migrate
 ### 4. Start Development
 
 ```bash
-# Start all apps
+# Start web + server (mobile is interactive and runs in its own terminal)
 pnpm dev
 
 # Start web only
@@ -241,23 +241,24 @@ The mobile app includes pre-configured build scripts for all environments:
 
 ## Development Commands
 
-| Command              | Description                        |
-| -------------------- | ---------------------------------- |
-| `pnpm dev`           | Start all apps in development mode |
-| `pnpm dev:web`       | Start web app only                 |
-| `pnpm dev:mobile`    | Start mobile app only              |
-| `pnpm build`         | Build all packages and apps        |
-| `pnpm typecheck`     | Run TypeScript type checking       |
-| `pnpm lint`          | Run ESLint                         |
-| `pnpm lint:fix`      | Run ESLint with auto-fix           |
-| `pnpm format`        | Check Prettier formatting          |
-| `pnpm format:fix`    | Fix Prettier formatting            |
-| `pnpm test`          | Run tests                          |
-| `pnpm db:push`       | Push Drizzle schema to database    |
-| `pnpm db:studio`     | Open Drizzle Studio                |
-| `pnpm auth:generate` | Generate Better Auth schema        |
-| `pnpm ui-add`        | Add shadcn/ui components           |
-| `pnpm verify`        | Run typecheck, lint, and format    |
+| Command              | Description                          |
+| -------------------- | ------------------------------------ |
+| `pnpm dev`           | Start web + server in watch mode     |
+| `pnpm dev:web`       | Start web app only                   |
+| `pnpm dev:mobile`    | Start mobile app only (own terminal) |
+| `pnpm run ci`        | Run every CI check locally, in order |
+| `pnpm build`         | Build all packages and apps          |
+| `pnpm typecheck`     | Run TypeScript type checking         |
+| `pnpm lint`          | Run ESLint                           |
+| `pnpm lint:fix`      | Run ESLint with auto-fix             |
+| `pnpm format`        | Check Prettier formatting            |
+| `pnpm format:fix`    | Fix Prettier formatting              |
+| `pnpm test`          | Run tests                            |
+| `pnpm db:push`       | Push Drizzle schema to database      |
+| `pnpm db:studio`     | Open Drizzle Studio                  |
+| `pnpm auth:generate` | Generate Better Auth schema          |
+| `pnpm ui-add`        | Add shadcn/ui components             |
+| `pnpm verify`        | Run typecheck, lint, and format      |
 
 ## Adding Components and Packages
 

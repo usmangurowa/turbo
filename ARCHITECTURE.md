@@ -33,8 +33,10 @@ The standalone server hosts the same API app from `apps/server` under `/api` and
 keeps a root `/health` runtime check. Better Auth handlers are mounted under
 `/api/auth/*` by each runtime. Business logic belongs in
 `packages/api/src/router/`, not in app-local API route handlers or runtime
-entrypoints. The API app is created in `packages/api/src/index.ts` and exports
-`AppType` for typed clients.
+entrypoints. Adapters for external APIs, when a feature needs one, live beside
+the routers in `packages/api/src/providers/` and hold no business logic
+(`.ai/patterns/external-provider-boundary.md`; none exist yet). The API app is
+created in `packages/api/src/index.ts` and exports `AppType` for typed clients.
 
 ## Frontend Data Flow
 

@@ -2,6 +2,9 @@
 
 import type { ApiKeySummary } from "@/hooks/use-api-keys";
 import * as React from "react";
+import Link from "next/link";
+import { QueryError } from "@/components/dashboard/query-error";
+import { TableCard } from "@/components/dashboard/table-card";
 import {
   useApiKeys,
   useCreateApiKey,
@@ -47,6 +50,7 @@ import {
 } from "@turbo/ui/components/dialog";
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -303,22 +307,31 @@ const LoadingRows = () => (
  * request is unauthenticated, so the zero-env template never crashes here.
  */
 export const ApiKeysCard = () => {
-  const { data: apiKeys, isPending, isError } = useApiKeys();
+  const { data: apiKeys, isPending, isError, refetch } = useApiKeys();
 
   const signedOut = !isPending && !isError && apiKeys === null;
   const showTable = isPending || (Array.isArray(apiKeys) && apiKeys.length > 0);
 
   return (
-    <div data-slot="api-keys-card" className="bg-card rounded-2xl border">
-      <div className="flex items-center justify-between gap-4 px-6 py-4">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-base font-semibold">API keys</h2>
-          <p className="text-muted-foreground text-sm">
-            Programmatic access to your workspace, rate limited per key.
-          </p>
-        </div>
-        {!signedOut && !isError ? <CreateKeyDialog /> : null}
-      </div>
+    <TableCard
+      title="API keys"
+      description="Programmatic access to your workspace, rate limited per key."
+      action={!signedOut && !isError ? <CreateKeyDialog /> : null}
+      footer={
+        <p className="text-muted-foreground text-xs">
+          Keys are shown in full exactly once, at creation. Revoking a key cuts
+          off access immediately.
+          {Array.isArray(apiKeys) && apiKeys.length > 0 ? (
+            <Badge
+              variant="secondary"
+              className="ml-2 rounded-full font-normal"
+            >
+              {apiKeys.length} {apiKeys.length === 1 ? "key" : "keys"}
+            </Badge>
+          ) : null}
+        </p>
+      }
+    >
       {signedOut ? (
         <Empty className="border-t border-dashed">
           <EmptyHeader>
@@ -331,19 +344,19 @@ export const ApiKeysCard = () => {
               them.
             </EmptyDescription>
           </EmptyHeader>
+          <EmptyContent>
+            <Button size="sm" asChild>
+              <Link href="/login">Sign in</Link>
+            </Button>
+          </EmptyContent>
         </Empty>
       ) : isError ? (
-        <Empty className="border-t border-dashed">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Icon icon={Key01Icon} />
-            </EmptyMedia>
-            <EmptyTitle>Couldn&apos;t load API keys</EmptyTitle>
-            <EmptyDescription>
-              Something went wrong fetching your keys. Refresh to try again.
-            </EmptyDescription>
-          </EmptyHeader>
-        </Empty>
+        <QueryError
+          framed={false}
+          className="border-t border-dashed"
+          title="Couldn't load API keys"
+          onRetry={() => void refetch()}
+        />
       ) : showTable ? (
         <Table>
           <TableHeader>
@@ -375,18 +388,6 @@ export const ApiKeysCard = () => {
           </EmptyHeader>
         </Empty>
       )}
-      <div className="text-muted-foreground border-t px-6 py-3 text-xs">
-        Keys are shown in full exactly once, at creation. Revoking a key cuts
-        off access immediately.
-        {Array.isArray(apiKeys) && apiKeys.length > 0 ? (
-          <Badge
-            variant="secondary"
-            className="ml-2 rounded-full text-xs font-normal"
-          >
-            {apiKeys.length} {apiKeys.length === 1 ? "key" : "keys"}
-          </Badge>
-        ) : null}
-      </div>
-    </div>
+    </TableCard>
   );
 };

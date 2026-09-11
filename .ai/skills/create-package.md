@@ -35,7 +35,7 @@
      },
      "scripts": {
        "build": "tsc",
-       "dev": "tsc --watch",
+       "dev": "tsc",
        "typecheck": "tsc --noEmit --emitDeclarationOnly false",
        "lint": "eslint",
        "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -71,10 +71,12 @@
 - [ ] `tsconfig.json` extends `@turbo/tsconfig`
 - [ ] ESLint config extends `@turbo/eslint-config`
 - [ ] `pnpm install` succeeds without errors
+- [ ] `dev` is one-shot (`tsc`); any long-running process lives under its own script name (`.ai/patterns/turbo-dev-tasks.md`)
 
 ## Anti-patterns (do NOT do)
 
 - Do not create packages outside `packages/` directory
 - Do not use a different scope than `@turbo/`
 - Do not omit a `build` step (`tsc`) for code packages; asset/config-only packages may omit build scripts
+- Do not put `tsc --watch` or another never-exiting process behind `dev` — root `turbo watch dev` re-runs one-shot tasks itself, and a persistent package task blocks every dependent app
 - Do not forget to add to pnpm workspace (already covered by `packages/*` glob)

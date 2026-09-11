@@ -1,4 +1,7 @@
+"use client";
+
 import type { IconSvgElement } from "@hugeicons/react";
+import * as React from "react";
 import {
   ArrowUpRight01Icon,
   DiscordIcon,
@@ -7,7 +10,17 @@ import {
   SlackIcon,
 } from "@hugeicons/core-free-icons";
 
+import { Badge } from "@turbo/ui/components/badge";
 import { Button } from "@turbo/ui/components/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@turbo/ui/components/card";
 import { Icon } from "@turbo/ui/components/icon";
 import { Switch } from "@turbo/ui/components/switch";
 
@@ -45,39 +58,56 @@ const integrations: Integration[] = [
   },
 ];
 
-const IntegrationCard = ({ integration }: { integration: Integration }) => (
-  <div
-    data-slot="integration-card"
-    className="bg-card flex flex-col gap-4 rounded-2xl border p-6"
-  >
-    <div className="flex items-start justify-between">
-      <div className="border-border/60 bg-background flex size-11 items-center justify-center rounded-xl border shadow-xs">
-        <Icon
-          icon={integration.icon}
-          className="text-foreground size-5"
-          strokeWidth={1.5}
-        />
-      </div>
-      <Switch
-        defaultChecked={integration.connected}
-        className="data-checked:bg-success"
-      />
-    </div>
-    <div className="flex flex-col gap-1">
-      <h3 className="text-sm font-semibold">{integration.name}</h3>
-      <p className="text-muted-foreground text-sm">{integration.description}</p>
-    </div>
-    <div className="border-t border-dashed" />
-    <Button
-      variant="ghost"
-      size="sm"
-      className="text-muted-foreground hover:text-foreground -mx-2 justify-start"
-    >
-      Learn more
-      <Icon icon={ArrowUpRight01Icon} className="size-3.5" />
-    </Button>
-  </div>
-);
+/**
+ * Integration tile: squircle `accent` icon tile beside the title, a status
+ * badge in the body, and a dashed divider above the ghost footer action
+ * (DESIGN.md → Components).
+ */
+const IntegrationCard = ({ integration }: { integration: Integration }) => {
+  const [connected, setConnected] = React.useState(integration.connected);
+
+  return (
+    <Card size="sm" data-slot="integration-card">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3 text-sm font-semibold">
+          <span className="bg-accent flex size-10 shrink-0 items-center justify-center rounded-xl">
+            <Icon
+              icon={integration.icon}
+              className="text-foreground size-5"
+              strokeWidth={1.5}
+            />
+          </span>
+          <h3>{integration.name}</h3>
+        </CardTitle>
+        <CardDescription>{integration.description}</CardDescription>
+        <CardAction>
+          <Switch
+            checked={connected}
+            onCheckedChange={setConnected}
+            // A switch keeps a stable name; `aria-checked` conveys the state.
+            aria-label={`${integration.name} connection`}
+            className="data-checked:bg-success"
+          />
+        </CardAction>
+      </CardHeader>
+      <CardContent>
+        <Badge variant={connected ? "success" : "outline"}>
+          {connected ? "Connected" : "Not connected"}
+        </Badge>
+      </CardContent>
+      <CardFooter className="border-t border-dashed">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-muted-foreground hover:text-foreground -mx-2 justify-start"
+        >
+          Learn more
+          <Icon icon={ArrowUpRight01Icon} data-icon="inline-end" />
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 export const Integrations = () => (
   <section className="flex flex-col gap-4">

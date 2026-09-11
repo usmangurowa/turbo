@@ -12,6 +12,12 @@ For broad polish, landing pages, or premium-feel UI review, also read `.ai/skill
 ## Key reminders
 
 - Preserve the mature neutral shadcn-style baseline unless a palette change is explicitly requested.
+- Work precedent-first: explicit user direction → nearest existing route or
+  component → configured shadcn primitive and current docs → new composition
+  only when the first three do not solve the requirement.
+- Dashboard surfaces compose `StatCard`, `TableCard`, `PageToolbar`, and
+  `Card variant="dashed"` from `apps/web/src/components/dashboard/`; never
+  hand-write a dashed frame on a `div`.
 - Use shared theme tokens instead of hardcoded colors.
 - Use CVA, `cn()`, named exports, and `data-slot` for shared UI components.
 - Avoid nested cards and decorative-only layouts in app workflows.

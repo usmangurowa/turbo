@@ -51,6 +51,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
+    "jsdom": "^30.0.1",
     "prettier": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",

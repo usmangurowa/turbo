@@ -5,12 +5,12 @@ runs:
   using: composite
   steps:
     - uses: pnpm/action-setup@v4
+    # pnpm must be on PATH before setup-node so `cache: pnpm` can locate the store.
     - uses: actions/setup-node@v6
       with:
         node-version-file: ".nvmrc"
+        cache: pnpm
 
+    # turbo is a root devDependency; every root script runs the local binary.
     - shell: bash
-      run: pnpm add -g turbo
-
-    - shell: bash
-      run: pnpm install
+      run: pnpm install --frozen-lockfile

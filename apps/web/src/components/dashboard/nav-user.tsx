@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/auth/client";
 import { useSession } from "@/hooks/use-session";
 import {
+  ComputerIcon,
   CreditCardIcon,
   Logout02Icon,
   MoonIcon,
@@ -42,7 +43,7 @@ export const NavUser = () => {
   const { isMobile } = useSidebar();
   const router = useRouter();
   const { data: session, isPending, refetch } = useSession();
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   const handleLogout = async () => {
     const { error } = await authClient.signOut();
@@ -151,6 +152,18 @@ export const NavUser = () => {
               <Icon icon={resolvedTheme === "dark" ? Sun03Icon : MoonIcon} />
               {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
             </DropdownMenuItem>
+            {/* The header toggle only flips light/dark; this is the way back. */}
+            {theme !== "system" ? (
+              <DropdownMenuItem
+                onSelect={(event) => {
+                  event.preventDefault();
+                  setTheme("system");
+                }}
+              >
+                <Icon icon={ComputerIcon} />
+                Use system theme
+              </DropdownMenuItem>
+            ) : null}
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive" onSelect={handleLogout}>
               <Icon icon={Logout02Icon} />

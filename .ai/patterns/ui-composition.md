@@ -56,6 +56,42 @@ Do not put loose workflow content directly under `Card`, omit a title, reorder
 slots, or nest one `Card` inside another. A visually small tile still needs a
 real title and content region.
 
+`CardTitle` renders a `div`; when the card is a section of the page (a table
+card, an integration tile, a landing feature), put the heading element inside
+it — `<CardTitle><h2>…</h2></CardTitle>` — so restyling never drops the card
+out of the document outline. `TableCard` does this for you via `titleAs`.
+
+`Card` takes `variant="default"` (ring hairline) or `variant="dashed"` (the
+signature dashed frame). The variant changes the frame only; the slot grammar
+above is identical for both.
+
+### House primitives (dashboard)
+
+`apps/web/src/components/dashboard/` wraps the grammar above into the recipes
+every dashboard screen composes:
+
+```text
+StatCard            -> Card[dashed](CardHeader(CardTitle=label, CardAction?), CardContent(value, valueCaption?, children?, caption?))
+TableCard           -> Card[dashed](CardHeader(CardTitle, CardDescription?, CardAction?), CardContent(children), CardFooter?)
+TablePagination     -> Pagination(Previous, "Page x of y", Next)   # lives in a TableCard footer
+PageToolbar         -> 48px border-b row: controls left, primary action right
+HintLabel           -> label + Tooltip(icon button "What <label> means")
+QueryError          -> Empty(EmptyHeader(title, description), EmptyContent(retry, sign-in))
+```
+
+| Primitive         | Rule                                                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `StatCard`        | One per metric; `size="hero"` on the overview row, `compact` in detail grids                                                   |
+| `TableCard`       | `title` is required and renders in a heading (`titleAs`, default `h2`); `padding="none"` for tables, `sm` for charts and lists |
+| `TablePagination` | Only inside a `TableCard` `footer`; bound anchors carry `aria-disabled`                                                        |
+| `PageToolbar`     | Exactly one per section page **that has page-level controls**, directly under the sticky header; controls are `size="sm"`      |
+| `HintLabel`       | Only where the label hides a calculation or policy                                                                             |
+| `QueryError`      | `framed={false}` when the parent already draws a dashed frame                                                                  |
+
+Standalone empty and error states (no surrounding card) put
+`rounded-2xl border border-dashed` on the `Empty` itself rather than wrapping it
+in a title-less `Card`.
+
 ### Dialog, Sheet, and Drawer
 
 ```text
@@ -133,11 +169,14 @@ design.
 DashboardLayout
   -> shared sticky header(PageTitle, HeaderActions)
   -> route content
+       -> PageToolbar(controls, primary action)
+       -> body column(StatCard grid?, TableCard*, sections)
 ```
 
 `apps/web/src/app/dashboard/layout.tsx` owns the sticky header and
 `PageTitle`. Dashboard route content does not repeat that title with another
-`h1` or `h2`. Begin with the route's primary workflow, toolbar, or state.
+`h1` or `h2`. Begin with the route's `PageToolbar` (or its primary workflow or
+state when the route has no controls yet), then the body column.
 
 ### Standalone Web Page
 
@@ -238,6 +277,29 @@ equivalents show the structural shortcut the grammar forbids.
   <Text className="text-3xl font-bold">0</Text>
   <Text className="text-muted-foreground text-sm">Projects</Text>
 </Card>
+```
+
+### Dashed frame
+
+**Do** — `apps/web/src/components/dashboard/stat-cards.tsx`
+
+```tsx
+<StatCard
+  size="hero"
+  label={stat.label}
+  action={<TrendBadge stat={stat} />}
+  value={<NumberTicker value={stat.value} />}
+  caption={stat.caption}
+/>
+```
+
+**Don't** — draw the frame by hand and skip the slot anatomy.
+
+```tsx
+<div className="bg-card flex flex-col gap-4 rounded-2xl border border-dashed p-6">
+  <span className="text-muted-foreground text-sm">{stat.label}</span>
+  <NumberTicker value={stat.value} className="text-5xl" />
+</div>
 ```
 
 ### Overlay anatomy

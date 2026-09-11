@@ -18,14 +18,57 @@ import {
 
 import { Badge } from "@turbo/ui/components/badge";
 import { Button } from "@turbo/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@turbo/ui/components/card";
 import { Icon } from "@turbo/ui/components/icon";
 import { NumberTicker } from "@turbo/ui/components/number-ticker";
+import { cn } from "@turbo/ui/lib/utils";
 
 interface Feature {
   title: string;
   description: string;
   icon: IconSvgElement;
 }
+
+/**
+ * Landing feature tile on the shared `Card` frame (dashed for the agent
+ * story, hairline for the stack), so the marketing page composes the same
+ * anatomy the dashboard does instead of a hand-written dashed `div`.
+ */
+const FeatureCard = ({
+  feature,
+  variant = "default",
+  iconClassName,
+}: {
+  feature: Feature;
+  variant?: "default" | "dashed";
+  iconClassName?: string;
+}) => (
+  <Card variant={variant} className="gap-1.5" data-slot="feature-card">
+    <CardHeader>
+      <CardTitle className="flex flex-col gap-4">
+        <span className="bg-accent flex size-10 items-center justify-center rounded-lg">
+          <Icon
+            icon={feature.icon}
+            className={cn("size-5", iconClassName)}
+            strokeWidth={1.5}
+          />
+        </span>
+        <h3 className="text-base font-semibold">{feature.title}</h3>
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-muted-foreground text-sm leading-relaxed">
+        {feature.description}
+      </p>
+    </CardContent>
+  </Card>
+);
 
 const agentFeatures: Feature[] = [
   {
@@ -179,24 +222,12 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {agentFeatures.map((feature) => (
-              <div
+              <FeatureCard
                 key={feature.title}
-                className="bg-card flex flex-col gap-4 rounded-2xl border border-dashed p-6"
-              >
-                <div className="bg-accent flex size-10 items-center justify-center rounded-lg">
-                  <Icon
-                    icon={feature.icon}
-                    className="text-primary size-5"
-                    strokeWidth={1.5}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <h3 className="text-base font-semibold">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
+                feature={feature}
+                variant="dashed"
+                iconClassName="text-primary"
+              />
             ))}
           </div>
         </section>
@@ -217,45 +248,42 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <div
+              <FeatureCard
                 key={feature.title}
-                className="bg-card flex flex-col gap-4 rounded-2xl border p-6"
-              >
-                <div className="bg-accent flex size-10 items-center justify-center rounded-lg">
-                  <Icon
-                    icon={feature.icon}
-                    className="text-foreground size-5"
-                    strokeWidth={1.5}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <h3 className="text-base font-semibold">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
+                feature={feature}
+                iconClassName="text-foreground"
+              />
             ))}
           </div>
         </section>
 
         {/* CTA */}
         <section className="container pb-24">
-          <div className="bg-card flex flex-col items-center gap-6 rounded-3xl border border-dashed px-6 py-16 text-center">
-            <h2 className="max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
-              Point your agent at a codebase it can actually navigate
-            </h2>
-            <p className="text-muted-foreground max-w-md text-base">
-              Create an account to explore the full stack — then clone the repo
-              and let your coding agent read the memory.
-            </p>
-            <Button size="lg" asChild>
-              <Link href="/create-account">
-                Start building
-                <Icon icon={ArrowRight01Icon} />
-              </Link>
-            </Button>
-          </div>
+          <Card
+            variant="dashed"
+            data-slot="cta-card"
+            className="rounded-3xl py-16 text-center"
+          >
+            {/* Centre inside the slots, never with `items-center` on the Card:
+                CardHeader is a `@container`, so shrink-to-fit sizing collapses it. */}
+            <CardHeader className="justify-items-center gap-6 px-6">
+              <CardTitle className="max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
+                <h2>Point your agent at a codebase it can actually navigate</h2>
+              </CardTitle>
+              <CardDescription className="max-w-md text-base">
+                Create an account to explore the full stack — then clone the
+                repo and let your coding agent read the memory.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex justify-center px-6">
+              <Button size="lg" asChild>
+                <Link href="/create-account">
+                  Start building
+                  <Icon icon={ArrowRight01Icon} />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
         </section>
       </main>
 

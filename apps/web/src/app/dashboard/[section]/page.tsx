@@ -54,31 +54,29 @@ export default async function DashboardSectionPage({
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6">
-      <div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed">
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Icon icon={item.icon} />
-            </EmptyMedia>
-            <EmptyTitle>Build {item.label.toLowerCase()} here</EmptyTitle>
-            <EmptyDescription>
-              This route ships with the template as a starting point. Replace it
-              with your own {item.label.toLowerCase()} experience.
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <Button variant="outline" size="sm" asChild>
-              <a
-                href="https://github.com/usmangurowa/turbo"
-                target="_blank"
-                rel="noreferrer"
-              >
-                View template docs
-              </a>
-            </Button>
-          </EmptyContent>
-        </Empty>
-      </div>
+      <Empty className="flex-1 rounded-2xl border border-dashed">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Icon icon={item.icon} />
+          </EmptyMedia>
+          <EmptyTitle>Build {item.label.toLowerCase()} here</EmptyTitle>
+          <EmptyDescription>
+            This route ships with the template as a starting point. Replace it
+            with your own {item.label.toLowerCase()} experience.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button variant="outline" size="sm" asChild>
+            <a
+              href="https://github.com/usmangurowa/turbo"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View template docs
+            </a>
+          </Button>
+        </EmptyContent>
+      </Empty>
     </div>
   );
 }

@@ -159,8 +159,9 @@ shadows:
 ## Overview
 
 Structured Restraint is a product-first design language for dense workflows. It
-should feel calm, exact, and quick to scan. Visual interest comes from hierarchy,
-content, and careful alignment rather than decoration.
+should feel calm, exact, and quick to scan — the numbers are the loudest thing
+on screen. Visual interest comes from hierarchy, content, and careful alignment
+rather than decoration.
 
 1. **Dense, not cramped.** Keep related controls close and separate major
    sections with a clear rhythm.
@@ -170,6 +171,9 @@ content, and careful alignment rather than decoration.
    Status colors communicate state, not decoration.
 4. **Composition is a contract.** Use complete component anatomy and predictable
    page structures so behavior and accessibility survive restyling.
+5. **Precedent first.** Extend the nearest existing surface before inventing a
+   new one; the house recipes in `.ai/context/design-system.md` are the
+   starting point for every dashboard screen.
 
 ## Colors
 
@@ -180,12 +184,19 @@ electric-blue accent. Use semantic tokens such as `background`, `foreground`,
 `muted-foreground`, `success`, and `warning`; palette steps exist for controlled
 variants, not one-off component color choices.
 
+`success` and `warning` annotate state — status dots, trend deltas, and the
+`Badge` `success` / `warning` variants — and never fill large surfaces. Keep one
+accent per view: blue acts, grayscale organizes, status colors annotate.
+
 ## Typography
 
 Inter Display is the only product typeface. Body copy stays at `body` or
 `body-sm`; labels use medium weight; titles use semibold. Reserve `display` for a
 single dominant value or page statement. The base `-0.15px` tracking keeps dense
-interfaces crisp; large display text uses Tailwind's `tracking-tight`.
+interfaces crisp; large display text uses Tailwind's `tracking-tight`. Numerals
+in stat cards and table cells use `tabular-nums` so columns of figures align.
+The dashboard page title lives in the sticky header chip, never as a duplicate
+`h2` on the page body.
 
 ## Layout
 
@@ -198,12 +209,23 @@ reading surfaces use the nearest semantic Tailwind `max-w-*` utility. Keep one
 primary alignment axis in each section. Page and component anatomy lives in
 `.ai/patterns/ui-composition.md`.
 
+Dashboards use bento grids of flat cards; workflows with repeated data entry or
+comparison use conventional forms and tables. A section page that has
+page-level controls opens with exactly one `PageToolbar` (a fixed 48px bar under
+the sticky header: controls left, primary action right), then its body column;
+routes without controls start with their primary workflow — never an empty bar.
+One primary action per region; siblings in a grid align on internal baselines.
+
 ## Elevation & Depth
 
-Prefer borders and tonal layers to shadows. Cards sit one surface above the page;
-popovers and overlays may use the inherited shadow scale. Use the lowest shadow
+Structured Restraint is flat-first. Depth comes from surface color steps
+(background → card → popover), hairline borders, and the dashed frame — not
+from shadows. Cards sit one surface above the page; popovers and overlays may
+use the inherited shadow scale, tight and directional. Use the lowest shadow
 that separates the surface. Avoid soft bloom, colored shadows, and stacked
-shadow effects.
+shadow effects. Focus rings are soft (`ring-2` at `ring-ring/30`). Focus
+indication may move to a containing surface (a linked card rings itself when
+its anchor is focused) but is never removed.
 
 ## Shapes
 
@@ -211,6 +233,11 @@ The base radius is `0.75rem`. Controls use `rounded-lg`, compact labels use
 `rounded-sm`, and panels use `rounded-xl` or `rounded-2xl`. Pills may use
 `rounded-full` when their shape communicates a chip, badge, or compact action.
 Do not mix sharp and highly rounded containers in one composition.
+
+Dashed borders are the signature of the language: stat cards, table frames,
+standalone empty states, and in-card dividers use `border-dashed` to evoke ruled
+paper. Squircle icon tiles (`rounded-xl` on `accent`) hold icons in tables and
+integration cards.
 
 ## Components
 
@@ -222,7 +249,25 @@ workflow composition stays in the owning app; shared primitives stay in
 
 Loading placeholders use `Skeleton`. Empty and error states use `Empty`. Use
 `Alert` for callouts, `Separator` for structural dividers, and `Badge` for compact
-status labels.
+status labels. Buttons have no `loading` prop — compose
+`<Spinner data-icon="inline-start" />` with `disabled`.
+
+House recipes (implementation in `apps/web/src/components/dashboard/`, rules in
+`.ai/context/design-system.md`):
+
+- **Dashed frame:** `Card variant="dashed"` — the documented registry patch
+  behind every dashed card. Never hand-write the frame on a `div`.
+- **Stat card:** `StatCard` — dashed frame, muted caption-size (12px, medium)
+  label top-left, one action slot top-right, `tabular-nums` numeral, small
+  muted caption.
+- **Table card:** `TableCard` — dashed frame with a `title`-role heading
+  (16px semibold, an `h2` by default), description, one action, edge-to-edge
+  body, and a dashed-divider footer for pagination or counts. Section titles
+  on one page share this scale whether or not they sit in a card.
+- **Header chip:** `accent` rounded-full pill with icon + nav label; the only
+  page title.
+- **Status badge:** `Badge variant="success" | "warning" | "destructive"`
+  for positive, attention, and failed states; `outline` for neutral ones.
 
 ## Do's and Don'ts
 
@@ -236,6 +281,11 @@ status labels.
   create competing calls to action.
 - Do use `Skeleton` and `Empty` for states. Don't ship raw `animate-pulse`,
   invisible loading gaps, or empty white boxes.
+- Do reach for `StatCard`, `TableCard`, and `Card variant="dashed"` before
+  drawing a new frame. Don't write a private stat or table wrapper again.
+- Do run a refinement pass (structure, typography, spacing, density,
+  interaction states) after building any screen — see
+  `.ai/skills/anti-slop-ui.md`. Don't ship the first draft.
 - Never nest cards, add decorative gradients or glows to product workflows, hide
   required overlay titles, omit avatar fallbacks, or leave icon-only buttons
   unnamed.

@@ -24,6 +24,7 @@
 - [ ] Types check: `pnpm typecheck`
 - [ ] Lint passes: `pnpm lint`
 - [ ] Format correct: `pnpm format`
+- [ ] Local CI gate is green: `pnpm run ci` (same steps and order as `.github/workflows/ci.yml`)
 - [ ] AI memory updated (if new patterns introduced) — see `.ai/skills/update-ai-memory.md`
 - [ ] New/changed AI documentation is based on observed repository facts (not assumptions)
 - [ ] Missing inputs were clarified before implementation where task requirements were ambiguous
