@@ -82,12 +82,13 @@ pnpm i
 cp .env.example .env
 ```
 
-**Optional — Infisical secrets manager.** Instead of maintaining a local `.env`, you can inject secrets at runtime from [Infisical](https://infisical.com). The CLI ships as a dev dependency; connect once, then use the `:infisical` script variants:
+**Which variables, and which are required?** `.env.example` lists every variable with a comment; the generated [`.ai/contracts/env.generated.md`](.ai/contracts/env.generated.md) classifies each one from the zod schemas — required or optional, which process reads it (`web`, `server`, `worker`, `mobile`), and whether it ends up in a client bundle. Today only `POSTGRES_URL` and `AUTH_SECRET` are required; everything else switches a feature on. `pnpm ai:env:strict` fails when `.env.example`, `turbo.json`, and the env modules disagree, so the table is always current.
+
+**Optional — Infisical secrets manager.** Instead of maintaining a local `.env`, you can inject secrets at runtime from [Infisical](https://infisical.com). This repository is linked to the `turbo` project through the committed `.infisical.json` (project id only, no secrets) with `dev`, `staging`, and `prod` environments. The CLI ships as a dev dependency; authenticate once, then use the `:infisical` script variants:
 
 ```bash
-# One-time: authenticate and link the repo to your Infisical project
+# One-time: authenticate (the repo is already linked via .infisical.json)
 pnpm exec infisical login
-pnpm exec infisical init   # writes .infisical.json — commit it (contains no secrets)
 
 # Run dev with secrets injected (auto-reloads when secrets change)
 pnpm dev:infisical
@@ -96,7 +97,7 @@ pnpm dev:infisical
 pnpm with-secrets pnpm db:migrate
 ```
 
-Both sources compose: variables injected by Infisical take precedence, and anything missing still falls back to `.env` via each app's `with-env` script.
+Both sources compose: variables injected by Infisical take precedence, and anything missing still falls back to `.env` via each app's `with-env` script. Populate an environment with the variables from the contract table above — the required ones for the runtimes it serves, plus the optional features you want on. Forks that want their own project run `pnpm exec infisical init` and commit the rewritten `.infisical.json`.
 
 `pnpm with-secrets` and `pnpm dev:infisical` run through `scripts/infisical-run.sh`, the same wrapper the Docker images boot with. It picks credentials in this order: `INFISICAL_CLIENT_ID` + `INFISICAL_CLIENT_SECRET` ([machine identity](https://infisical.com/docs/documentation/platform/identities/machine-identities), what production uses), a pre-issued `INFISICAL_TOKEN`, then your local `infisical login` session; in CI or with nothing configured it runs the command on the existing env vars and says so. The project comes from `INFISICAL_PROJECT_ID` or `.infisical.json`, the environment slug from `INFISICAL_ENV` (default `dev`).
 

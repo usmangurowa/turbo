@@ -191,6 +191,9 @@ Example: `packages/db/src/auth-schema.ts`
 - Non-secret constants (PostHog host, Expo app identity/EAS project ID, provider API URLs) are hardcoded in the codebase (`apps/mobile/app.config.ts`, `eas.json`), not stored in `.env`
 - The standalone server uses `SERVER_PORT` for local port configuration; generic `PORT` is reserved as a platform fallback and should not be set in `.env.example`.
 - **Env skip logic: always `shouldSkipEnvValidation()` from `@turbo/shared/env` — never inline `npm_lifecycle_event`/`CI` checks.** New skip conditions belong in `packages/shared/src/env.ts` with a test.
+- `.ai/contracts/env.generated.md` is the env contract for humans and agents: every `.env.example` variable with required/optional (derived from the zod schemas), the runtime that reads it, and its exposure. A new variable is complete only when it appears there correctly — add it to `.env.example` (under a `# Group` heading), `turbo.json` `globalEnv`, and the owning env module (or read it via `process.env` in exactly one package when it is a pure feature switch), then run `pnpm ai:env:strict`.
+- Optional env modules follow the `packages/auth/env.ts` shape: `z.string().transform(v => v === "" ? undefined : v).optional()` (`optionalString`) or the `z.union([z.literal(""), z.url()])` variant (`optionalUrl`). The contract script recognises both as "empty string counts as unset".
+- `.infisical.json` (committed, project id only) links the repo to the `turbo` Infisical project with `dev`/`staging`/`prod`. Each environment holds the required variables for the runtimes it serves plus the optional features it enables. Coolify apps read their own env store today; wiring them to Infisical means setting the four `INFISICAL_*` machine-identity variables on the app (`scripts/infisical-run.sh`).
 
 ## Operational Commands
 
