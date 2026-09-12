@@ -1,12 +1,28 @@
 /**
- * @turbo/jobs — Trigger.dev task definitions.
+ * @turbo/jobs — background jobs on pg-boss.
  *
- * Tasks live in src/tasks/ (see trigger.config.ts `dirs`). Import a task's
- * type from "@turbo/jobs/tasks/<name>" when triggering from other packages
- * so job code never ends up in their runtime bundles.
+ * - Handlers live in src/tasks/ and are plain async functions.
+ * - src/queues.ts is the typed registry of job names and payloads.
+ * - "@turbo/jobs/client" is the producer (`enqueue`); import it from the API.
+ * - "@turbo/jobs/worker" builds the worker; apps/server/src/worker.ts runs it.
+ *
+ * This root barrel stays free of pg-boss so importing a handler for the
+ * in-process fallback never loads a connection pool.
  */
 
 export {
-  sendSupportEmailTask,
+  jobHandlers,
+  jobNames,
+  type JobHandler,
+  type JobHandlers,
+} from "./handlers";
+export {
+  QUEUE_POLICY,
+  type JobName,
+  type JobPayload,
+  type JobPayloads,
+} from "./queues";
+export {
+  sendSupportEmail,
   type SendSupportEmailPayload,
 } from "./tasks/send-support-email";

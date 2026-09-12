@@ -13,6 +13,6 @@
 | **Hono** | Lightweight web framework used for the API layer |
 | **Better Auth** | TypeScript-first authentication library used for auth |
 | **Drizzle** | TypeScript ORM for PostgreSQL |
-| **Trigger.dev** | Background job/task runner platform |
+| **pg-boss** | Postgres-backed job queue used for background work (`packages/jobs`) |
 
 <!-- TODO: Add domain-specific business terms as they are introduced -->

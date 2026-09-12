@@ -7,14 +7,18 @@ lives in `tooling/`.
 ## Mental Model
 
 - `apps/web` is the Next.js App Router application and public web runtime.
-- `apps/server` is the standalone Node/Hono runtime for the shared API app.
+- `apps/server` is the standalone Node/Hono runtime for the shared API app and
+  hosts the jobs worker entrypoint.
 - `apps/mobile` is the Expo Router mobile application.
 - `packages/api` owns business API routes through Hono routers.
 - `packages/auth` owns Better Auth runtime configuration and auth generation.
 - `packages/db` owns Drizzle/Postgres schema and database clients.
 - `packages/ui` owns shared web UI components following shadcn/ui patterns.
 - `packages/validators` owns shared Zod contracts.
-- `packages/jobs` owns Trigger.dev background tasks.
+- `packages/jobs` owns pg-boss background jobs: typed queue registry, plain
+  handler functions, the `enqueue` producer, and the worker factory.
+  `apps/server/src/worker.ts` is the process that runs the worker
+  (`.ai/decisions/ADR-0004-pg-boss-jobs.md`).
 - `tooling/*` owns reusable ESLint, Prettier, TypeScript, Tailwind, and Vitest
   configuration.
 

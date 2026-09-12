@@ -105,6 +105,8 @@ jobs:
               docker run --rm --entrypoint sh turbo-server -c
               'which pnpm tsx drizzle-kit infisical
               && test -f node_modules/@turbo/db/scripts/drizzle.mjs
+              && test -f src/worker.ts
+              && test -f tsconfig.runtime.json
               && ls node_modules/@turbo/db/drizzle/*.sql'
     steps:
       - uses: actions/checkout@v5

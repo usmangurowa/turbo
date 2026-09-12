@@ -1,11 +1,9 @@
 import { zValidator } from "@hono/zod-validator";
-import { tasks } from "@trigger.dev/sdk";
 import { Hono } from "hono";
 import { z } from "zod";
 
-import type { sendSupportEmailTask } from "@turbo/jobs/tasks/send-support-email";
-import { DEFAULT_FROM, sendEmail } from "@turbo/mail/client";
-import { SupportEmail } from "@turbo/mail/templates/support";
+import { enqueue, isJobQueueConfigured } from "@turbo/jobs/client";
+import { sendSupportEmail } from "@turbo/jobs/tasks/send-support-email";
 
 import type { AppContext } from "../context";
 import { authMiddleware } from "../middleware/auth";
@@ -20,9 +18,9 @@ const app = new Hono<AppContext>()
   /**
    * POST /support - Submit feedback or support request
    *
-   * Enqueues the send-support-email Trigger.dev task when
-   * TRIGGER_SECRET_KEY is set; otherwise sends in-process via
-   * @turbo/mail (which mock-logs without RESEND_API_KEY).
+   * Enqueues the send-support-email job when JOBS_POSTGRES_URL is set;
+   * otherwise runs the same handler in-process (which mock-logs without
+   * RESEND_API_KEY).
    */
   .post("/", authMiddleware, zValidator("json", supportSchema), async (c) => {
     const session = c.get("session");
@@ -40,18 +38,10 @@ const app = new Hono<AppContext>()
       metadata: body.metadata,
     };
 
-    if (process.env.TRIGGER_SECRET_KEY) {
-      await tasks.trigger<typeof sendSupportEmailTask>(
-        "send-support-email",
-        payload,
-      );
+    if (isJobQueueConfigured()) {
+      await enqueue("send-support-email", payload);
     } else {
-      await sendEmail({
-        to: process.env.SUPPORT_INBOX_EMAIL ?? DEFAULT_FROM,
-        subject: `[Support] ${body.type}`,
-        template: SupportEmail(payload),
-        replyTo: payload.userEmail,
-      });
+      await sendSupportEmail(payload);
     }
 
     return c.json({ success: true, message: "Support request received" });

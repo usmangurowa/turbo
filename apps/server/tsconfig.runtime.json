@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  // Read by tsx only (see package.json scripts and the Dockerfile CMD); tsc,
+  // ESLint, and editors use tsconfig.json. tsx applies compilerOptions only to
+  // files inside `include`, so the workspace packages it executes from source
+  // (mail templates above all) are listed here, once for the pnpm workspace
+  // layout and once for the flattened `pnpm deploy` layout in the image.
+  // Deliberately standalone: the image prunes devDependencies, so extending
+  // @turbo/tsconfig would make tsx fail to start in production.
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  },
+  "include": ["src", "../../packages/*/src", "node_modules/@turbo/*/src"],
+  "exclude": ["dist"]
+}

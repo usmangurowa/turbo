@@ -5,16 +5,16 @@
 The root `turbo.json` defines `dev` with `dependsOn: ["^dev"]` and
 `persistent: false`. Only apps (`apps/web`, `apps/server`, `apps/mobile`)
 override `persistent: true`. Any package whose `dev` script never exits
-(`tsc --watch`, `npx trigger.dev dev`) blocks every dependent task forever —
+(`tsc --watch`, a queue worker) blocks every dependent task forever —
 the apps never start under `turbo watch dev`.
 
 Rules:
 
 - Package `dev` scripts must be one-shot (`tsc`, not `tsc --watch`).
   `turbo watch dev` re-runs them on file change, so watch mode is redundant.
-- Long-running package dev processes run under a separate script name:
-  `@turbo/jobs` keeps its trigger.dev loop on `dev:trigger`
-  (`pnpm -F @turbo/jobs dev:trigger`, needs `TRIGGER_SECRET_KEY`).
+- Long-running processes run under a separate script name: the pg-boss
+  worker is `pnpm dev:worker` (`apps/server` `worker`, needs
+  `JOBS_POSTGRES_URL`), never a package `dev` script.
 - `@turbo/mobile` marks `dev` as `interactive`, which `turbo watch` cannot
   host — root `dev` and `dev:infisical` exclude it (`-F "!@turbo/mobile"`).
   Use `pnpm dev:mobile` in its own terminal.
@@ -46,5 +46,6 @@ const optionalString = z
 
 Do not write `z.string().transform(...).pipe(z.string().optional())` — the
 outer `z.string()` runs first and rejects `undefined`, making the var
-effectively required (this crashes `apps/server` on boot when the var is
-unset).
+effectively required (this crashed `apps/server` on boot when `RESEND_API_KEY`
+was absent rather than empty; `apps/server/src/env.ts` now follows the
+pattern above, with `optionalUrl` as its URL-validating sibling).

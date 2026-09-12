@@ -1,20 +1,28 @@
 # syntax=docker/dockerfile:1.7
 #
 # @turbo/server: Hono API image (run with tsx, migrations applied on boot).
+# The same image also runs the pg-boss jobs worker when SERVER_PROCESS=worker.
 #
 # Build from the repo root (the context must be the monorepo, not apps/server):
 #   docker build -f apps/server/Dockerfile -t turbo-server .
 #
-# Run:
+# Run the API:
 #   docker run --rm -p 3001:3001 -e POSTGRES_URL=... -e AUTH_SECRET=... turbo-server
+# Run the jobs worker (no port, no migrations):
+#   docker run --rm -e SERVER_PROCESS=worker -e JOBS_POSTGRES_URL=... -e POSTGRES_URL=... -e AUTH_SECRET=... turbo-server
 #
 # Boot sequence mirrors root `pnpm start:server`:
 #   TURBO_DB_SKIP_DOTENV=1 pnpm db:migrate && pnpm -F @turbo/server start:prod
 # i.e. drizzle-kit migrate (via packages/db/scripts/drizzle.mjs) → tsx src/index.ts.
+# With SERVER_PROCESS=worker it mirrors `pnpm start:worker` instead: tsx src/worker.ts.
+# Both run tsx with --tsconfig tsconfig.runtime.json (see the CMD comment).
 #
 # Coolify: build pack "dockerfile", dockerfile location "/apps/server/Dockerfile",
 # base directory "/", port 3001, health check GET /health, and no custom
-# install/build/start command (the CMD is baked in).
+# install/build/start command (the CMD is baked in). For the worker, add a
+# second application from the same repository and Dockerfile with
+# SERVER_PROCESS=worker in its environment, no exposed port, and the health
+# check disabled.
 #
 # Keep NODE_VERSION in sync with .nvmrc and PNPM_VERSION with
 # package.json#packageManager.
@@ -135,9 +143,13 @@ COPY --from=build /app/node_modules/@infisical/cli/bin/infisical /usr/local/bin/
 USER node
 EXPOSE 3001
 
-# Equivalent to `pnpm with-secrets pnpm start:server`. `pnpm deploy` flattens
-# the workspace, so packages/db lives at node_modules/@turbo/db. There is no
-# .env in the image: the wrapper injects Infisical secrets (or passes platform
-# env vars through), and the dotenv wrappers are skipped.
+# Equivalent to `pnpm with-secrets pnpm start:server`, or `pnpm start:worker`
+# when SERVER_PROCESS=worker. `pnpm deploy` flattens the workspace, so
+# packages/db lives at node_modules/@turbo/db. There is no .env in the image:
+# the wrapper injects Infisical secrets (or passes platform env vars through),
+# and the dotenv wrappers are skipped. Only the API process migrates.
+# tsconfig.runtime.json widens tsx's tsconfig scope to node_modules/@turbo/*/src
+# so the mail templates' JSX compiles with the automatic runtime (tsx applies
+# compilerOptions only to files inside `include`).
 CMD ["sh", "scripts/infisical-run.sh", "--", "sh", "-c", \
-  "TURBO_DB_SKIP_DOTENV=1 node node_modules/@turbo/db/scripts/drizzle.mjs migrate && exec tsx src/index.ts"]
+  "if [ \"$SERVER_PROCESS\" = worker ]; then exec tsx --tsconfig tsconfig.runtime.json src/worker.ts; fi; TURBO_DB_SKIP_DOTENV=1 node node_modules/@turbo/db/scripts/drizzle.mjs migrate && exec tsx --tsconfig tsconfig.runtime.json src/index.ts"]

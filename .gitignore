@@ -29,7 +29,6 @@ apps/mobile/android
 apps/mobile/build
 apps/mobile/.build
 
-packages/jobs/.trigger
 
 # production
 build

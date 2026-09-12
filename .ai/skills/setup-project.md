@@ -25,7 +25,6 @@ Ask for each value one at a time. Offer the current value as the default so the 
 | 7 | Production web domain | `https://acme.com` | Drives web metadata and email addresses |
 | 8 | Twitter/X handle | `@acme` | Skippable |
 | 9 | PostHog host | `https://us.i.posthog.com` | Only change if on EU cloud (`https://eu.i.posthog.com`) or self-hosted |
-| 10 | Trigger.dev project ID | `proj_...` | Skippable if not using background jobs |
 
 ## Step-by-step procedure
 
@@ -43,7 +42,6 @@ Ask for each value one at a time. Offer the current value as the default so the 
    | Web domain | `apps/web/src/app/layout.tsx` (`metadataBase`, `openGraph.url`) · `packages/mail/src/client.tsx` (`DEFAULT_FROM` = `no-reply@<domain>`, default support `to` = `support@<domain>`) · `packages/mail/src/templates/welcome.tsx` (default `actionUrl`) |
    | Twitter handle | `apps/web/src/app/layout.tsx` (`twitter.site`, `twitter.creator`) |
    | PostHog host | `packages/shared/src/constants.ts` (`POSTHOG_HOST`) |
-   | Trigger.dev project ID | `packages/jobs/trigger.config.ts` (`project`) |
 
 3. Also update descriptive copy: `apps/web/src/app/layout.tsx` `description`/`openGraph.description` if the user provides a tagline (skippable).
 4. Environment file: if `.env` does not exist, copy `.env.example` to `.env` and tell the user which secrets to fill (`POSTGRES_URL`, `AUTH_SECRET` via `openssl rand -base64 32`, `RESEND_API_KEY`, provider keys). Never write real secrets into `.env.example`.

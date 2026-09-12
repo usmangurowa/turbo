@@ -336,7 +336,7 @@ docker run --rm -p 3001:3001 -e POSTGRES_URL=... -e AUTH_SECRET=... -e RESEND_AP
 What the images do:
 
 - **web** serves `node apps/web/server.js` on port 3000. `NEXT_PUBLIC_*` values are inlined at build time, so pass them as `--build-arg` (every key in `apps/web/src/env.ts` has an `ARG`). `SENTRY_AUTH_TOKEN` is an optional BuildKit secret (`--secret id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN`); the build succeeds without it.
-- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`.
+- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`. Set `SERVER_PROCESS=worker` and the same image runs the pg-boss jobs worker (`pnpm start:worker`) instead: no migrations, no port. Deploy it as a separate application once `JOBS_POSTGRES_URL` is set; without that variable the API sends emails in-process and no worker is needed.
 - Both images boot through `scripts/infisical-run.sh` with the Infisical CLI on `PATH`. Set `INFISICAL_CLIENT_ID`, `INFISICAL_CLIENT_SECRET`, `INFISICAL_PROJECT_ID` (or commit `.infisical.json`), and `INFISICAL_ENV` (e.g. `prod`) on the platform and the container pulls every other secret from Infisical at start. Leave them unset and the container runs on platform-injected env vars alone — there is no `.env` in the image either way.
 - Neither image installs `apps/mobile`, dev toolchains, `.git`, or docs (see `.dockerignore`).
 

@@ -126,7 +126,8 @@ For detailed technology guides, see `.agents/skills/`:
 - Tailwind CSS → `.agents/skills/tailwind-patterns/`
 - Better Auth → `.agents/skills/better-auth-best-practices/`
 - Drizzle ORM → `.agents/skills/drizzle/`
-- Trigger.dev → `.agents/skills/trigger-dev-tasks/`
+- Trigger.dev → `.agents/skills/trigger-dev-tasks/` (reference only; jobs run on
+  pg-boss, `.ai/decisions/ADR-0004-pg-boss-jobs.md`)
 - Turborepo → `.agents/skills/turborepo/`
 
 ---

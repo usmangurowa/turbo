@@ -25,7 +25,7 @@ packages/
   assets/       → Font files
   auth/         → Better Auth configuration
   db/           → Drizzle ORM + Postgres schemas
-  jobs/         → Trigger.dev background tasks
+  jobs/         → pg-boss background jobs (queue registry, handlers, producer, worker)
   mail/         → Email templates (Resend)
   shared/       → Shared utilities and constants
   supabase/     → Supabase client setup
@@ -88,7 +88,7 @@ tooling/
 | API runtime     | Standalone Node/Hono app (`apps/server`)                                                                                                       |
 | Database        | Supabase (Postgres)                                                                                                                            |
 | Email           | Resend                                                                                                                                         |
-| Background jobs | Trigger.dev                                                                                                                                    |
+| Background jobs | pg-boss (Postgres-backed; `JOBS_POSTGRES_URL`, worker runs from `apps/server`)                                                                 |
 | Analytics       | PostHog                                                                                                                                        |
 | Error tracking  | Sentry (@sentry/nextjs, @sentry/react-native)                                                                                                  |
 | AI providers    | Gemini, OpenRouter, Groq (Vercel AI SDK v7)                                                                                                    |

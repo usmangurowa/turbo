@@ -203,7 +203,9 @@ Example: `packages/db/src/auth-schema.ts`
 - Prefer workspace/root scripts when available over ad-hoc package commands.
 - `pnpm run ci` runs the same checks as `.github/workflows/ci.yml` in the same order and stops on the first failure; it is the local merge gate. Invoke it as `pnpm run ci` — bare `pnpm ci` is a reserved pnpm built-in. Any step added to or removed from the workflow must be mirrored in the script, and vice versa (`.ai/decisions/ADR-0003-single-job-ci.md`).
 - Per-package `pnpm typecheck` / `pnpm lint` in a fresh worktree need dependencies built once: `pnpm turbo run build --filter=<pkg>^... --output-logs=errors-only`. Root-level commands do this automatically via `dependsOn: ["^build"]`.
-- Package `dev` scripts are one-shot (`tsc`, never `tsc --watch`); long-running package processes use a separate script name (`pnpm -F @turbo/jobs dev:trigger`). See `.ai/patterns/turbo-dev-tasks.md`.
+- Package `dev` scripts are one-shot (`tsc`, never `tsc --watch`); long-running processes use a separate script name (`pnpm dev:worker` runs the pg-boss worker). See `.ai/patterns/turbo-dev-tasks.md`.
+- `pnpm dev:worker` runs the jobs worker locally (`tsx watch`, reads `.env`); `pnpm start:worker` is the production entry. The server Docker image runs the worker when `SERVER_PROCESS=worker` is set.
+- Every `tsx` invocation in `apps/server` passes `--tsconfig tsconfig.runtime.json`. tsx applies `compilerOptions` only to files inside `include`, and that file widens the scope to the workspace packages executed from source (mail templates need the automatic JSX runtime). It is standalone on purpose: the image prunes `@turbo/tsconfig`.
 
 ## Copy Voice (user-facing text)
 
@@ -226,6 +228,17 @@ Example: `packages/db/src/auth-schema.ts`
 - Never hardcode sample rates (e.g., `tracesSampleRate: 0.1`) in app files — import from `@turbo/analytics` instead.
 - React Native `Sentry.init` consumes `SENTRY_CONFIG.tracesSampleRate` only (the web `replays*` fields are not supported by the React Native SDK).
 - `posthogWebOptions` is for web (posthog-js) only; mobile wires PostHog via `PostHogProvider` directly.
+
+## Background Job Patterns (pg-boss)
+
+- A job is a plain async function in `packages/jobs/src/tasks/<name>.ts` that takes a typed payload, returns a result, and **throws on failure** so pg-boss retries it. It imports no queue code, so the API can call it directly for the inline path.
+- Register it twice: the payload in `JobPayloads` (`src/queues.ts`) and the handler in `jobHandlers` (`src/handlers.ts`). The mapped type makes a missing entry a compile error.
+- Producers import `@turbo/jobs/client`: `isJobQueueConfigured()` gates on `JOBS_POSTGRES_URL`; `enqueue(name, payload, options?)` is the only send API. Never construct `PgBoss` in a router or app.
+- The queue is presence-gated: empty `JOBS_POSTGRES_URL` → run the handler in the request (as `POST /support` does); set → enqueue and let the worker run it. The zero-env template keeps working without a worker.
+- One shared `QUEUE_POLICY` (three attempts, backoff 1s→10s, five-minute run limit) is applied at `createQueue`; per-job overrides go through `enqueue`'s `options`, not a second policy object.
+- The worker runtime is `apps/server/src/worker.ts` (`pnpm dev:worker` / `pnpm start:worker` / `SERVER_PROCESS=worker` in the server image). `packages/jobs` exports `createWorker()` and owns no process concerns (signals, exit codes, env).
+- Handler failures report through `@turbo/analytics/server` `captureError` with `job` and `jobId` tags, then rethrow.
+- Tests mock `pg-boss` (`vi.mock("pg-boss", () => ({ PgBoss: vi.fn(function () { return boss; }) }))`) and never need a database; see `packages/jobs/src/__tests__/`.
 
 ## Mail Patterns
 

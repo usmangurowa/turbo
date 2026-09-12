@@ -19,7 +19,7 @@ summary.
 | Database   | `packages/db`         | Drizzle/Postgres schema and client       |
 | UI         | `packages/ui`         | Shared web components                    |
 | Validators | `packages/validators` | Shared Zod schemas and inferred types    |
-| Jobs       | `packages/jobs`       | Trigger.dev tasks                        |
+| Jobs       | `packages/jobs`       | pg-boss jobs: registry, handlers, worker |
 
 ## Dependency Direction
 

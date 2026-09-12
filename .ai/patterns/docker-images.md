@@ -69,11 +69,19 @@ production exactly as `pnpm with-secrets` makes it locally.
 8. **Server boot chain.** `pnpm deploy` flattens the workspace, so
    `packages/db` sits at `/app/node_modules/@turbo/db`. The CMD mirrors root
    `start:server` by path:
-   `TURBO_DB_SKIP_DOTENV=1 node node_modules/@turbo/db/scripts/drizzle.mjs migrate && exec tsx src/index.ts`.
+   `TURBO_DB_SKIP_DOTENV=1 node node_modules/@turbo/db/scripts/drizzle.mjs migrate && exec tsx --tsconfig tsconfig.runtime.json src/index.ts`.
    `drizzle.mjs` spawns `pnpm drizzle-kit migrate`, which is why pnpm stays
-   in the runner and `/app/node_modules/.bin` is on `PATH`.
-9. **Web boot.** Next standalone `server.js` reads `PORT`/`HOSTNAME`; the
-   image sets `3000`/`0.0.0.0`.
+   in the runner and `/app/node_modules/.bin` is on `PATH`. With
+   `SERVER_PROCESS=worker` the same CMD skips migrations and runs
+   `tsx --tsconfig tsconfig.runtime.json src/worker.ts` instead — one image,
+   two processes; only the API migrates.
+9. **`tsconfig.runtime.json` is the tsx config.** tsx applies a tsconfig's
+   `compilerOptions` only to files inside its `include`; the runtime config
+   adds `node_modules/@turbo/*/src` (the flattened layout) so mail templates
+   compile with the automatic JSX runtime. It must not extend
+   `@turbo/tsconfig` — that package is a devDependency and is pruned.
+10. **Web boot.** Next standalone `server.js` reads `PORT`/`HOSTNAME`; the
+    image sets `3000`/`0.0.0.0`.
 
 ## Version pins
 
@@ -88,6 +96,9 @@ Per app: build pack `dockerfile`, base directory `/`, Dockerfile location
 `/apps/web/Dockerfile` or `/apps/server/Dockerfile`, port `3000` / `3001`,
 health check `GET /` / `GET /health`, and **no custom install/build/start
 command** (the CMD is baked in). Mark `NEXT_PUBLIC_*` variables as build-time.
+The jobs worker is a third application from the same repository and the
+server Dockerfile with `SERVER_PROCESS=worker` and `JOBS_POSTGRES_URL` in its
+environment, no exposed port, and the health check disabled.
 
 `git_branch: main` does not mean auto-deploy. Coolify rebuilds only when
 GitHub delivers a `push` webhook, and the app's **source** decides whether one

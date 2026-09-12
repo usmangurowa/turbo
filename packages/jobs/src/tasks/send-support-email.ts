@@ -1,10 +1,8 @@
-import { task } from "@trigger.dev/sdk";
-
 import { DEFAULT_FROM, sendEmail } from "@turbo/mail/client";
 import { SupportEmail } from "@turbo/mail/templates/support";
 
 /**
- * Payload for the send-support-email task.
+ * Payload for the send-support-email job.
  * Mirrors SupportEmailProps from @turbo/mail/templates/support.
  */
 export interface SendSupportEmailPayload {
@@ -23,25 +21,23 @@ export interface SendSupportEmailPayload {
 /**
  * Send a support request email to the support inbox.
  *
- * Triggered by the API's POST /support route when TRIGGER_SECRET_KEY is
- * configured. The recipient defaults to SUPPORT_INBOX_EMAIL, falling back
- * to the mail package's DEFAULT_FROM. Replies go straight to the user.
+ * Runs on the jobs worker when the API enqueued it, or in-process from
+ * POST /support when no queue is configured. The recipient defaults to
+ * SUPPORT_INBOX_EMAIL, falling back to the mail package's DEFAULT_FROM.
+ * Replies go straight to the user. Throws on failure so pg-boss retries
+ * per the queue policy.
  */
-export const sendSupportEmailTask = task({
-  id: "send-support-email",
-  run: async (payload: SendSupportEmailPayload) => {
-    const result = await sendEmail({
-      to: process.env.SUPPORT_INBOX_EMAIL ?? DEFAULT_FROM,
-      subject: `[Support] ${payload.type}`,
-      template: SupportEmail(payload),
-      replyTo: payload.userEmail,
-    });
+export const sendSupportEmail = async (payload: SendSupportEmailPayload) => {
+  const result = await sendEmail({
+    to: process.env.SUPPORT_INBOX_EMAIL ?? DEFAULT_FROM,
+    subject: `[Support] ${payload.type}`,
+    template: SupportEmail(payload),
+    replyTo: payload.userEmail,
+  });
 
-    if (!result.success) {
-      // Throw so Trigger.dev retries per trigger.config.ts defaults
-      throw result.error ?? new Error("Failed to send support email");
-    }
+  if (!result.success) {
+    throw result.error ?? new Error("Failed to send support email");
+  }
 
-    return { emailId: result.id };
-  },
-});
+  return { emailId: result.id };
+};
