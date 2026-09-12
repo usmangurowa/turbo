@@ -158,3 +158,27 @@ queue at runtime without a deploy.
   anti-pattern `.ai/patterns/turbo-dev-tasks.md` warns about, so an absent
   (not empty) `RESEND_API_KEY` crashed boot. Both optionals now follow
   `packages/auth/env.ts`.
+
+### Deployment (turbo project on Coolify, 2026-09-12)
+
+The queue runs on a separate Postgres instance from the app database — the
+"escape hatch" this spec describes, exercised on day one:
+
+- `infra-postgres` (shared instance, `infra` project) gained a `turbo_jobs`
+  database owned by a dedicated `turbo_jobs` role with no other grants. The
+  app database stays on `turbo db` in the turbo project.
+- `JOBS_POSTGRES_URL` is set on `turbo server` (production scope only;
+  previews send inline) and on the new `turbo worker` application.
+- `turbo worker` is a second Coolify application from the same repository
+  and `apps/server/Dockerfile` with `SERVER_PROCESS=worker`, no domain, health
+  check disabled, and the server's watch paths. Its env mirrors the server's
+  (`POSTGRES_URL`, `AUTH_SECRET`, `RESEND_API_KEY`, `SERVER_URL`, `APP_URL`)
+  because `apps/server/src/env.ts` validates them at boot.
+- The database was created from inside the running `turbo server` container
+  (same Docker network as `infra-postgres`) via a one-off Coolify task that
+  read a base64-encoded script and both credentials from temporary runtime
+  env vars, then those vars were deleted. Nothing was exposed publicly and
+  no secret was written into a stored command.
+- Secrets live in Coolify's env store; turbo's Coolify apps do not use
+  Infisical (no `INFISICAL_*` variables). To mirror `JOBS_POSTGRES_URL` into
+  Infisical later, copy it from either app's environment in Coolify.
