@@ -27,6 +27,14 @@
 2. **Reproduce locally**: Run the failing command with the same flags.
 3. **Check for common causes**:
    - Missing environment variables (compare with `.env.example`)
+   - A process fails env validation on boot (`Invalid environment variables`,
+     a zod error naming `POSTGRES_URL` or `AUTH_SECRET`) in a deployment that
+     reads secrets from Infisical — the environment is missing a required
+     key. Run `pnpm ai:env:infisical --env prod` (or the environment's slug):
+     it lists the required variables the environment lacks and any keys the
+     contract does not know, without printing a value. Strict mode
+     (`pnpm ai:env:infisical:strict`) exits 1 on drift, 2 when Infisical is
+     unreadable.
    - Missing dependencies (`pnpm install`)
    - Type errors from package changes (check `exports` in `package.json`)
    - Turborepo cache issues (`pnpm clean`)

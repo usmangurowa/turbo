@@ -98,6 +98,7 @@ tooling/
 | Tool              | Purpose                                                                             |
 | ----------------- | ----------------------------------------------------------------------------------- |
 | Vitest            | Unit/integration testing (4.1.x); `jsdom` only in `packages/ui` for hydration tests |
+| `node --test`     | Tests for `scripts/ai/*.mjs` (`scripts/ai/__tests__/`, root `pnpm test:scripts`)    |
 | ESLint 10         | Linting (flat config)                                                               |
 | Prettier 3.9      | Code formatting with import sort + tailwind sort                                    |
 | TypeScript strict | Type checking across all packages                                                   |

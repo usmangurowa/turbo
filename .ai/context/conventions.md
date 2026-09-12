@@ -16,6 +16,7 @@
 - **Routes (mobile)**: Expo Router — `src/app/` directory with file-based routing
 - **Config files**: `kebab-case` (e.g., `eslint.config.ts`, `vitest.config.ts`)
 - **Test files**: `__tests__/<name>.test.ts` (co-located in `src/`)
+- **Script tests**: `scripts/ai/__tests__/<name>.test.mjs`, run with `node --test` via the root `pnpm test:scripts` (Turbo task `//#test:scripts`, part of `pnpm test`). A script under test exports its functions and runs `main()` only when executed directly (`check-infisical-env.mjs`).
 - **Schema files**: `<domain>-schema.ts` in `packages/db/src/` (e.g., `auth-schema.ts`)
 
 ## Exports
@@ -194,6 +195,7 @@ Example: `packages/db/src/auth-schema.ts`
 - `.ai/contracts/env.generated.md` is the env contract for humans and agents: every `.env.example` variable with required/optional (derived from the zod schemas), the runtime that reads it, and its exposure. A new variable is complete only when it appears there correctly — add it to `.env.example` (under a `# Group` heading), `turbo.json` `globalEnv`, and the owning env module (or read it via `process.env` in exactly one package when it is a pure feature switch), then run `pnpm ai:env:strict`.
 - Optional env modules follow the `packages/auth/env.ts` shape: `z.string().transform(v => v === "" ? undefined : v).optional()` (`optionalString`) or the `z.union([z.literal(""), z.url()])` variant (`optionalUrl`). The contract script recognises both as "empty string counts as unset".
 - `.infisical.json` (committed, project id only) links the repo to the `turbo` Infisical project with `dev`/`staging`/`prod`. Each environment holds the required variables for the runtimes it serves plus the optional features it enables. Coolify apps read their own env store today; wiring them to Infisical means setting the four `INFISICAL_*` machine-identity variables on the app (`scripts/infisical-run.sh`).
+- `pnpm ai:env:infisical --env <slug>` (or `--all`) compares an Infisical environment's key names with the contract: missing required, missing optional, unknown keys, public keys present. Run it before a deploy and after adding a variable; it reads names only and never prints a value. `pnpm ai:env:infisical:strict` exits 1 on missing required variables, 2 when Infisical is unreadable. It is deliberately not a CI step — CI holds no Infisical credentials (`.ai/specs/active/infisical-env-drift.spec.md`). Env-contract parsing shared by both env scripts lives in `scripts/ai/_env.mjs`; add new parsing there, not in a script.
 
 ## Operational Commands
 

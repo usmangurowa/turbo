@@ -47,6 +47,10 @@
     "test": {
       "dependsOn": ["^build"],
       "outputs": []
+    },
+    "//#test:scripts": {
+      "inputs": ["scripts/ai/**"],
+      "outputs": []
     }
   },
   "globalEnv": [
