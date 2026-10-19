@@ -306,7 +306,7 @@ pnpm start:server
 
 How it works on each deploy:
 
-1. The platform (e.g., Coolify) builds and starts a new container with `pnpm start:server`.
+1. The platform (e.g., Coolify) builds and starts a new container with `pnpm start:server` (the Docker image runs the bundled equivalent, `node dist/migrate.mjs && node dist/index.mjs`).
 2. `pnpm db:migrate` applies only migrations the database hasn't seen (tracked in the Drizzle journal).
 3. If migrations succeed, the server boots and the health check passes.
 4. If migrations fail, the server never starts, the health check fails, and the previous version keeps serving.
@@ -321,7 +321,7 @@ Requirements:
 
 ### Docker (Coolify / any container host)
 
-`apps/web/Dockerfile` and `apps/server/Dockerfile` build slim multi-stage images (Next.js standalone for web, `pnpm deploy --prod` output for the server). Docker is an additional path: Vercel ignores Dockerfiles and the `output: "standalone"` switch (it is gated on `DOCKER_BUILD=1`, which only the web Dockerfile sets), and `pnpm start:server` keeps working on a plain VPS. Both targets coexist.
+`apps/web/Dockerfile` and `apps/server/Dockerfile` build slim multi-stage images (Next.js standalone for web; an esbuild bundle with no `node_modules` for the server). Docker is an additional path: Vercel ignores Dockerfiles and the `output: "standalone"` switch (it is gated on `DOCKER_BUILD=1`, which only the web Dockerfile sets), and `pnpm start:server` keeps working on a plain VPS. Both targets coexist.
 
 Build from the repo root — the context must be the monorepo, not the app folder:
 
@@ -336,9 +336,9 @@ docker run --rm -p 3001:3001 -e POSTGRES_URL=... -e AUTH_SECRET=... -e RESEND_AP
 What the images do:
 
 - **web** serves `node apps/web/server.js` on port 3000. `NEXT_PUBLIC_*` values are inlined at build time, so pass them as `--build-arg` (every key in `apps/web/src/env.ts` has an `ARG`). `SENTRY_AUTH_TOKEN` is an optional BuildKit secret (`--secret id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN`); the build succeeds without it.
-- **server** runs the same chain as `pnpm start:server` — `drizzle-kit migrate` then `tsx src/index.ts` — on port 3001 with `GET /health`.
+- **server** runs the same chain as `pnpm start:server` — apply migrations, then start the API — on port 3001 with `GET /health`. Both steps are esbuild bundles (`pnpm -F @turbo/server build` → `dist/migrate.mjs`, `dist/index.mjs`); migrations go through drizzle-orm's migrator with drizzle-kit's folder and `drizzle.__drizzle_migrations` table, so the image needs neither pnpm, tsx, nor drizzle-kit and stays interchangeable with `pnpm db:migrate`.
 - Both images boot through `scripts/infisical-run.sh` with the Infisical CLI on `PATH`. Set `INFISICAL_CLIENT_ID`, `INFISICAL_CLIENT_SECRET`, `INFISICAL_PROJECT_ID` (or commit `.infisical.json`), and `INFISICAL_ENV` (e.g. `prod`) on the platform and the container pulls every other secret from Infisical at start. Leave them unset and the container runs on platform-injected env vars alone — there is no `.env` in the image either way.
-- Neither image installs `apps/mobile`, dev toolchains, `.git`, or docs (see `.dockerignore`).
+- Neither image installs `apps/mobile`, dev toolchains, `.git`, or docs (see `.dockerignore`). Both run under `tini`, so a stop signal reaches node.
 
 Coolify settings per app:
 

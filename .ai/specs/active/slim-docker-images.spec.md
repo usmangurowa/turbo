@@ -5,7 +5,7 @@
 - State: implemented
 - Owner: AI agent
 - Created: 2026-09-05
-- Updated: 2026-09-05 (Infisical runtime wrapper)
+- Updated: 2026-10-19 (server bundled with esbuild; programmatic migrations)
 
 ## Problem
 
@@ -103,7 +103,57 @@ server:
 - **`DOCKER_BUILD` gate.** Unconditional `output: "standalone"` makes local
   `next start` warn and changes Vercel's build output. Gating keeps both
   paths byte-identical to today.
-- **`pnpm deploy --legacy`.** pnpm ≥ 10 requires `--legacy` (or
-  `inject-workspace-packages`) to deploy from a workspace that links packages.
+- **`pnpm deploy --legacy`** (superseded 2026-10-19, see below). pnpm ≥ 10
+  requires `--legacy` (or `inject-workspace-packages`) to deploy from a
+  workspace that links packages.
 - **Hoisted `nodeLinker`.** `--filter` cannot shrink the build-stage install
   much under `hoisted`, but only the runner size matters.
+
+## Revision 2026-10-19: bundled server image
+
+### Problem
+
+The server image was 828 MB (the worker, same Dockerfile, 782 MB): 373 MB of
+`pnpm deploy --prod` node_modules (full copies of every `@opentelemetry/*`
+version, `drizzle-kit` + its esbuild, `tsx`, the TypeScript sources of every
+workspace package), pnpm in the runner because `drizzle.mjs` spawns
+`pnpm drizzle-kit`, plus the Node base and the Infisical CLI.
+
+### Change
+
+- `apps/server/esbuild.config.mjs` (new) bundles `src/index.ts` and
+  `src/migrate.ts` into `dist/*.mjs` (ESM, `node22`, code splitting,
+  sourcemaps, `jsx: automatic`, `createRequire` banner, no externals).
+  `apps/server` `build` script now runs it (it was `tsc` with no consumer of
+  the output); `esbuild` (already in the lockfile via tsx) is a devDependency.
+- `packages/db/src/migrate.ts` (new, exported as `@turbo/db/migrate`) runs
+  drizzle-orm's `migrate()` with drizzle-kit's defaults
+  (`drizzle/`, `__drizzle_migrations`, schema `drizzle`) and the config's
+  `:6543` → `:5432` rewrite. `apps/server/src/migrate.ts` is its entry point.
+- Server runner: `node:22.21.0-alpine` + `tini`, `dist/`, `drizzle/`, the
+  Infisical wrapper and binary. No `prune` stage, no node_modules, pnpm, tsx,
+  or drizzle-kit. CMD: `node dist/migrate.mjs && exec node dist/index.mjs`
+  under `scripts/infisical-run.sh`.
+- Web runner: `tini` entrypoint; `libc6-compat` dropped (Infisical is a
+  static Go binary, sharp ships a musl build).
+- CI `docker` job: the server smoke test boots the image against a throwaway
+  Postgres, checks `GET /health`, and re-runs the migration entry as a no-op.
+
+### Unchanged
+
+`pnpm start:server`, `pnpm db:migrate` (drizzle-kit), `pnpm dev`, the
+`tsx`/`drizzle-kit` dependencies (still used by the non-Docker paths), env
+vars, ports, Coolify settings, and the Infisical boot contract.
+
+### Decisions
+
+- **Bundle everything, externalise only on proof.** No dependency of
+  `@turbo/server` needs native code or reads its own files, so
+  `external` is empty. `@sentry/node` is bundled: the server initialises it
+  lazily (no `--import` instrumentation), so bundling loses no
+  auto-instrumentation it had before.
+- **No Dockerfile `HEALTHCHECK`.** Coolify probes `/health` itself; the
+  worker app runs the same image without an HTTP port.
+- **Base stays `node:<.nvmrc>-alpine`.** Copying the node binary onto bare
+  alpine would save ~40 MB more (npm, yarn, corepack), at the cost of
+  tracking Node's own runtime deps by hand.

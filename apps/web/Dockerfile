@@ -106,10 +106,11 @@ RUN [ -f .infisical.json ] || echo '{}' > .infisical.json
 
 # ---------------------------------------------------------------------------
 # runner: only the traced standalone output, static assets, public/, and the
-# Infisical secrets wrapper.
+# Infisical secrets wrapper. No libc6-compat: the Infisical CLI is a static Go
+# binary and sharp ships a musl build. tini is PID 1 and forwards signals.
 # ---------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-alpine AS runner
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache tini
 ENV NODE_ENV=production \
   NEXT_TELEMETRY_DISABLED=1 \
   HOSTNAME=0.0.0.0 \
@@ -138,4 +139,5 @@ EXPOSE 3000
 # in the image, so the wrapper injects Infisical secrets (or passes platform
 # env vars through), and standalone ships its own server.js instead of the
 # `next` CLI.
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["sh", "scripts/infisical-run.sh", "--", "node", "apps/web/server.js"]
