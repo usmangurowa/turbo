@@ -437,6 +437,9 @@ importers:
       dotenv-cli:
         specifier: ^11.0.0
         version: 11.0.0
+      esbuild:
+        specifier: ^0.28.1
+        version: 0.28.1
       eslint:
         specifier: 'catalog:'
         version: 10.7.0(jiti@2.7.0)

@@ -101,11 +101,27 @@ jobs:
               && docker stop smoke
           - app: server
             dockerfile: apps/server/Dockerfile
+            # Boots the image against a throwaway Postgres: migrations apply,
+            # /health answers, and a second migration run is a no-op. The
+            # runner must not ship node_modules, pnpm, tsx, or drizzle-kit.
             smoke: >-
               docker run --rm --entrypoint sh turbo-server -c
-              'which pnpm tsx drizzle-kit infisical
-              && test -f node_modules/@turbo/db/scripts/drizzle.mjs
-              && ls node_modules/@turbo/db/drizzle/*.sql'
+              '! test -e node_modules && ! command -v pnpm && ! command -v tsx
+              && command -v infisical && test -f drizzle/meta/_journal.json'
+              && docker network create smoke
+              && docker run -d --rm --name pg --network smoke -e POSTGRES_HOST_AUTH_METHOD=trust postgres:16-alpine
+              && until docker exec pg pg_isready -h 127.0.0.1 -U postgres; do sleep 1; done
+              && docker run -d --rm --name smoke --network smoke -p 3001:3001
+              -e POSTGRES_URL=postgres://postgres@pg:5432/postgres
+              -e AUTH_SECRET=ci-smoke-secret-0123456789abcdef0123456789
+              -e RESEND_API_KEY=re_ci_smoke turbo-server
+              && for i in $(seq 30); do curl -fsS http://localhost:3001/health && break; sleep 1; done
+              && curl -fsS http://localhost:3001/health
+              && docker run --rm --network smoke
+              -e POSTGRES_URL=postgres://postgres@pg:5432/postgres turbo-server
+              node dist/migrate.mjs
+              && docker logs smoke
+              && docker stop smoke pg
     steps:
       - uses: actions/checkout@v5
 
