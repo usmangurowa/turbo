@@ -91,10 +91,21 @@ RUN pnpm -F @turbo/server build
 RUN [ -f .infisical.json ] || echo '{}' > .infisical.json
 
 # ---------------------------------------------------------------------------
+# typecheck: tsc --noEmit over the server and the workspace sources it
+# imports. esbuild strips types without checking them, so this stage is what
+# fails the deploy on a type error. BuildKit runs it in parallel with `build`;
+# the runner copies its empty marker file, so TypeScript never ships.
+# ---------------------------------------------------------------------------
+FROM deps AS typecheck
+COPY . /app
+RUN pnpm -F @turbo/server typecheck && touch /typecheck.ok
+
+# ---------------------------------------------------------------------------
 # runner: node, the bundle, the migrations, and the Infisical secrets wrapper.
 # tini is PID 1 so SIGTERM reaches node (which installs no handler of its own).
 # ---------------------------------------------------------------------------
 FROM node:${NODE_VERSION}-alpine AS runner
+COPY --from=typecheck /typecheck.ok /tmp/typecheck.ok
 RUN apk add --no-cache tini
 ENV NODE_ENV=production \
   PORT=3001
